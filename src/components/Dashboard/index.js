@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useInterval } from "../../useInterval";
 
 export default function Dashboard() {
@@ -6,6 +7,10 @@ export default function Dashboard() {
 
   //Move Character
   const moveCharacter = (e) => {
+    if (playerCollision(char, shop)) {
+      useNav;
+    }
+
     window.addEventListener(
       "keydown",
       function (e) {
@@ -26,12 +31,12 @@ export default function Dashboard() {
   };
 
   //Character Model
-  var char = {
-    x: 50,
-    y: 50,
+  let char = {
+    x: 230, //Character X Position On Map
+    y: 400, //Character Y Position On Map
     width: 20,
     height: 42,
-    spriteX: 0,
+    spriteX: 74, //Position Character Is Facing
     spriteY: 0,
     speed: 150,
     edgeRegion: 50,
@@ -40,8 +45,8 @@ export default function Dashboard() {
     animateCur: 0,
     animatePos: Array(0, 42, 84, 42, 0, 128, 170, 128),
   };
-  var charReady = false;
-  var charImg = new Image();
+  let charReady = false;
+  let charImg = new Image();
   charImg.onload = function () {
     charReady = true;
   };
@@ -49,17 +54,27 @@ export default function Dashboard() {
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/knightd25b8b7e.png";
 
   //Background Map
-  var background = { x: 0, y: 0, width: 512, height: 480 };
-  var backgroundReady = false;
-  var backgroundImg = new Image();
+  let background = { x: 0, y: 0, width: 512, height: 480 };
+  let backgroundReady = false;
+  let backgroundImg = new Image();
   backgroundImg.onload = function () {
     backgroundReady = true;
   };
   backgroundImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/background.png";
 
-  //Render Character & Map
-  var render = function () {
+  //Shop
+  let shop = { x: 100, y: 100, width: 50, height: 50 };
+  let shopReady = false;
+  let shopImg = new Image(1, 1);
+  shopImg.onload = function () {
+    shopReady = true;
+  };
+  shopImg.src =
+    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1eb6c9aa-2543-4b4b-882d-63a35c351c43/d59ekov-7d6c7582-a16c-4a60-ba95-e105a8b7ad27.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzFlYjZjOWFhLTI1NDMtNGI0Yi04ODJkLTYzYTM1YzM1MWM0M1wvZDU5ZWtvdi03ZDZjNzU4Mi1hMTZjLTRhNjAtYmE5NS1lMTA1YThiN2FkMjcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.DSkRaR9tHFnhuAOwLkT_fk1cm5zBIJXAqSGNJAhPcpw";
+
+  //Render Character & Map & Other Objects Onto Map
+  let render = function () {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, 512, 480);
@@ -83,6 +98,8 @@ export default function Dashboard() {
       ctx.drawImage(backgroundImg, background.x, background.y);
     }
 
+    ctx.drawImage(shopImg, 1, 1);
+
     if (charReady) {
       ctx.drawImage(
         charImg,
@@ -98,11 +115,22 @@ export default function Dashboard() {
     }
   };
 
+  function playerCollision(a, b) {
+    if (
+      a.x < b.x + b.width &&
+      a.x + a.width > b.x &&
+      a.y < b.y + b.height &&
+      a.y + a.height > b.y
+    )
+      return true;
+    return false;
+  }
+
   // Keyboard Controls To Move Character
-  var keysDown = {};
+  let keysDown = {};
 
   //Update Character Movement
-  var update = function (modifier) {
+  let update = function (modifier) {
     if (37 in keysDown) {
       char.spriteX = 170;
       if (Math.round(char.x) > char.edgeRegion) {
@@ -169,7 +197,7 @@ export default function Dashboard() {
   let then = Date.now();
 
   (function () {
-    var requestAnimationFrame =
+    let requestAnimationFrame =
       window.requestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.webkitRequestAnimationFrame ||
@@ -177,9 +205,9 @@ export default function Dashboard() {
     window.requestAnimationFrame = requestAnimationFrame;
   })();
 
-  var mainInterval = function () {
-    var now = Date.now();
-    var delta = now - then;
+  let mainInterval = function () {
+    let now = Date.now();
+    let delta = now - then;
 
     update(delta / 1000);
     render();
@@ -206,6 +234,7 @@ export default function Dashboard() {
         width={510}
         height={480}
       ></canvas>
+      <img src={shopImg}></img>
     </div>
   );
 }
