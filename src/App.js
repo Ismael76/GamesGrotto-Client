@@ -1,17 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import { Dashboard } from "./components";
-import { Splash } from "./pages";
+import { Splash, Shop, Home } from "./pages";
 import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 
 function App() {
   return (
-
     <Routes>
       <Route path="/" element={<Splash />} />
-
-      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   );
 }
