@@ -129,6 +129,91 @@ export default function Dashboard() {
     }
   };
 
+  // Keyboard controls
+  var keysDown = {};
+  addEventListener(
+    "keydown",
+    function (e) {
+      char.moving = true;
+      keysDown[e.keyCode] = true;
+    },
+    false
+  );
+
+  addEventListener(
+    "keyup",
+    function (e) {
+      char.moving = false;
+      delete keysDown[e.keyCode];
+    },
+    false
+  );
+
+  // Update
+  var update = function (modifier) {
+    if (37 in keysDown) {
+      char.spriteX = 170;
+      if (Math.round(char.x) > char.edgeRegion) {
+        char.x -= char.speed * modifier;
+      } else {
+        if (Math.round(background.x) < 0) {
+          background.x += char.speed * modifier;
+        } else if (Math.round(char.x) > 0) {
+          char.x -= char.speed * modifier;
+        }
+      }
+    }
+    if (38 in keysDown) {
+      char.spriteX = 74;
+      if (Math.round(char.y) > char.edgeRegion) {
+        char.y -= char.speed * modifier;
+      } else {
+        if (Math.round(background.y) < 0) {
+          background.y += char.speed * modifier;
+        } else if (Math.round(char.y) > 0) {
+          char.y -= char.speed * modifier;
+        }
+      }
+    }
+    if (39 in keysDown) {
+      char.spriteX = 148;
+      if (Math.round(char.x) + char.width < 512 - char.edgeRegion) {
+        char.x += char.speed * modifier;
+      } else {
+        if (Math.round(background.x) > 512 - background.width) {
+          background.x -= char.speed * modifier;
+        } else if (Math.round(char.x) + char.width < 512) {
+          char.x += char.speed * modifier;
+        }
+      }
+    }
+    if (40 in keysDown) {
+      char.spriteX = 0;
+      if (Math.round(char.y) + char.height < 480 - char.edgeRegion) {
+        char.y += char.speed * modifier;
+      } else {
+        if (Math.round(background.y) > 480 - background.height) {
+          background.y -= char.speed * modifier;
+        } else if (Math.round(char.y) + char.height < 480) {
+          char.y += char.speed * modifier;
+        }
+      }
+    }
+
+    if (37 in keysDown && 38 in keysDown) {
+      char.spriteX = 124;
+    }
+    if (38 in keysDown && 39 in keysDown) {
+      char.spriteX = 100;
+    }
+    if (39 in keysDown && 40 in keysDown) {
+      char.spriteX = 50;
+    }
+    if (40 in keysDown && 37 in keysDown) {
+      char.spriteX = 26;
+    }
+  };
+
   useEffect(() => {
     render();
   }, []);
