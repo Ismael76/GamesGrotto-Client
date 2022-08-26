@@ -10,6 +10,7 @@ export default function Dashboard() {
   const moveCharacter = (e) => {
     if (playerCollision(char, shop)) {
       navigate("/shop", { replace: true });
+
     }
 
     window.addEventListener(
