@@ -2,47 +2,43 @@ import React, { useState, useEffect, useRef } from "react";
 import { useInterval } from "../../useInterval";
 
 export default function Dashboard() {
-  //Character Movement Directions
-  const DIRECTIONS = {
-    38: [0, -1], //Up
-    40: [0, 1], //Down
-    37: [-1, 0], //Left
-    39: [1, 0], //Right
-  };
-
   const USER_START = [
     [200, 200],
     [200, 200],
   ];
 
-  //Direction of moving character, initially set to move upwards
   const [dir, setDir] = useState([0, -1]);
   const [user, setUser] = useState(USER_START);
   const [keyPress, setKeyPress] = useState(false);
 
-  //Gets value of canvas element inside of the canvasRef variable
   const canvasRef = useRef();
 
-  //Moves character
-  const moveCharacter = ({ keyCode }) => {
-    console.log("PRESS KEY");
-    setDir(DIRECTIONS[keyCode]);
-    setKeyPress(true);
+  const moveCharacter = (e) => {
+    window.addEventListener(
+      "keydown",
+      function (e) {
+        char.moving = true;
+        keysDown[e.keyCode] = true;
+      },
+      false
+    );
+
+    window.addEventListener(
+      "keyup",
+      function (e) {
+        char.moving = false;
+        delete keysDown[e.keyCode];
+      },
+      false
+    );
   };
 
   //Loads character
   useEffect(() => {
     const canvas = canvasRef.current;
-    var background = new Image();
-    // background.src =
-    //   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/background.png";
     const ctx = canvas.getContext("2d");
-    // background.onload = () => {
-    //   ctx.drawImage(background, 0, 0);
-    // };
-
-    ctx.fillStyle = "blue";
-    user.forEach(([x, y]) => ctx.fillRect(x, y, 20, 20));
+    // ctx.fillStyle = "blue";
+    // user.forEach(([x, y]) => ctx.fillRect(x, y, 20, 20));
   }, [user]);
 
   // Char
@@ -65,19 +61,8 @@ export default function Dashboard() {
   charImg.onload = function () {
     charReady = true;
   };
-
   charImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/knightd25b8b7e.png";
-
-  const gameLoop = () => {
-    const userCopy = JSON.parse(JSON.stringify(user));
-    const newUserHead = [userCopy[0][0] + dir[0], userCopy[0][1] + dir[1]];
-    userCopy.unshift(newUserHead);
-    userCopy.pop();
-    setUser(userCopy);
-  };
-
-  //   useInterval(() => gameLoop(), 1000);
 
   // Background
   var background = { x: 0, y: 0, width: 512, height: 480 };
@@ -131,23 +116,6 @@ export default function Dashboard() {
 
   // Keyboard controls
   var keysDown = {};
-  addEventListener(
-    "keydown",
-    function (e) {
-      char.moving = true;
-      keysDown[e.keyCode] = true;
-    },
-    false
-  );
-
-  addEventListener(
-    "keyup",
-    function (e) {
-      char.moving = false;
-      delete keysDown[e.keyCode];
-    },
-    false
-  );
 
   // Update
   var update = function (modifier) {
@@ -214,8 +182,31 @@ export default function Dashboard() {
     }
   };
 
+  let then = Date.now();
+
+  (function () {
+    var requestAnimationFrame =
+      window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame;
+    window.requestAnimationFrame = requestAnimationFrame;
+  })();
+
+  var mainInterval = function () {
+    var now = Date.now();
+    var delta = now - then;
+
+    update(delta / 1000);
+    render();
+
+    then = now;
+    requestAnimationFrame(mainInterval);
+  };
+
   useEffect(() => {
     render();
+    mainInterval();
   }, []);
 
   return (
