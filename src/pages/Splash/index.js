@@ -18,14 +18,16 @@ Modal.setAppElement("#root");
 
 export default function Splash() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [whichModal, setWhichModal] = React.useState('register');
 
   function openModal() {
     setIsOpen(true);
-  }
+}
 
   function closeModal() {
     setIsOpen(false);
   }
+
 
   return (
     // will check whether they already have an account, if they do they will be sent to the Dashboard, if they don't the modal will appear.
@@ -42,7 +44,9 @@ export default function Splash() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <SignUp />
+        {whichModal == 'register' && <SignUp setWhichModal={setWhichModal}/>}
+        {whichModal == 'login' && <SignIn setWhichModal={setWhichModal}/>}
+
 
 
 <button onClick={closeModal}>close</button>
