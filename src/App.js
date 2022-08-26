@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Dashboard } from "./components";
 import { Splash } from "./pages";
-
 import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 
