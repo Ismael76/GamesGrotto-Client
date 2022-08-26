@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,12 +6,30 @@ export default function SignIn({ setWhichModal }) {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const naviagte = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    return null
-  };
 
+    const loginData = {
+      username: e.target[0].value,
+      password: e.target[1].value,
+    };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginData),
+    };
+    try {
+      const response = await fetch("http://localhost:5000/auth/login", options);
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
+      naviagte("/home", { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   function goToOther() {
     setWhichModal("register");
@@ -29,13 +47,14 @@ export default function SignIn({ setWhichModal }) {
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         ></input>
-        <br/>
+        <br />
         <input
           type="password"
           label="Password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         ></input>
+        <input type="submit" value="Login"></input>
       </form>
 
       <p>

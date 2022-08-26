@@ -3,6 +3,7 @@ import { Dashboard, SignIn, SignUp } from "../../components";
 import "normalize.css";
 import "./styles.css";
 import backgroundgif from "./world-splash-animation.mp4";
+import { Link, useNavigate } from "react-router-dom";
 
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
@@ -23,7 +24,12 @@ export default function Splash() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("register");
 
+  const navigate = useNavigate();
+
   function openModal() {
+    if (localStorage.getItem("token")) {
+      navigate("/home", { replace: true });
+    }
     setIsOpen(true);
   }
 
