@@ -8,7 +8,7 @@ export default function Dashboard() {
   //Move Character
   const moveCharacter = (e) => {
     if (playerCollision(char, shop)) {
-      useNav;
+      // useNav;
     }
 
     window.addEventListener(
@@ -238,4 +238,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
