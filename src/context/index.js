@@ -18,22 +18,33 @@ export const Provider =({ children }) => {
 
     const setUser = async (token) => {
         setLoading(true)
+
         if (token) {
             window.localStorage.setItem("token", token);
             const res = await api.getUser();
             dispatch(actions.setUserData(res.data));
-            // setError(!res.verified)
+            setError(!res.verified)
         } else {
             window.localStorage.clear()
             dispatch(actions.setUserData(initialUserState))
         }
         setLoading(false)
     }
-    
-    // useEffect(() => {
-    //     const token = window.localStorage.getItem("token");
-    //     setUser(token);
-    //   }, []);
+
+    const updateUser = async (data) => {
+        setLoading(true);
+        const res = await api.updateUser(data);
+        setError(!res.success);
+        dispatch(actions.setUserData(res.data));
+        setLoading(false);
+      };
+
+
+
+    useEffect(() => {
+        const token = window.localStorage.getItem("token");
+        setUser(token);
+      }, []);
 
     return (
         <context.Provider value={{loading, error, user, setUser }}>
