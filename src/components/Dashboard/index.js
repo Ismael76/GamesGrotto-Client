@@ -2,17 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useInterval } from "../../useInterval";
 
 export default function Dashboard() {
-  const USER_START = [
-    [200, 200],
-    [200, 200],
-  ];
-
-  const [dir, setDir] = useState([0, -1]);
-  const [user, setUser] = useState(USER_START);
-  const [keyPress, setKeyPress] = useState(false);
-
   const canvasRef = useRef();
 
+  //Move Character
   const moveCharacter = (e) => {
     window.addEventListener(
       "keydown",
@@ -33,15 +25,7 @@ export default function Dashboard() {
     );
   };
 
-  //Loads character
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    // ctx.fillStyle = "blue";
-    // user.forEach(([x, y]) => ctx.fillRect(x, y, 20, 20));
-  }, [user]);
-
-  // Char
+  //Character Model
   var char = {
     x: 50,
     y: 50,
@@ -64,7 +48,7 @@ export default function Dashboard() {
   charImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/knightd25b8b7e.png";
 
-  // Background
+  //Background Map
   var background = { x: 0, y: 0, width: 512, height: 480 };
   var backgroundReady = false;
   var backgroundImg = new Image();
@@ -74,7 +58,7 @@ export default function Dashboard() {
   backgroundImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/background.png";
 
-  // Render Function
+  //Render Character & Map
   var render = function () {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -114,10 +98,10 @@ export default function Dashboard() {
     }
   };
 
-  // Keyboard controls
+  // Keyboard Controls To Move Character
   var keysDown = {};
 
-  // Update
+  //Update Character Movement
   var update = function (modifier) {
     if (37 in keysDown) {
       char.spriteX = 170;
