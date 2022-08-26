@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useInterval } from "../../useInterval";
 
 export default function Dashboard() {
   const canvasRef = useRef();
 
+  const navigate = useNavigate();
+
   //Move Character
   const moveCharacter = (e) => {
     if (playerCollision(char, shop)) {
-      useNav;
+      navigate("/shop", { replace: true });
     }
 
     window.addEventListener(
@@ -115,12 +116,13 @@ export default function Dashboard() {
     }
   };
 
-  function playerCollision(a, b) {
+  //When Player Character Collides With Shop!
+  function playerCollision(char, shop) {
     if (
-      a.x < b.x + b.width &&
-      a.x + a.width > b.x &&
-      a.y < b.y + b.height &&
-      a.y + a.height > b.y
+      char.x < shop.x + shop.width &&
+      char.x + char.width > shop.x &&
+      char.y < shop.y + shop.height &&
+      char.y + char.height > shop.y
     )
       return true;
     return false;
@@ -238,4 +240,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
