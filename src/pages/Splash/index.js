@@ -1,5 +1,5 @@
 import React from "react";
-import { Dashboard, SignIn, SignUp } from "../../components";
+import { SignIn, SignUp } from "../../components";
 import "normalize.css";
 import "./styles.css";
 import backgroundgif from "./world-splash-animation.mp4";
