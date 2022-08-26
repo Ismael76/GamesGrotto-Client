@@ -1,57 +1,44 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useInterval } from "../../useInterval";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  //Character Movement Directions
-  const DIRECTIONS = {
-    38: [0, -1], //Up
-    40: [0, 1], //Down
-    37: [-1, 0], //Left
-    39: [1, 0], //Right
-  };
-
-  const USER_START = [
-    [200, 200],
-    [200, 200],
-  ];
-
-  //Direction of moving character, initially set to move upwards
-  const [dir, setDir] = useState([0, -1]);
-  const [user, setUser] = useState(USER_START);
-  const [keyPress, setKeyPress] = useState(false);
-
-  //Gets value of canvas element inside of the canvasRef variable
   const canvasRef = useRef();
 
-  //Moves character
-  const moveCharacter = ({ keyCode }) => {
-    console.log("PRESS KEY");
-    setDir(DIRECTIONS[keyCode]);
-    setKeyPress(true);
+  const navigate = useNavigate();
+
+  //Move Character
+  const moveCharacter = (e) => {
+    if (playerCollision(char, shop)) {
+      navigate("/shop", { replace: true });
+
+    }
+
+    window.addEventListener(
+      "keydown",
+      function (e) {
+        char.moving = true;
+        keysDown[e.keyCode] = true;
+      },
+      false
+    );
+
+    window.addEventListener(
+      "keyup",
+      function (e) {
+        char.moving = false;
+        delete keysDown[e.keyCode];
+      },
+      false
+    );
   };
 
-  //Loads character
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    var background = new Image();
-    // background.src =
-    //   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/background.png";
-    const ctx = canvas.getContext("2d");
-    // background.onload = () => {
-    //   ctx.drawImage(background, 0, 0);
-    // };
-
-    ctx.fillStyle = "blue";
-    user.forEach(([x, y]) => ctx.fillRect(x, y, 20, 20));
-  }, [user]);
-
-  // Char
-  var char = {
-    x: 50,
-    y: 50,
+  //Character Model
+  let char = {
+    x: 230, //Character X Position On Map
+    y: 400, //Character Y Position On Map
     width: 20,
     height: 42,
-    spriteX: 0,
+    spriteX: 74, //Position Character Is Facing
     spriteY: 0,
     speed: 150,
     edgeRegion: 50,
@@ -60,37 +47,36 @@ export default function Dashboard() {
     animateCur: 0,
     animatePos: Array(0, 42, 84, 42, 0, 128, 170, 128),
   };
-  var charReady = false;
-  var charImg = new Image();
+  let charReady = false;
+  let charImg = new Image();
   charImg.onload = function () {
     charReady = true;
   };
-
   charImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/knightd25b8b7e.png";
 
-  const gameLoop = () => {
-    const userCopy = JSON.parse(JSON.stringify(user));
-    const newUserHead = [userCopy[0][0] + dir[0], userCopy[0][1] + dir[1]];
-    userCopy.unshift(newUserHead);
-    userCopy.pop();
-    setUser(userCopy);
-  };
-
-  //   useInterval(() => gameLoop(), 1000);
-
-  // Background
-  var background = { x: 0, y: 0, width: 512, height: 480 };
-  var backgroundReady = false;
-  var backgroundImg = new Image();
+  //Background Map
+  let background = { x: 0, y: 0, width: 512, height: 480 };
+  let backgroundReady = false;
+  let backgroundImg = new Image();
   backgroundImg.onload = function () {
     backgroundReady = true;
   };
   backgroundImg.src =
     "https://s3-us-west-2.amazonaws.com/s.cdpn.io/15388/background.png";
 
-  // Render Function
-  var render = function () {
+  //Shop
+  let shop = { x: 100, y: 100, width: 50, height: 50 };
+  let shopReady = false;
+  let shopImg = new Image(1, 1);
+  shopImg.onload = function () {
+    shopReady = true;
+  };
+  shopImg.src =
+    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1eb6c9aa-2543-4b4b-882d-63a35c351c43/d59ekov-7d6c7582-a16c-4a60-ba95-e105a8b7ad27.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzFlYjZjOWFhLTI1NDMtNGI0Yi04ODJkLTYzYTM1YzM1MWM0M1wvZDU5ZWtvdi03ZDZjNzU4Mi1hMTZjLTRhNjAtYmE5NS1lMTA1YThiN2FkMjcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.DSkRaR9tHFnhuAOwLkT_fk1cm5zBIJXAqSGNJAhPcpw";
+
+  //Render Character & Map & Other Objects Onto Map
+  let render = function () {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, 512, 480);
@@ -114,6 +100,8 @@ export default function Dashboard() {
       ctx.drawImage(backgroundImg, background.x, background.y);
     }
 
+    ctx.drawImage(shopImg, 1, 1);
+
     if (charReady) {
       ctx.drawImage(
         charImg,
@@ -129,28 +117,23 @@ export default function Dashboard() {
     }
   };
 
-  // Keyboard controls
-  var keysDown = {};
-  addEventListener(
-    "keydown",
-    function (e) {
-      char.moving = true;
-      keysDown[e.keyCode] = true;
-    },
-    false
-  );
+  //When Player Character Collides With Shop!
+  function playerCollision(char, shop) {
+    if (
+      char.x < shop.x + shop.width &&
+      char.x + char.width > shop.x &&
+      char.y < shop.y + shop.height &&
+      char.y + char.height > shop.y
+    )
+      return true;
+    return false;
+  }
 
-  addEventListener(
-    "keyup",
-    function (e) {
-      char.moving = false;
-      delete keysDown[e.keyCode];
-    },
-    false
-  );
+  // Keyboard Controls To Move Character
+  let keysDown = {};
 
-  // Update
-  var update = function (modifier) {
+  //Update Character Movement
+  let update = function (modifier) {
     if (37 in keysDown) {
       char.spriteX = 170;
       if (Math.round(char.x) > char.edgeRegion) {
@@ -214,8 +197,31 @@ export default function Dashboard() {
     }
   };
 
+  let then = Date.now();
+
+  (function () {
+    let requestAnimationFrame =
+      window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame;
+    window.requestAnimationFrame = requestAnimationFrame;
+  })();
+
+  let mainInterval = function () {
+    let now = Date.now();
+    let delta = now - then;
+
+    update(delta / 1000);
+    render();
+
+    then = now;
+    requestAnimationFrame(mainInterval);
+  };
+
   useEffect(() => {
     render();
+    mainInterval();
   }, []);
 
   return (
@@ -231,6 +237,7 @@ export default function Dashboard() {
         width={510}
         height={480}
       ></canvas>
+      <img src={shopImg}></img>
     </div>
   );
 }
