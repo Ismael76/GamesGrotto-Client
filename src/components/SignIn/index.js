@@ -69,24 +69,23 @@ export default function SignIn({ setWhichModal }) {
 
       <form onSubmit={handleSubmit}>
         <input
+          className="mb-1"
           type="text"
           label="Username"
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         ></input>
-        <br/>
         <input
+          className="mb-1"
           type="password"
           label="Password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         ></input>
-        <br/>
-        <input className="rpgui-button" type="submit" value="Login"></input>
-        <br/>
+        <button className="rpgui-button mb-1" type="submit" value="Login">Login</button>
       </form>
 
-      <p>
+      <p className="mt-1">
         Don't have an account? <button className="bg-success" onClick={goToOther}>Register.</button>
       </p>
     </section>
