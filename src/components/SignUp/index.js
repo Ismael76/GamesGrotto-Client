@@ -58,7 +58,7 @@ export default function SignUp({setWhichModal}) {
       navigate("/home");
     }
   }, [user, registered, navigate])
-  
+
   return (
     <section>
       <h1>Welcome!</h1>
@@ -92,7 +92,8 @@ export default function SignUp({setWhichModal}) {
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
         />
-        <br/><button>Submit</button>
+        <br/>
+                <input type="submit" value="SignUp"></input>
 
       </form>
 

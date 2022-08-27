@@ -50,7 +50,6 @@ export const updateUser = async (data) => {
 };
 
 
-// Change object keys from snake_case to camelCase
 const toCamelCase = (obj) => {
   const newObj = {};
   Object.keys(obj).forEach((key) => {

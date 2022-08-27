@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-=======
+
 import React, {useState, useEffect} from "react";
->>>>>>> 8a78dad90c2bfcb29fc4afb4289eef2ae5757675
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context";
@@ -17,8 +14,8 @@ export default function SignIn({ setWhichModal }) {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-<<<<<<< HEAD
-  const naviagte = useNavigate();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,31 +34,29 @@ export default function SignIn({ setWhichModal }) {
       const response = await fetch("http://localhost:5000/auth/login", options);
       const { token } = await response.json();
       localStorage.setItem("token", token);
-      naviagte("/home", { replace: true });
+      navigate("/home", { replace: true });
     } catch (err) {
       console.log(err);
     }
   };
-=======
-  const { user, setUser } = useUserContext();
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const res = await api.login({ username, password });
-    setErrorMessage(res.error || null);
-    setLoading(false);
-    setUser(res.token);
-  };
 
-  useEffect(() => {
-    if (user.username) {
-      navigate("/home");
-    }
-  }, [user, navigate]);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const res = await api.login({ username, password });
+  //   setErrorMessage(res.error || null);
+  //   setLoading(false);
+  //   setUser(res.token);
+  // };
 
->>>>>>> 8a78dad90c2bfcb29fc4afb4289eef2ae5757675
+  // useEffect(() => {
+  //   if (user.username) {
+  //     navigate("/home");
+  //   }
+  // }, [user, navigate]);
+
+
 
   function goToOther() {
     setWhichModal("register");
@@ -86,11 +81,8 @@ export default function SignIn({ setWhichModal }) {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         ></input>
-<<<<<<< HEAD
+
         <input type="submit" value="Login"></input>
-=======
-        <br/><button>Submit</button>
->>>>>>> 8a78dad90c2bfcb29fc4afb4289eef2ae5757675
       </form>
 
       <p>

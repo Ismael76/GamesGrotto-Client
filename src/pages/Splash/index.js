@@ -9,6 +9,10 @@ import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
 const customStyles = {
+  overlay: {
+    opacity: "0.75",
+    backgroundColor: '#4a646c'
+  },
   content: {
     top: "50%",
     left: "50%",
@@ -16,7 +20,9 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-  },
+    backgroundColor: 'white',
+    color: "black"
+  }
 };
 Modal.setAppElement("#root");
 
@@ -44,12 +50,15 @@ export default function Splash() {
         <source src={backgroundgif} type="video/mp4" />
       </video>
       <div className="enter-btn-container">
+        { !modalIsOpen &&
         <button
           onClick={openModal}
-          className="btn btn-light btn-lg position-absolute"
+          className="enter-btn shadow-sm"
         >
           Enter
         </button>
+
+}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -59,19 +68,7 @@ export default function Splash() {
       >
         {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
-
         <button onClick={closeModal}>close</button>
-
-        {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form> */}
       </Modal>
     </section>
   );

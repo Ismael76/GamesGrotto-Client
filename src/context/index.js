@@ -41,10 +41,10 @@ export const Provider =({ children }) => {
 
 
 
-    useEffect(() => {
-        const token = window.localStorage.getItem("token");
-        setUser(token);
-      }, []);
+    // useEffect(() => {
+    //     const token = window.localStorage.getItem("token");
+    //     setUser(token);
+    //   }, []);
 
     return (
         <context.Provider value={{loading, error, user, setUser }}>
