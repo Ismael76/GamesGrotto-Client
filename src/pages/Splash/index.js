@@ -35,7 +35,10 @@ export default function Splash() {
 
   function openModal() {
     if (localStorage.getItem("token")) {
-      navigate("/home", { replace: true });
+      fade(section.current);
+      setTimeout(() => {
+        navigate("/home", { replace: true });
+      }, 800);
     }
     setIsOpen(true);
   }
@@ -43,6 +46,20 @@ export default function Splash() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  function fade(element) {
+    var op = 1; // initial opacity
+    var timer = setInterval(function () {
+      if (op <= 0.1) {
+        clearInterval(timer);
+        element.style.display = "none";
+      }
+      element.style.opacity = op;
+      element.style.filter = "alpha(opacity=" + op * 100 + ")";
+      op -= op * 0.1;
+    }, 50);
+  }
+
 
   return (
     // will check whether they already have an account, if they do they will be sent to the Dashboard, if they don't the modal will appear.
@@ -58,6 +75,7 @@ export default function Splash() {
         )}
       </div>
 
+        {!localStorage.getItem("token") &&
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
@@ -73,6 +91,7 @@ export default function Splash() {
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
         </div>
       </Modal>
+      }
     </section>
   );
 }

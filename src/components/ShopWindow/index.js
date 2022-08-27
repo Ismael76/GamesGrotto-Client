@@ -1,5 +1,6 @@
-import React from "react";
-import "./styles.css";
+
+import React from 'react'
+import './styles.css'
 
 export default function ShopWindow() {
   return (
@@ -42,7 +43,7 @@ export default function ShopWindow() {
             </div>
             <div class="product-content">
               <h3 class="title">
-                <a href="#">Create a listing</a>
+                <a href="#">Sell</a>
               </h3>
             </div>
           </div>
@@ -50,4 +51,7 @@ export default function ShopWindow() {
       </div>
     </section>
   );
+
+
+
 }
