@@ -28,20 +28,12 @@
 
 .enter-btn {
   position: absolute;
-  background: #e24545;
-  border-bottom: 6px inset rgba(0, 0, 0, 0.5);
-  border-left: 6px inset rgba(0, 0, 0, 0.5);
-  border-right: 6px inset rgba(255, 255, 255, 0.5);
-  border-top: 6px inset rgba(255, 255, 255, 0.5);
-  box-sizing: border-box;
-  color: #45e2e2;
-  cursor: pointer;
   display: inline-block;
-  font-size: 2rem;
-  font-family: "Press Start 2P", cursive;
+  font-size: 1.3rem;
   margin: 1rem;
   min-width: 200px;
   padding: 1rem;
+  padding-top:1.1rem;
   text-transform: uppercase;
   width: auto;
   opacity: 0.9;
@@ -59,47 +51,6 @@
   transition: all 0.3s;
 
   /* change enter btn animation here */
-
-  border: 1px solid rgba(226, 69, 69, 0.5);
-}
-
-.enter-btn:hover {
-  background: #b93b3b;
-}
-
-.enter-btn:hover::after {
-  animation-name: rotatecw;
-  animation-duration: 2s;
-}
-.enter-btn:hover::before {
-  animation-name: rotateccw;
-  animation-duration: 3s;
-}
-.enter-btn:hover::after,
-.enter-btn:hover::before {
-  left: 64px;
-  width: 64px;
-
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes rotatecw {
-  from {
-    transform: rotate(0deg) scale(400%);
-  }
-  to {
-    transform: rotate(360deg) scale(400%);
-  }
-}
-
-@keyframes rotateccw {
-  from {
-    transform: rotate(0deg) scale(400%);
-  }
-  to {
-    transform: rotate(-360deg) scale(380%);
-  }
 }
 
 .ReactModal__Overlay {
