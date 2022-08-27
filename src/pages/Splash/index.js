@@ -46,7 +46,7 @@ export default function Splash() {
 
   return (
     // will check whether they already have an account, if they do they will be sent to the Dashboard, if they don't the modal will appear.
-    <section ref={section} className="splash-page">
+    <section ref={section} className="splash-page rpgui-content ">
       <video preload="auto" autoPlay muted loop id="myVideo">
         <source src={backgroundgif} type="video/mp4" />
       </video>
@@ -59,6 +59,7 @@ export default function Splash() {
       </div>
 
       <Modal
+        className="rpgui-content splash-modal-position"
         ref={modal}
         closeTimeoutMS={500}
         isOpen={modalIsOpen}
@@ -66,9 +67,11 @@ export default function Splash() {
         style={customStyles}
         contentLabel="Authentication modal"
       >
+        <div className="rpgui-container framed">
         {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
         <button onClick={closeModal}>close</button>
+        </div>
       </Modal>
     </section>
   );
