@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useContext } from "react";
+import { GameContext } from "../../ContextProvider";
 import { SignIn, SignUp } from "../../components";
 import "normalize.css";
 import "./styles.css";
@@ -9,6 +10,9 @@ import ReactDOM from "react-dom";
 import Modal from "react-modal";
 
 const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(64, 223, 219,0.3)",
+  },
   content: {
     top: "50%",
     left: "50%",
@@ -16,11 +20,14 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    color: "black",
+    opacity: "0.92",
   },
 };
 Modal.setAppElement("#root");
 
 export default function Splash() {
+  const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("register");
 
@@ -39,39 +46,29 @@ export default function Splash() {
 
   return (
     // will check whether they already have an account, if they do they will be sent to the Dashboard, if they don't the modal will appear.
-    <section className="splash-page">
+    <section ref={section} className="splash-page">
       <video preload="auto" autoPlay muted loop id="myVideo">
         <source src={backgroundgif} type="video/mp4" />
       </video>
       <div className="enter-btn-container">
-        <button
-          onClick={openModal}
-          className="btn btn-light btn-lg position-absolute"
-        >
-          Enter
-        </button>
+        {!modalIsOpen && (
+          <button onClick={openModal} className="enter-btn shadow-sm">
+            Enter
+          </button>
+        )}
       </div>
+
       <Modal
+        ref={modal}
+        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Authentication modal"
       >
         {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
-
         <button onClick={closeModal}>close</button>
-
-        {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form> */}
       </Modal>
     </section>
   );

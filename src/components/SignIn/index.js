@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffec, useContext } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
+import { GameContext } from "../../ContextProvider";
 
 export default function SignIn({ setWhichModal }) {
+  const [section, modal, homeSection] = useContext(GameContext);
+
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +31,11 @@ export default function SignIn({ setWhichModal }) {
       const response = await fetch("http://localhost:5000/auth/login", options);
       const { token } = await response.json();
       localStorage.setItem("token", token);
-      naviagte("/home", { replace: true });
+      fade(section.current);
+      fade(modal.current.node);
+      setTimeout(() => {
+        navigate("/home", { replace: true });
+      }, 800);
     } catch (err) {
       console.log(err);
     }
@@ -37,6 +44,23 @@ export default function SignIn({ setWhichModal }) {
   function goToOther() {
     setWhichModal("register");
   }
+
+  function fade(element) {
+    var op = 1; // initial opacity
+    var timer = setInterval(function () {
+      if (op <= 0.1) {
+        clearInterval(timer);
+        element.style.display = "none";
+      }
+      element.style.opacity = op;
+      element.style.filter = "alpha(opacity=" + op * 100 + ")";
+      op -= op * 0.1;
+    }, 50);
+  }
+
+  window.addEventListener("click", () => {
+    console.log(modal.current);
+  });
 
   return (
     <section>

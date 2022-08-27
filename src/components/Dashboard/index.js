@@ -258,9 +258,12 @@ export default function Dashboard() {
     backgroundImg.src = require("./map.png");
     console.log(backgroundImg);
     backgroundImg.onload = function () {
-      ctx.drawImage(backgroundImg, -500, -1400);
+      ctx.drawImage(backgroundImg, -300, -1400);
     };
   };
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   useEffect(() => {
     render();
@@ -268,7 +271,7 @@ export default function Dashboard() {
 
   return (
     <div role="button" tabIndex="0" className="dashboard">
-      <canvas ref={canvasRef} width={1024} height={900}></canvas>
+      <canvas ref={canvasRef} width={width} height={height}></canvas>
     </div>
   );
 }

@@ -37,25 +37,6 @@ export default function SignUp({ setWhichModal }) {
     setLoading(false);
   };
 
-  // const verifyUser = useCallback(async () => {
-  //   setLoading(true);
-  //   const res = await api.login({ username, password });
-  //   setErrorMessage(res.error || null);
-  //   setUser(res.token || null);
-  // }, [username, password, setUser]);
-
-  // useEffect(() => {
-  //   if (registered) {
-  //     verifyUser();
-  //   }
-  // }, [registered, verifyUser]);
-
-  // useEffect(() => {
-  //   if (registered && user.username) {
-  //     navigate("/home");
-  //   }
-  // }, [user, registered, navigate]);
-
   return (
     <section>
       <h1>Welcome!</h1>

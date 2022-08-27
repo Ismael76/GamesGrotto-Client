@@ -1,20 +1,130 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
 #myVideo {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    transform: translateX(calc((100% - 100vw) / 2));
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translateX(calc((100% - 100vw) / 2));
 
-
-    /* background: url('https://cdnb.artstation.com/p/assets/images/images/037/263/051/original/karina-formanova-rainforest-animation.gif?1619929364'); */
+  /* background: url('https://cdnb.artstation.com/p/assets/images/images/037/263/051/original/karina-formanova-rainforest-animation.gif?1619929364'); */
 }
 
 .enter-btn-container {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.enter-btn {
+  position: absolute;
+  background: #e24545;
+  border-bottom: 6px inset rgba(0, 0, 0, 0.5);
+  border-left: 6px inset rgba(0, 0, 0, 0.5);
+  border-right: 6px inset rgba(255, 255, 255, 0.5);
+  border-top: 6px inset rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  color: #45e2e2;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2rem;
+  font-family: "Press Start 2P", cursive;
+  margin: 1rem;
+  min-width: 200px;
+  padding: 1rem;
+  text-transform: uppercase;
+  width: auto;
+  opacity: 0.9;
+}
+
+.enter-btn::before,
+.enter-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  transition: all 0.3s;
+
+  /* change enter btn animation here */
+
+  border: 1px solid rgba(226, 69, 69, 0.5);
+}
+
+.enter-btn:hover {
+  background: #b93b3b;
+}
+
+.enter-btn:hover::after {
+  animation-name: rotatecw;
+  animation-duration: 2s;
+}
+.enter-btn:hover::before {
+  animation-name: rotateccw;
+  animation-duration: 3s;
+}
+.enter-btn:hover::after,
+.enter-btn:hover::before {
+  left: 64px;
+  width: 64px;
+
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotatecw {
+  from {
+    transform: rotate(0deg) scale(400%);
+  }
+  to {
+    transform: rotate(360deg) scale(400%);
+  }
+}
+
+@keyframes rotateccw {
+  from {
+    transform: rotate(0deg) scale(400%);
+  }
+  to {
+    transform: rotate(-360deg) scale(380%);
+  }
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 500ms ease-in;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.ReactModal__Content {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 500ms ease-in;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* .ReactModal__Content--before-close {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 700ms ease-out;
+} */
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transition: all 700ms;
 }
