@@ -52,7 +52,7 @@ export default function Splash() {
       </video>
       <div className="enter-btn-container">
         {!modalIsOpen && (
-          <button onClick={openModal} className="enter-btn shadow-sm">
+          <button onClick={openModal} className="enter-btn shadow-sm rpgui-button my-auto">
             Enter
           </button>
         )}
@@ -67,10 +67,10 @@ export default function Splash() {
         style={customStyles}
         contentLabel="Authentication modal"
       >
-        <div className="rpgui-container framed">
+        <div className="rpgui-container framed d-flex flex-column text-center">
+        <button className="position-absolute" onClick={closeModal}>X</button>
         {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
-        <button onClick={closeModal}>close</button>
         </div>
       </Modal>
     </section>
