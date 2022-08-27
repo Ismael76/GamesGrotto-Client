@@ -75,7 +75,7 @@
     animation-duration: 3s;
   }
   .enter-btn:hover::after, .enter-btn:hover::before {
-    left: 60px;
+    left: 64px;
     width: 64px;
 
     animation-iteration-count: infinite;
