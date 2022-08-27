@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+
 #myVideo {
     position: fixed;
     right: 0;
@@ -27,19 +30,21 @@
 	border-right: 6px inset rgba(255,255,255,.5);
 	border-top: 6px inset rgba(255,255,255,.5);
 	box-sizing: border-box;
-	color: white;
+	color: #45e2e2;
 	cursor: pointer;
 	display: inline-block;
-	font-size: 2.2rem;
+	font-size: 2rem;
+    font-family: 'Press Start 2P', cursive;;
 	margin: 1rem;
 	min-width: 200px;
-	padding: .5rem;
+	padding: 1rem;
 	text-transform: uppercase;
 	width: auto;
     opacity: 0.9;
 }
 
-/* BTN TWO */
+
+
 .enter-btn::before, .enter-btn::after {
     content: '';
     position: absolute;
@@ -55,7 +60,10 @@
     border: 1px solid rgba(226, 69, 69, 0.5)
   }
 
+  .enter-btn:hover {
+    background: #b93b3b;
 
+}
 
 
   .enter-btn:hover::after {
