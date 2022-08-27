@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import { Link, useNavigate } from "react-router-dom";
+import { GameContext } from "../../ContextProvider";
 import * as api from "../../api";
 import "./styles.css"
 
@@ -17,6 +18,8 @@ export default function SignUp({ setWhichModal }) {
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
+  const [section, modal, homeSection] = useContext(GameContext);
+
   const navigate = useNavigate();
 
   function goToOther() {
@@ -25,6 +28,51 @@ export default function SignUp({ setWhichModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const registerData = {
+      username: e.target[0].value,
+      email: e.target[1].value,
+      password: e.target[2].value,
+    };
+
+    const loginData = {
+      username: e.target[0].value,
+      password: e.target[2].value,
+    };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registerData),
+    };
+
+    const optionsTwo = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginData),
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/auth/register",
+        options
+      );
+
+      const loginResponse = await fetch(
+        "http://localhost:5000/auth/login",
+        optionsTwo
+      );
+
+      const { token } = await loginResponse.json();
+      localStorage.setItem("token", token);
+      fade(section.current);
+      fade(modal.current.node);
+      setTimeout(() => {
+        navigate("/home", { replace: true });
+      }, 800);
+    } catch (err) {
+      console.log(err);
+    }
 
     if (password !== confirmPassword) {
       setErrorMessage("Passwords must match.");
@@ -37,6 +85,19 @@ export default function SignUp({ setWhichModal }) {
     setErrorMessage(res.error || null);
     setLoading(false);
   };
+
+  function fade(element) {
+    var op = 1; // initial opacity
+    var timer = setInterval(function () {
+      if (op <= 0.1) {
+        clearInterval(timer);
+        element.style.display = "none";
+      }
+      element.style.opacity = op;
+      element.style.filter = "alpha(opacity=" + op * 100 + ")";
+      op -= op * 0.1;
+    }, 50);
+  }
 
   return (
     <section className="d-flex flex-column text-center">
@@ -76,7 +137,10 @@ export default function SignUp({ setWhichModal }) {
           placeholder="Confirm Password"
         />
         <br/>
-        <button className="rpgui-button mb-1">Submit</button>
+        <button type="submit" className="rpgui-button mb-1">Submit</button>
+
+        <br />
+
       </form>
 
       <p className="mt-1">
