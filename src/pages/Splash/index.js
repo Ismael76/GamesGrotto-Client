@@ -10,8 +10,7 @@ import Modal from "react-modal";
 
 const customStyles = {
   overlay: {
-    opacity: "0.75",
-    backgroundColor: '#4a646c'
+    backgroundColor: 'rgba(255,0,0,0.3)'
   },
   content: {
     top: "50%",
@@ -20,8 +19,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: 'white',
-    color: "black"
+    color: "black",
+    opacity: '0.92'
   }
 };
 Modal.setAppElement("#root");
@@ -60,11 +59,12 @@ export default function Splash() {
 
 }
       </div>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Authentication modal"
       >
         {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
         {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
