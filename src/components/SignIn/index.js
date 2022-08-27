@@ -1,4 +1,4 @@
-import React, { useState, useEffec, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { GameContext } from "../../ContextProvider";
