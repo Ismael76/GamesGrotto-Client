@@ -23,7 +23,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section ref={homeSection} class="home">
+    <section ref={homeSection} className="home">
       <Dashboard />
     </section>
   );
