@@ -1,5 +1,6 @@
 .shop-window {
     position: absolute;
+    align-items: center;
     left: 35rem;
     top: 5rem;
     width: 63vw;
