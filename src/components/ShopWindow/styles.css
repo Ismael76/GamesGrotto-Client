@@ -1,8 +1,7 @@
 .shop-window {
     position: absolute;
     align-items: center;
-    left: 35rem;
-    top: 5rem;
-    width: 63vw;
-    height: 80vh;
+    left: 40vw;
+    top: calc(10vw + 3rem);
+
 }
