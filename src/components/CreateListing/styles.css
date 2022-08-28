@@ -1,0 +1,9 @@
+.sell-window {
+
+    position: absolute;
+    align-items: center;
+    left: calc(40vw + 2rem);
+    top: 10vw;
+    width: 100%;
+
+}

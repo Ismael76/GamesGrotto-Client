@@ -1,11 +1,37 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useNavigate } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
-import { ListingWindow } from "../../components";
+import { ListingWindow, CreateListing } from "../../components";
+
+
+import Modal from "react-modal";
+
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(64, 223, 219,0.3)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    color: "black",
+    opacity: "0.92",
+  },
+};
+Modal.setAppElement("#root");
+
+
 
 export default function Shop() {
   const [section, modal, homeSection] = useContext(GameContext);
   const [showListing, setShowListing] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  // const navigate = useNavigate();
+
 
   function unfade(element) {
     var op = 0.1; // initial opacity
@@ -23,6 +49,15 @@ export default function Shop() {
   const handleClick = () => {
     setShowListing(true);
   };
+
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     unfade(homeSection.current);
@@ -79,7 +114,7 @@ export default function Shop() {
                 </div>
                 <div class="product-content">
                   <h3 class="title mx-md-5 py-1">
-                    <button className="rpgui-button d-block m-auto  ">
+                    <button onClick={openModal} className="rpgui-button d-block m-auto  ">
                       <a href="#">Sell</a>
                     </button>
                   </h3>
@@ -87,6 +122,17 @@ export default function Shop() {
               </div>
             </div>
           </div>
+          <Modal
+            className="rpgui-content splash-modal-position"
+            ref={modal}
+            closeTimeoutMS={500}
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Authentication modal"
+          >
+            <CreateListing closeModal={closeModal}/>
+          </Modal>
         </section>
       )}
     </section>

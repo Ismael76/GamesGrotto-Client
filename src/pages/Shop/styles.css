@@ -11,3 +11,44 @@
   left: calc(30vw + 2rem);
   top: 10vw;
 }
+
+
+.splash-modal-position {
+  display:flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 500ms ease-in;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ReactModal__Content {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 500ms ease-in;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* .ReactModal__Content--before-close {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 700ms ease-out;
+} */
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transition: all 700ms;
+}
