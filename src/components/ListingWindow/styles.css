@@ -1,0 +1,6 @@
+.shop-window {
+  position: absolute;
+  align-items: center;
+  left: calc(30vw + 2rem);
+  top: 10vw;
+}

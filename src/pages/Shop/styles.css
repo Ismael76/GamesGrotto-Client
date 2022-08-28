@@ -1,14 +1,13 @@
-.shop{
-    background: url('../../images/shopBackground.png') no-repeat center center/100% fixed;
-    width: 100vw;
-    height: 100vh;
-
+.shop {
+  background: url("../../images/shopBackground.png") no-repeat center
+    center/100% fixed;
+  width: 100vw;
+  height: 100vh;
 }
 
 .shop-window {
-    position: absolute;
-    align-items: center;
-    left: calc(30vw + 2rem);
-    top: 10vw;
-
+  position: absolute;
+  align-items: center;
+  left: calc(30vw + 2rem);
+  top: 10vw;
 }
