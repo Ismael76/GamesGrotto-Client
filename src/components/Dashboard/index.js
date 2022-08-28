@@ -1,11 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
+import { shopNavigateData, forumNavigateData } from "./navigateZones";
+import { useNavigate } from "react-router-dom";
 
 //Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 50) {
   collisionsMap.push(collisions.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger A Navigation To Shop
+const shopNavigate = [];
+for (let i = 0; i < shopNavigateData.length; i += 50) {
+  shopNavigate.push(shopNavigateData.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger A Navigation To Forums
+const forumNavigate = [];
+for (let i = 0; i < forumNavigateData.length; i += 50) {
+  forumNavigate.push(forumNavigateData.slice(i, 50 + i));
 }
 
 const keys = {
@@ -108,6 +122,8 @@ document.addEventListener("keyup", function (playerWalk) {
 const Dashboard = ({ draw, height, width }) => {
   const canvas = React.useRef();
 
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -136,7 +152,7 @@ const Dashboard = ({ draw, height, width }) => {
       }
 
       draw() {
-        ctx.fillStyle = "rgba(255, 0, 0, 0)";
+        ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
       }
     }
@@ -147,10 +163,47 @@ const Dashboard = ({ draw, height, width }) => {
     };
     const boundaries = [];
 
+    //All Collision Tiles
     collisionsMap.forEach((row, i) => {
       row.forEach((symbol, j) => {
         if (symbol === 4071) {
           boundaries.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    //All Navigate Tiles For Shop
+    const shopNavigateTiles = [];
+
+    shopNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          shopNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    //All Navigate Tiles For Forum
+    const forumNavigateTiles = [];
+
+    forumNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          forumNavigateTiles.push(
             new Boundary({
               position: {
                 x: j * Boundary.width + offset.x,
@@ -239,7 +292,12 @@ const Dashboard = ({ draw, height, width }) => {
       );
     };
 
-    const moveables = [gameSceneLayer, ...boundaries];
+    const moveables = [
+      gameSceneLayer,
+      ...boundaries,
+      ...shopNavigateTiles,
+      ...forumNavigateTiles,
+    ];
 
     function animate() {
       window.requestAnimationFrame(animate);
@@ -250,15 +308,86 @@ const Dashboard = ({ draw, height, width }) => {
         boundary.draw();
       });
 
+      //All Navigation Tiles Players Walk Over To Enter Shop
+      shopNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      //All Navigation Tiles Players Walk Over To Enter Forums
+      forumNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
       player.draw(); //Draw Player Onto Canvas
 
       let moving = true;
       player.moving = false;
-      // Player Movement When Keys Are Pressed
+
+      if (
+        keys.w.pressed ||
+        keys.a.pressed ||
+        keys.s.pressed ||
+        keys.d.pressed ||
+        keys.ArrowDown.pressed ||
+        keys.ArrowUp.pressed ||
+        keys.ArrowLeft.pressed ||
+        keys.ArrowRight.pressed
+      ) {
+        for (let i = 0; i < shopNavigateTiles.length; i++) {
+          const navigateZone = shopNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            navigate("/shop", { replace: true });
+            break;
+          }
+        }
+
+        for (let i = 0; i < forumNavigateTiles.length; i++) {
+          const navigateZone = forumNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            navigate("/forum", { replace: true });
+            break;
+          }
+        }
+      }
       if (
         keys.ArrowDown.pressed ||
         (keys.s.pressed && lastKeyDown === "ArrowDown")
       ) {
+        // Player Movement When Keys Are Pressed
         player.moving = true;
         player.image = player.sprites.down;
         for (let i = 0; i < boundaries.length; i++) {
@@ -310,6 +439,7 @@ const Dashboard = ({ draw, height, width }) => {
             break;
           }
         }
+
         if (moving) {
           moveables.forEach((movable) => {
             movable.position.y += 3;
