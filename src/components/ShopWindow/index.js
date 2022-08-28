@@ -6,9 +6,12 @@ export default function ShopWindow() {
   return (
     <section className="rpgui-content">
       <div className="rpgui-container framed-golden-2 shop-window">
-      <div className="d-flex flex-row-reverse pb-2 pl-2">
+      <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
         <a href="#" className="">
-        <div class="rpgui-icon exclamation"></div>
+        <div class="rpgui-icon exclamation flex-item"></div>
+        </a>
+        <a href="#" className="">
+        <div class="rpgui-container flex-item">Back</div>
         </a>
         </div>
         <div class="d-flex row justify-content-center pb-5 w-auto">
