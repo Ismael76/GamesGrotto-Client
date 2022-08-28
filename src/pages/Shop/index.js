@@ -29,6 +29,7 @@ export default function Shop() {
   const [section, modal, homeSection] = useContext(GameContext);
   const [showListing, setShowListing] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [listingType, setListingType] = useState("")
 
   // const navigate = useNavigate();
 
@@ -46,8 +47,10 @@ export default function Shop() {
     }, 40);
   }
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    console.log("The value of e is:", e)
     setShowListing(true);
+    setListingType(e.target.innerText)
   };
 
 
@@ -66,7 +69,7 @@ export default function Shop() {
   return (
     <section ref={homeSection} className="shop bg-dark">
       {showListing ? (
-        <ListingWindow />
+        <ListingWindow listingType={listingType}/>
       ) : (
         <section className="rpgui-content">
           <div className="rpgui-container framed-golden-2 shop-window">
