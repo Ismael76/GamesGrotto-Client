@@ -2,6 +2,8 @@ import React, { useEffect, useContext } from "react";
 import { Dashboard } from "../../components";
 import { GameContext } from "../../ContextProvider";
 
+const draw = (context) => {};
+
 export default function Home() {
   const [section, modal, homeSection] = useContext(GameContext);
 
@@ -24,7 +26,11 @@ export default function Home() {
 
   return (
     <section ref={homeSection} className="home">
-      <Dashboard />
+      <Dashboard
+        draw={draw}
+        height={window.innerHeight}
+        width={window.innerWidth}
+      />
     </section>
   );
 }
