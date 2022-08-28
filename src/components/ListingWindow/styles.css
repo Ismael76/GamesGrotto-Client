@@ -7,3 +7,10 @@
   max-height: 75%;
   overflow: auto;
 }
+
+.listing-modal {
+  max-width: 60%;
+  top: 4%;
+  height: 92%;
+
+}

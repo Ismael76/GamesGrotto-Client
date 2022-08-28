@@ -34,6 +34,7 @@ export default function Shop() {
   // const navigate = useNavigate();
 
 
+
   function unfade(element) {
     var op = 0.1; // initial opacity
     element.style.display = "block";
@@ -69,7 +70,7 @@ export default function Shop() {
   return (
     <section ref={homeSection} className="shop bg-dark">
       {showListing ? (
-        <ListingWindow listingType={listingType}/>
+        <ListingWindow listingType={listingType} setShowListing={setShowListing}/>
       ) : (
         <section className="rpgui-content">
           <div className="rpgui-container framed-golden-2 shop-window">

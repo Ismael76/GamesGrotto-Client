@@ -1,0 +1,11 @@
+.for-sale-img {
+    width: 250px;
+    margin: auto;
+    height: 250px;
+}
+
+.contact-seller-container {
+    top: 63%;
+    left: 50%;
+    transform: translateX(-50%);
+}

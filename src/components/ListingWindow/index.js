@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useState, useNavigate } from "react";
 import "./styles.css"
 import { GameContext } from "../../ContextProvider";
-
+import { ListingModal, ContactModal } from "../../components";
 
 import Modal from "react-modal";
 
 const customStyles = {
   overlay: {
-    backgroundColor: "rgba(64, 223, 219,0.3)",
+    backgroundColor: "rgba(64, 223, 219,0.2)",
   },
   content: {
     top: "50%",
@@ -17,16 +17,17 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     color: "black",
-    opacity: "0.92",
+    opacity: "1",
   },
 };
 Modal.setAppElement("#root");
 
 
-export default function ListingWindow(listingType) {
+export default function ListingWindow({listingType, setShowListing}) {
   const [gameType, setGameType] = useState("Video Game")
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [whichModal, setWhichModal] = React.useState("ListingModal");
 
   const dummyData = [
     {name:"Call of Duty", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:12, location:"London"},
@@ -41,6 +42,9 @@ export default function ListingWindow(listingType) {
   console.log("The gametype is: ",gameType)
 
 
+  const handleBack = () => {
+    setShowListing(false)
+  }
 
   function openModal() {
     setIsOpen(true);
@@ -51,7 +55,7 @@ export default function ListingWindow(listingType) {
   }
 
 
-  const showListing = () =>
+  const renderListing = () =>
 
     dummyData.map((val, key) => (
         <tr key={key}>
@@ -69,12 +73,19 @@ export default function ListingWindow(listingType) {
       )
     )
 
+    function goToOther() {
+      setWhichModal("ListingModal");
+    }
 
   return (
     <section className="rpgui-content">
 
       <div className="rpgui-container framed-golden-2 shop-window">
-        <div className="d-flex flex-column">
+      <a href="#" onClick={handleBack} >
+                <div class="rpgui-container position-absolute">Back</div>
+              </a>
+
+        <div className="d-flex flex-column pt-5">
           <select className="rpgui-dropdown" onChange={(e)=>{setGameType(e.target.value)}}>
             <option className="rpgui-dropdown-imp">Video Game</option>
             <option className="rpgui-dropdown-imp">Board Game</option>
@@ -86,9 +97,8 @@ export default function ListingWindow(listingType) {
               <th className="p-3">Price</th>
               <th className="p-3">Location</th>
             </tr>
-            {showListing()}
+            {renderListing()}
         </table>
-          {/* <Listings listingType={listingType}/> */}
         </div>
       </div>
       <Modal
@@ -100,9 +110,10 @@ export default function ListingWindow(listingType) {
             style={customStyles}
             contentLabel="Authentication modal"
           >
-             <div className="rpgui-container framed d-flex flex-column text-center">
-        <button className="position-absolute" onClick={closeModal}>X</button>
-        <h1>Header</h1>
+                    <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
+
+        {whichModal == "ContactModal" && <><a className="position-absolute" onClick={goToOther}>Back</a><ContactModal setWhichModal={setWhichModal} /></>}
+        {whichModal == "ListingModal" && <><button className="position-absolute" onClick={closeModal}>X</button><ListingModal setWhichModal={setWhichModal} /></>}
         </div>
           </Modal>
     </section>
