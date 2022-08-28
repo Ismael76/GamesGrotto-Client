@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
 
+//Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 50) {
   collisionsMap.push(collisions.slice(i, 50 + i));
@@ -106,12 +107,24 @@ document.addEventListener("keyup", function (playerWalk) {
 
 const Dashboard = ({ draw, height, width }) => {
   const canvas = React.useRef();
+
   React.useEffect(() => {
     const ctx = canvas.current.getContext("2d");
+
+    //Getting Player Image To Render On Map
     const playerImage = new Image();
     playerImage.src = require("../../images/playerUp.png");
 
-    //Boundaries Players Cant Move Over
+    const playerImageDown = new Image();
+    playerImageDown.src = require("../../images/playerDown.png");
+
+    const playerImageRight = new Image();
+    playerImageRight.src = require("../../images/playerRight.png");
+
+    const playerImageLeft = new Image();
+    playerImageLeft.src = require("../../images/playerLeft.png");
+
+    //Boundaries Class Created To Deal With Boundaries Where Players Cant Move Over
     class Boundary {
       static width = 64;
       static height = 64;
@@ -123,7 +136,7 @@ const Dashboard = ({ draw, height, width }) => {
       }
 
       draw() {
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "rgba(255, 0, 0, 0.2  )";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
       }
     }
@@ -149,16 +162,62 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
+    //Sprite Class Creating Sprites Such As Players, Map etc.
     class Sprite {
-      constructor({ position, velocity, image }) {
+      constructor({ position, velocity, image, frames = { max: 1 }, sprites }) {
         this.position = position;
         this.image = image;
+        this.frames = { ...frames, val: 0, elapsed: 0 };
+
+        this.image.onload = () => {
+          this.width = this.image.width / this.frames.max;
+          this.height = this.image.height;
+        };
+        this.moving = false;
+        this.sprites = sprites;
       }
 
       draw() {
-        ctx.drawImage(this.image, this.position.x, this.position.y);
+        ctx.drawImage(
+          this.image,
+          this.frames.val * this.width,
+          0,
+          this.image.width / this.frames.max, //Crop X
+          this.image.height, //Crop Y
+          this.position.x,
+          this.position.y,
+          this.image.width / this.frames.max,
+          this.image.height
+        );
+
+        if (this.moving) {
+          if (this.frames.max > 1) this.frames.elapsed++;
+
+          if (this.frames.elapsed % 10 === 0) {
+            if (this.frames.val < this.frames.max - 1) this.frames.val++;
+            else this.frames.val = 0;
+          }
+        }
       }
     }
+
+    // Player Configuration
+    const player = new Sprite({
+      position: {
+        x: 700, //Player Pos On X Axis
+        y: 700, // Player Pos On Y Axis
+      },
+      image: playerImage, //Loading Player Image
+      frames: {
+        max: 4,
+      },
+      sprites: {
+        up: playerImage,
+        down: playerImageDown,
+        left: playerImageLeft,
+        right: playerImageRight,
+      },
+    });
 
     // Game Scene Configuration
     const gameScene = new Image();
@@ -168,46 +227,154 @@ const Dashboard = ({ draw, height, width }) => {
         x: offset.x,
         y: offset.y,
       },
-      image: gameScene,
+      image: gameScene, //Loading Map Image
     });
+
+    const checkCollision = ({ player, boundary }) => {
+      return (
+        player.position.x + player.width >= boundary.position.x &&
+        player.position.x <= boundary.position.x + boundary.width &&
+        player.position.y <= boundary.position.y + boundary.height &&
+        player.position.y + player.height >= boundary.position.y
+      );
+    };
+
+    const moveables = [gameSceneLayer, ...boundaries];
 
     function animate() {
       window.requestAnimationFrame(animate);
-      gameSceneLayer.draw(); // Draw Game Scene Layer
+      gameSceneLayer.draw(); //Draw Game Map Onto Canvas
+
+      //All Boundaries PLayers Cannot Walk Over
       boundaries.forEach((boundary) => {
         boundary.draw();
       });
-      ctx.drawImage(
-        playerImage,
-        0,
-        0,
-        playerImage.width / 4, //Crop X
-        playerImage.height, //Crop Y
-        700, //Position Of Player On X Axis
-        700, //Position Of Player On Y Axis
-        playerImage.width / 4,
-        playerImage.height
-      );
+
+      player.draw(); //Draw Player Onto Canvas
+
+      let moving = true;
+      player.moving = false;
+      // Player Movement When Keys Are Pressed
       if (
         keys.ArrowDown.pressed ||
         (keys.s.pressed && lastKeyDown === "ArrowDown")
       ) {
-        gameSceneLayer.position.y = gameSceneLayer.position.y - 3; // Move Down
+        player.moving = true;
+        player.image = player.sprites.down;
+        for (let i = 0; i < boundaries.length; i++) {
+          const boundary = boundaries[i];
+          //Checks For Collision With Player Sprite
+          if (
+            checkCollision({
+              player: player,
+              boundary: {
+                ...boundary,
+                position: {
+                  x: boundary.position.x,
+                  y: boundary.position.y - 3,
+                },
+              },
+            })
+          ) {
+            moving = false;
+            break;
+          }
+        }
+        if (moving) {
+          moveables.forEach((movable) => {
+            movable.position.y -= 3;
+          }); // Move Down
+        }
       } else if (
         keys.ArrowUp.pressed ||
         (keys.w.pressed && lastKeyDown === "ArrowUp")
       ) {
-        gameSceneLayer.position.y = gameSceneLayer.position.y + 3; // Move Up
+        player.moving = true;
+        player.image = player.sprites.up;
+        for (let i = 0; i < boundaries.length; i++) {
+          const boundary = boundaries[i];
+          //Checks For Collision With Player Sprite
+          if (
+            checkCollision({
+              player: player,
+              boundary: {
+                ...boundary,
+                position: {
+                  x: boundary.position.x,
+                  y: boundary.position.y + 3,
+                },
+              },
+            })
+          ) {
+            moving = false;
+            break;
+          }
+        }
+        if (moving) {
+          moveables.forEach((movable) => {
+            movable.position.y += 3;
+          }); // Move Up
+        }
       } else if (
         keys.ArrowRight.pressed ||
         (keys.d.pressed && lastKeyDown === "ArrowRight")
       ) {
-        gameSceneLayer.position.x = gameSceneLayer.position.x - 3; // Move Left
+        player.moving = true;
+        player.image = player.sprites.right;
+        for (let i = 0; i < boundaries.length; i++) {
+          const boundary = boundaries[i];
+          //Checks For Collision With Player Sprite
+          if (
+            checkCollision({
+              player: player,
+              boundary: {
+                ...boundary,
+                position: {
+                  x: boundary.position.x - 3,
+                  y: boundary.position.y,
+                },
+              },
+            })
+          ) {
+            moving = false;
+            break;
+          }
+        }
+        if (moving) {
+          moveables.forEach((movable) => {
+            movable.position.x -= 3;
+          }); // Move Left
+        }
       } else if (
         keys.ArrowLeft.pressed ||
         (keys.a.pressed && lastKeyDown === "ArrowLeft")
       ) {
-        gameSceneLayer.position.x = gameSceneLayer.position.x + 3; // Move Right
+        player.moving = true;
+        player.image = player.sprites.left;
+        for (let i = 0; i < boundaries.length; i++) {
+          const boundary = boundaries[i];
+          //Checks For Collision With Player Sprite
+          if (
+            checkCollision({
+              player: player,
+              boundary: {
+                ...boundary,
+                position: {
+                  x: boundary.position.x + 3,
+                  y: boundary.position.y,
+                },
+              },
+            })
+          ) {
+            moving = false;
+            break;
+          }
+        }
+        if (moving) {
+          moveables.forEach((movable) => {
+            movable.position.x += 3;
+          }); // Move Right
+        }
       }
     }
 
