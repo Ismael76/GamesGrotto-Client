@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
-import { navigateZonesData } from "./navigateZones";
+import { shopNavigateData, forumNavigateData } from "./navigateZones";
 import { useNavigate } from "react-router-dom";
 
 //Array That Stores All Tiles That Is A Collision Tile
@@ -10,10 +10,16 @@ for (let i = 0; i < collisions.length; i += 50) {
   collisionsMap.push(collisions.slice(i, 50 + i));
 }
 
-//Array That Stores All Tiles That Trigger A Navigation
-const navigateZonesMap = [];
-for (let i = 0; i < navigateZonesData.length; i += 50) {
-  navigateZonesMap.push(navigateZonesData.slice(i, 50 + i));
+//Array That Stores All Tiles That Trigger A Navigation To Shop
+const shopNavigate = [];
+for (let i = 0; i < shopNavigateData.length; i += 50) {
+  shopNavigate.push(shopNavigateData.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger A Navigation To Forums
+const forumNavigate = [];
+for (let i = 0; i < forumNavigateData.length; i += 50) {
+  forumNavigate.push(forumNavigateData.slice(i, 50 + i));
 }
 
 const keys = {
@@ -173,13 +179,13 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
-    //All Navigate Tiles
-    const navigateZones = [];
+    //All Navigate Tiles For Shop
+    const shopNavigateTiles = [];
 
-    navigateZonesMap.forEach((row, i) => {
+    shopNavigate.forEach((row, i) => {
       row.forEach((symbol, j) => {
         if (symbol === 4071) {
-          navigateZones.push(
+          shopNavigateTiles.push(
             new Boundary({
               position: {
                 x: j * Boundary.width + offset.x,
@@ -191,7 +197,23 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
-    console.log(navigateZones);
+    //All Navigate Tiles For Forum
+    const forumNavigateTiles = [];
+
+    forumNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          forumNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
 
     //Sprite Class Creating Sprites Such As Players, Map etc.
     class Sprite {
@@ -270,7 +292,12 @@ const Dashboard = ({ draw, height, width }) => {
       );
     };
 
-    const moveables = [gameSceneLayer, ...boundaries, ...navigateZones];
+    const moveables = [
+      gameSceneLayer,
+      ...boundaries,
+      ...shopNavigateTiles,
+      ...forumNavigateTiles,
+    ];
 
     function animate() {
       window.requestAnimationFrame(animate);
@@ -281,8 +308,13 @@ const Dashboard = ({ draw, height, width }) => {
         boundary.draw();
       });
 
-      //All Navigation Tiles Players Walk Over
-      navigateZones.forEach((navigateZone) => {
+      //All Navigation Tiles Players Walk Over To Enter Shop
+      shopNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      //All Navigation Tiles Players Walk Over To Enter Forums
+      forumNavigateTiles.forEach((navigateZone) => {
         navigateZone.draw();
       });
 
@@ -301,8 +333,8 @@ const Dashboard = ({ draw, height, width }) => {
         keys.ArrowLeft.pressed ||
         keys.ArrowRight.pressed
       ) {
-        for (let i = 0; i < navigateZones.length; i++) {
-          const navigateZone = navigateZones[i];
+        for (let i = 0; i < shopNavigateTiles.length; i++) {
+          const navigateZone = shopNavigateTiles[i];
           const overlappingArea =
             (Math.min(
               player.position.x + player.width,
@@ -322,6 +354,31 @@ const Dashboard = ({ draw, height, width }) => {
             overlappingArea > (player.width * player.height) / 2
           ) {
             navigate("/shop", { replace: true });
+            break;
+          }
+        }
+
+        for (let i = 0; i < forumNavigateTiles.length; i++) {
+          const navigateZone = forumNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            navigate("/forum", { replace: true });
             break;
           }
         }
