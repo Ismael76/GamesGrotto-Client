@@ -1,11 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
+import { navigateZonesData } from "./navigateZones";
+import { useNavigate } from "react-router-dom";
 
 //Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 50) {
   collisionsMap.push(collisions.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger A Navigation
+const navigateZonesMap = [];
+for (let i = 0; i < navigateZonesData.length; i += 50) {
+  navigateZonesMap.push(navigateZonesData.slice(i, 50 + i));
 }
 
 const keys = {
@@ -108,6 +116,8 @@ document.addEventListener("keyup", function (playerWalk) {
 const Dashboard = ({ draw, height, width }) => {
   const canvas = React.useRef();
 
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -136,7 +146,7 @@ const Dashboard = ({ draw, height, width }) => {
       }
 
       draw() {
-        ctx.fillStyle = "rgba(255, 0, 0, 0)";
+        ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
       }
     }
@@ -147,6 +157,7 @@ const Dashboard = ({ draw, height, width }) => {
     };
     const boundaries = [];
 
+    //All Collision Tiles
     collisionsMap.forEach((row, i) => {
       row.forEach((symbol, j) => {
         if (symbol === 4071) {
@@ -161,6 +172,26 @@ const Dashboard = ({ draw, height, width }) => {
         }
       });
     });
+
+    //All Navigate Tiles
+    const navigateZones = [];
+
+    navigateZonesMap.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          navigateZones.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    console.log(navigateZones);
 
     //Sprite Class Creating Sprites Such As Players, Map etc.
     class Sprite {
@@ -239,7 +270,7 @@ const Dashboard = ({ draw, height, width }) => {
       );
     };
 
-    const moveables = [gameSceneLayer, ...boundaries];
+    const moveables = [gameSceneLayer, ...boundaries, ...navigateZones];
 
     function animate() {
       window.requestAnimationFrame(animate);
@@ -250,15 +281,56 @@ const Dashboard = ({ draw, height, width }) => {
         boundary.draw();
       });
 
+      //All Navigation Tiles Players Walk Over
+      navigateZones.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
       player.draw(); //Draw Player Onto Canvas
 
       let moving = true;
       player.moving = false;
-      // Player Movement When Keys Are Pressed
+
+      if (
+        keys.w.pressed ||
+        keys.a.pressed ||
+        keys.s.pressed ||
+        keys.d.pressed ||
+        keys.ArrowDown.pressed ||
+        keys.ArrowUp.pressed ||
+        keys.ArrowLeft.pressed ||
+        keys.ArrowRight.pressed
+      ) {
+        for (let i = 0; i < navigateZones.length; i++) {
+          const navigateZone = navigateZones[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            navigate("/shop", { replace: true });
+            break;
+          }
+        }
+      }
       if (
         keys.ArrowDown.pressed ||
         (keys.s.pressed && lastKeyDown === "ArrowDown")
       ) {
+        // Player Movement When Keys Are Pressed
         player.moving = true;
         player.image = player.sprites.down;
         for (let i = 0; i < boundaries.length; i++) {
@@ -310,6 +382,7 @@ const Dashboard = ({ draw, height, width }) => {
             break;
           }
         }
+
         if (moving) {
           moveables.forEach((movable) => {
             movable.position.y += 3;
