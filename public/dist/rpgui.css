@@ -116,7 +116,6 @@ inside your html file.
   height: 60px;
   display: inline-block;
   /* padding */
-  padding-top: 5px;
   padding-left: 35px;
   padding-right: 35px;
   overflow: visible;
@@ -560,8 +559,12 @@ ul.rpgui-dropdown-imp {
   background-image: url("img/icons/clock.png");
 }
 
-.rpgui-icon.chest {
-  background-image: url("img/icons/chest.png");
+.rpgui-icon.chest-open {
+  background-image: url("img/icons/chest-open.png");
+}
+
+.rpgui-icon.chest-closed {
+  background-image: url("img/icons/chest-closed.png");
 }
 
 .rpgui-icon.award {
