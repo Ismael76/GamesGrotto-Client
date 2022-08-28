@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-var spriteMiddle = 2;
+import { collisions } from "./collisions";
+
+const collisionsMap = [];
+for (let i = 0; i < collisions.length; i += 50) {
+  collisionsMap.push(collisions.slice(i, 50 + i));
+}
 
 const keys = {
   ArrowUp: {
@@ -72,19 +77,15 @@ document.addEventListener("keyup", function (playerWalk) {
   switch (playerWalk.key) {
     case "ArrowUp":
       keys.ArrowUp.pressed = false;
-      console.log("Walk Up");
       break;
     case "ArrowDown":
       keys.ArrowDown.pressed = false;
-      console.log("Walk Down");
       break;
     case "ArrowLeft":
       keys.ArrowLeft.pressed = false;
-      console.log("Walk Left");
       break;
     case "ArrowRight":
       keys.ArrowRight.pressed = false;
-      console.log("Walk Right");
       break;
     case "w":
       keys.w.pressed = false;
@@ -109,6 +110,45 @@ const Dashboard = ({ draw, height, width }) => {
     const ctx = canvas.current.getContext("2d");
     const playerImage = new Image();
     playerImage.src = require("../../images/playerUp.png");
+
+    //Boundaries Players Cant Move Over
+    class Boundary {
+      static width = 64;
+      static height = 64;
+
+      constructor({ position }) {
+        this.position = position;
+        this.width = 64;
+        this.height = 64;
+      }
+
+      draw() {
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+      }
+    }
+
+    const offset = {
+      x: -280,
+      y: -1250,
+    };
+    const boundaries = [];
+
+    collisionsMap.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
     class Sprite {
       constructor({ position, velocity, image }) {
         this.position = position;
@@ -119,20 +159,24 @@ const Dashboard = ({ draw, height, width }) => {
         ctx.drawImage(this.image, this.position.x, this.position.y);
       }
     }
+
     // Game Scene Configuration
     const gameScene = new Image();
     gameScene.src = require("./map.png");
     const gameSceneLayer = new Sprite({
       position: {
-        x: -300,
-        y: -1400,
+        x: offset.x,
+        y: offset.y,
       },
       image: gameScene,
-    }); //  End Game Scene Configuration
+    });
 
     function animate() {
-      gameSceneLayer.draw(); // Draw Game Scene Layer
       window.requestAnimationFrame(animate);
+      gameSceneLayer.draw(); // Draw Game Scene Layer
+      boundaries.forEach((boundary) => {
+        boundary.draw();
+      });
       ctx.drawImage(
         playerImage,
         0,
@@ -172,6 +216,7 @@ const Dashboard = ({ draw, height, width }) => {
 
   return <canvas ref={canvas} height={height} width={width} />;
 };
+
 Dashboard.propTypes = {
   draw: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
