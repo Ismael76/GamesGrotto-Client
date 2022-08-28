@@ -58,15 +58,14 @@ export default function ListingWindow({listingType, setShowListing}) {
   const renderListing = () =>
 
     dummyData.map((val, key) => (
-        <tr key={key}>
+        <tr key={key}  className="border-golden">
 
           <td className="p-3">{val.name}</td>
           <td className="p-3">{val.description}</td>
           <td className="p-3">£{val.price}</td>
           <td className="p-3">{val.location}</td>
 
-          <button className="rpgui-button mt-5" onClick={openModal}>More</button>
-          <hr className="golden"/>
+          <button className="rpgui-button px-3 mx-3 my-auto py-auto" onClick={openModal}>More</button>
 
         </tr>
 
@@ -87,8 +86,8 @@ export default function ListingWindow({listingType, setShowListing}) {
 
         <div className="d-flex flex-column pt-5">
           <select className="rpgui-dropdown" onChange={(e)=>{setGameType(e.target.value)}}>
-            <option className="rpgui-dropdown-imp">Video Game</option>
-            <option className="rpgui-dropdown-imp">Board Game</option>
+            <option className="rpgui-dropdown-imp">Video Games</option>
+            <option className="rpgui-dropdown-imp">Board Games</option>
           </select>
           <table>
             <tr>
@@ -113,7 +112,7 @@ export default function ListingWindow({listingType, setShowListing}) {
                     <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
 
         {whichModal == "ContactModal" && <><a className="position-absolute" onClick={goToOther}>Back</a><ContactModal setWhichModal={setWhichModal} /></>}
-        {whichModal == "ListingModal" && <><button className="position-absolute" onClick={closeModal}>X</button><ListingModal setWhichModal={setWhichModal} /></>}
+        {whichModal == "ListingModal" && <><button className="position-absolute py-1" onClick={closeModal}>X</button><ListingModal setWhichModal={setWhichModal} /></>}
         </div>
           </Modal>
     </section>

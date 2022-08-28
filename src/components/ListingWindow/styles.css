@@ -14,3 +14,10 @@
   height: 92%;
 
 }
+
+
+.border-golden {
+
+  border: 4mm ridge rgba(255, 215, 0, .7);
+
+}
