@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
-import { shopNavigateData, forumNavigateData } from "./navigateZones";
+import {
+  shopNavigateData,
+  forumNavigateData,
+  signBoardPopupData,
+  forumSignboardPopupData,
+} from "./navigateZones";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+
+//Modal
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(64, 223, 219,0)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    color: "black",
+    opacity: "0.92",
+  },
+};
 
 //Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
@@ -20,6 +43,18 @@ for (let i = 0; i < shopNavigateData.length; i += 50) {
 const forumNavigate = [];
 for (let i = 0; i < forumNavigateData.length; i += 50) {
   forumNavigate.push(forumNavigateData.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger Signboard Modal Popup For Shop
+const signboardNavigate = [];
+for (let i = 0; i < signBoardPopupData.length; i += 50) {
+  signboardNavigate.push(signBoardPopupData.slice(i, 50 + i));
+}
+
+//Array That Stores All Tiles That Trigger Signboard Modal Popup For Forum
+const forumSignboardNavigate = [];
+for (let i = 0; i < forumSignboardPopupData.length; i += 50) {
+  forumSignboardNavigate.push(forumSignboardPopupData.slice(i, 50 + i));
 }
 
 const keys = {
@@ -120,6 +155,7 @@ document.addEventListener("keyup", function (playerWalk) {
 });
 
 const Dashboard = ({ draw, height, width }) => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const canvas = React.useRef();
 
   const navigate = useNavigate();
@@ -152,7 +188,7 @@ const Dashboard = ({ draw, height, width }) => {
       }
 
       draw() {
-        ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+        ctx.fillStyle = "rgba(255, 0, 0, 0)";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
       }
     }
@@ -215,6 +251,42 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
+    //All Navigate Tiles For Shop Signboard
+    const signboardNavigateTiles = [];
+
+    signboardNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          signboardNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    //All Navigate Tiles For Forum Signboard
+    const forumSignboardNavigateTiles = [];
+
+    forumSignboardNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4071) {
+          forumSignboardNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
     //Sprite Class Creating Sprites Such As Players, Map etc.
     class Sprite {
       constructor({ position, velocity, image, frames = { max: 1 }, sprites }) {
@@ -257,8 +329,8 @@ const Dashboard = ({ draw, height, width }) => {
     // Player Configuration
     const player = new Sprite({
       position: {
-        x: 700, //Player Pos On X Axis
-        y: 700, // Player Pos On Y Axis
+        x: 750, //Player Pos On X Axis
+        y: 440, // Player Pos On Y Axis
       },
       image: playerImage, //Loading Player Image
       frames: {
@@ -297,6 +369,8 @@ const Dashboard = ({ draw, height, width }) => {
       ...boundaries,
       ...shopNavigateTiles,
       ...forumNavigateTiles,
+      ...signboardNavigateTiles,
+      ...forumSignboardNavigateTiles,
     ];
 
     function animate() {
@@ -315,6 +389,16 @@ const Dashboard = ({ draw, height, width }) => {
 
       //All Navigation Tiles Players Walk Over To Enter Forums
       forumNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      //All Navigation Tiles Players Walk Over For Shop Sign Board Popup
+      signboardNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      //All Navigation Tiles Players Walk Over For Forum Sign Board Popup
+      forumSignboardNavigateTiles.forEach((navigateZone) => {
         navigateZone.draw();
       });
 
@@ -355,6 +439,60 @@ const Dashboard = ({ draw, height, width }) => {
           ) {
             navigate("/shop", { replace: true });
             break;
+          }
+        }
+
+        for (let i = 0; i < forumSignboardNavigateTiles.length; i++) {
+          const navigateZone = forumSignboardNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setIsOpen(true);
+            break;
+          } else {
+            setIsOpen(false);
+          }
+        }
+
+        for (let i = 0; i < signboardNavigateTiles.length; i++) {
+          const navigateZone = signboardNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setIsOpen(true);
+            break;
+          } else {
+            setIsOpen(false);
           }
         }
 
@@ -511,7 +649,27 @@ const Dashboard = ({ draw, height, width }) => {
     animate();
   }, [draw, height, width]);
 
-  return <canvas ref={canvas} height={height} width={width} />;
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  return (
+    <>
+      <canvas ref={canvas} height={height} width={width} />
+      <Modal
+        className="rpgui-content splash-modal-position"
+        closeTimeoutMS={500}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Authentication modal"
+      >
+        <div className="rpgui-container framed d-flex flex-column text-center">
+          <div>Enter shop to sell, buy and trade games!</div>
+        </div>
+      </Modal>
+    </>
+  );
 };
 
 Dashboard.propTypes = {
