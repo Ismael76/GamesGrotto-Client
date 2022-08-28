@@ -15,7 +15,7 @@ export default function ShopWindow() {
         <div class="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
 
             <div>
-            <div class="rpgui-icon sword"></div>
+            <div class="rpgui-icon chest-open"></div>
 
             </div>
             <div class="product-content">
