@@ -8,8 +8,8 @@
   overflow: auto;
 }
 
-.listing-modal {
-  max-width: 60%;
+.comments-modal {
+  width: 46%;
   top: 4%;
   height: 92%;
   overflow: auto;
