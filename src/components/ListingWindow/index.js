@@ -28,57 +28,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listingData, setListingData] = useState([]);
-
-  const dummyData = [
-    {
-      name: "Call of Duty",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 12,
-      location: "London",
-    },
-    {
-      name: "Fifa 12",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Battlefield 3",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 14,
-      location: "London",
-    },
-    {
-      name: "Battlefield 4",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Chess",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 16,
-      location: "London",
-    },
-    {
-      name: "Ludo",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 21,
-      location: "London",
-    },
-  ];
+  const [post, setPost] = useState();
 
   const handleBack = () => {
     setShowListing(false);
   };
 
-  function openModal() {
+  function openModal(post) {
+    setPost(post)
     setIsOpen(true);
   }
 
@@ -108,7 +65,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
 
         <button
           className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={openModal}
+          onClick={() =>openModal(val)}
         >
           More
         </button>
@@ -171,7 +128,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a href="#" onClick={closeModal}>
                 <div className="rpgui-container position-absolute">X</div>
               </a>
-              <ListingModal setWhichModal={setWhichModal} />
+              <ListingModal listing={post} setWhichModal={setWhichModal} />
             </>
           )}
         </div>
