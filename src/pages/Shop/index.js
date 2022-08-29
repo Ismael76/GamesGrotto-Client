@@ -169,10 +169,10 @@ export default function Shop() {
               <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>
               <p>In this shop you can find games of all types to buy or trade.
               </p>
-              <p>Alternatively you can post its for sale or trade on the market place.
+              <p>Alternatively you can post games for sale or to trade on the market place.
               </p>
               <h3>How to:</h3>
-              <p>If a game interests you, simply message the seller your offer and wait for a reply.
+              <p>If a game interests you, simply message the seller your offer along with your contact details and wait for a reply.
               </p>
               <div className="rpgui-container framed-grey">
                 <h2>Rules:</h2>

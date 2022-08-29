@@ -18,6 +18,7 @@
   align-items: center;
   left: calc(30vw + 2rem);
   top: 8vw;
+  max-width: 50%;
   z-index: 1;
 }
 
