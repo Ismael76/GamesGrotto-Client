@@ -112,7 +112,7 @@ export default function ForumWindow() {
           <div class="rpgui-container flex-item">Back</div>
         </a>
         <form onSubmit={handleSubmit} className="d-flex mt-4">
-          <input className="m-1" value="Search game here"></input>
+          <input className="m-1" placeholder="Search game here"></input>
           <button className="m-1">Submit</button>
         </form>
       </div>
