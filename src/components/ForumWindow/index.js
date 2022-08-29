@@ -57,7 +57,7 @@ export default function ForumWindow() {
     setIsOpen(true)
   }
 
-  const openCreatePostModal = () =>{
+  const openCreatePostModal = () => {
     setWhichModal("CreatePost")
     setIsOpen(true)
   }
@@ -66,15 +66,54 @@ export default function ForumWindow() {
     setIsOpen(false)
   }
 
+  const updateLikes = async (item) => {
+    item.likes = item.likes + 1
+    const data = { id: item.id, likes: item.likes, dislikes: item.dislikes }
+    const options = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    try {
+      const response = await fetch("http://localhost:5000/posts", options);
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const updateDislikes = async (item) => {
+    item.dislikes = item.dislikes + 1
+    const data = { id: item.id, likes: item.likes, dislikes: item.dislikes }
+    const options = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    try {
+      const response = await fetch("http://localhost:5000/posts", options);
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const renderListing = () =>
     postData.map((item) => (
       <>
         <div key={item.id} onClick={() => openCommentModal(item)}>
           <h3 className="p-3">{item.title}</h3>
+
           <p className="p-3">{item.text}</p>
           <p className="p-3 text-center">
             Posted by {item.username} {/*on {item.date} */}
           </p>
+        </div>
+        <div className="d-flex justify-content-around">
+          <button className="rpgui-button" onClick={() => updateLikes(item)}>{item.likes}👍</button>
+          <button className="rpgui-button" onClick={() => updateDislikes(item)}>{item.dislikes}👎</button>
         </div>
         <hr className="golden" />
       </>
@@ -114,7 +153,7 @@ export default function ForumWindow() {
         <button className="rpgui-container framed-golden post-create" onClick={openCreatePostModal}>Create Post</button>
 
       </>}
-      
+
       <Modal
         className="rpgui-content splash-modal-position p-3"
         ref={modal}
@@ -123,10 +162,10 @@ export default function ForumWindow() {
         style={customStyles}
         contentLabel="Authentication modal"
       >
-        {whichModal=="DisplayComments"&&(<>
-        <CommentModal post={post} closeModal={closeModal} /></>)}
-        {whichModal=="CreatePost"&&(<>
-        <CreatePostModal closeModal={closeModal} /></>)}
+        {whichModal == "DisplayComments" && (<>
+          <CommentModal post={post} closeModal={closeModal} /></>)}
+        {whichModal == "CreatePost" && (<>
+          <CreatePostModal closeModal={closeModal} /></>)}
 
       </Modal>
 
