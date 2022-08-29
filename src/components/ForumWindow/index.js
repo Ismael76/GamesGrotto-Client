@@ -113,9 +113,7 @@ export default function ForumWindow() {
         style={customStyles}
         contentLabel="Authentication modal"
       ></Modal>
-      <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
         <CommentModal post={post} closeModal={closeModal} />
-      </div>
       </>}
     </section>
   );
