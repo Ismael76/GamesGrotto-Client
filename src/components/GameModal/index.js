@@ -40,7 +40,7 @@ export default function GameModal({
           style={customStyles}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed d-flex flex-column text-center p-4">
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
             <button className="position-absolute" onClick={closeModal}>
               X
             </button>
@@ -59,7 +59,7 @@ export default function GameModal({
           style={customStyles}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed d-flex flex-column text-center p-4">
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
             <button className="position-absolute" onClick={closeModal}>
               X
             </button>
