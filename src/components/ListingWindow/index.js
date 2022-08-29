@@ -28,14 +28,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listingData, setListingData] = useState([]);
-  const [post, setPost] = useState();
+  const [listing, setListing] = useState();
 
   const handleBack = () => {
     setShowListing(false);
   };
 
-  function openModal(post) {
-    setPost(post);
+  function openModal(listing) {
+    setListing(listing);
     setIsOpen(true);
   }
 
@@ -122,7 +122,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a className="position-absolute" onClick={goToOther}>
                 Back
               </a>
-              <ContactModal setWhichModal={setWhichModal} />
+              <ContactModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
           {whichModal == "ListingModal" && (
@@ -130,7 +130,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a href="#" onClick={closeModal}>
                 <div className="rpgui-container position-absolute">X</div>
               </a>
-              <ListingModal listing={post} setWhichModal={setWhichModal} />
+              <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
         </div>
