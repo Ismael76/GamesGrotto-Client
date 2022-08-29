@@ -1,9 +1,10 @@
 .sell-window {
+  align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-    position: absolute;
-    align-items: center;
-    left: calc(40vw + 2rem);
-    top: 10vw;
-    width: 100%;
-
+.listing-dropdown {
+  width: 100% !important;
 }

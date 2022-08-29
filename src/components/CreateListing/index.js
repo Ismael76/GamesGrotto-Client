@@ -5,12 +5,12 @@ export default function CreateListing({ closeModal }) {
   return (
     <section className="rpgui-content framed-golden sell-window">
       <div className="rpgui-container framed d-flex flex-column text-center">
-        <button className="position-absolute" onClick={closeModal}>
-          X
-        </button>
+        <a href="#" onClick={closeModal}>
+          <div class="rpgui-container position-absolute">X</div>
+        </a>
         <section className="d-flex flex-column text-center p-5">
-          <h1>Create a new listing</h1>
-          <p>Sell or trade your old games.</p>
+          <h1>CREATE LISTING</h1>
+          <p>Sell/Trade Your Old Games!</p>
 
           {/* <form onSubmit={handleSubmit}> */}
           <form>
@@ -23,8 +23,10 @@ export default function CreateListing({ closeModal }) {
             />
             <br />
 
-             <select className="rpgui-dropdown">
-              <option value="Sell" selected>Sell</option>
+            <select className="rpgui-dropdown listing-dropdown mt-1 mb-1">
+              <option value="Sell" selected>
+                Sell
+              </option>
               <option value="Trade">Trade</option>
             </select>
 
@@ -47,9 +49,9 @@ export default function CreateListing({ closeModal }) {
             <input
               className="mb-1"
               type="text"
-              label="Img url"
+              label="Img URL"
               // onChange={(e) => setEmail(e.target.value)}
-              placeholder="Img url"
+              placeholder="Img URL"
             />
 
             <br />
@@ -62,7 +64,7 @@ export default function CreateListing({ closeModal }) {
             />
             <br />
             <button type="submit" className="rpgui-button mb-1">
-              Submit
+              Create
             </button>
 
             <br />

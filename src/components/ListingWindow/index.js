@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useNavigate } from "react";
-import "./styles.css"
+import "./styles.css";
 import { GameContext } from "../../ContextProvider";
 import { ListingModal, ContactModal } from "../../components";
 
@@ -22,29 +22,63 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-
-export default function ListingWindow({listingType, setShowListing}) {
-  const [gameType, setGameType] = useState("Video Game")
+export default function ListingWindow({ listingType, setShowListing }) {
+  const [gameType, setGameType] = useState("Video Game");
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
 
   const dummyData = [
-    {name:"Call of Duty", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:12, location:"London"},
-    {name:"Fifa 12", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:13, location:"London"},
-    {name:"Battlefield 3", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:14, location:"London"},
-    {name:"Battlefield 4", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:13, location:"London"},
-    {name:"Chess", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:16, location:"London"},
-    {name:"Ludo", description:"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.", price:21, location:"London"}
-  ]
+    {
+      name: "Call of Duty",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 12,
+      location: "London",
+    },
+    {
+      name: "Fifa 12",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 13,
+      location: "London",
+    },
+    {
+      name: "Battlefield 3",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 14,
+      location: "London",
+    },
+    {
+      name: "Battlefield 4",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 13,
+      location: "London",
+    },
+    {
+      name: "Chess",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 16,
+      location: "London",
+    },
+    {
+      name: "Ludo",
+      description:
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+      price: 21,
+      location: "London",
+    },
+  ];
 
   // Type will be used when accessing database to differentiate between trades and buys
-  console.log("The gametype is: ",gameType)
-
+  console.log("The gametype is: ", gameType);
 
   const handleBack = () => {
-    setShowListing(false)
-  }
+    setShowListing(false);
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -54,38 +88,41 @@ export default function ListingWindow({listingType, setShowListing}) {
     setIsOpen(false);
   }
 
-
   const renderListing = () =>
-
     dummyData.map((val, key) => (
-        <tr key={key}  className="border-golden">
+      <tr key={key} className="border-golden">
+        <td className="p-3">{val.name}</td>
+        <td className="p-3">{val.description}</td>
+        <td className="p-3">£{val.price}</td>
+        <td className="p-3">{val.location}</td>
 
-          <td className="p-3">{val.name}</td>
-          <td className="p-3">{val.description}</td>
-          <td className="p-3">£{val.price}</td>
-          <td className="p-3">{val.location}</td>
+        <button
+          className="rpgui-button px-3 mx-3 my-auto py-auto"
+          onClick={openModal}
+        >
+          More
+        </button>
+      </tr>
+    ));
 
-          <button className="rpgui-button px-3 mx-3 my-auto py-auto" onClick={openModal}>More</button>
-
-        </tr>
-
-      )
-    )
-
-    function goToOther() {
-      setWhichModal("ListingModal");
-    }
+  function goToOther() {
+    setWhichModal("ListingModal");
+  }
 
   return (
     <section className="rpgui-content">
-
       <div className="rpgui-container framed-golden-2 shop-window">
-      <a href="#" onClick={handleBack} >
-                <div class="rpgui-container position-absolute">Back</div>
-              </a>
+        <a href="#" onClick={handleBack}>
+          <div class="rpgui-container position-absolute">Back</div>
+        </a>
 
         <div className="d-flex flex-column pt-5">
-          <select className="rpgui-dropdown" onChange={(e)=>{setGameType(e.target.value)}}>
+          <select
+            className="rpgui-dropdown"
+            onChange={(e) => {
+              setGameType(e.target.value);
+            }}
+          >
             <option className="rpgui-dropdown-imp">Video Games</option>
             <option className="rpgui-dropdown-imp">Board Games</option>
           </select>
@@ -97,24 +134,37 @@ export default function ListingWindow({listingType, setShowListing}) {
               <th className="p-3">Location</th>
             </tr>
             {renderListing()}
-        </table>
+          </table>
         </div>
       </div>
       <Modal
-            className="rpgui-content splash-modal-position"
-            ref={modal}
-            closeTimeoutMS={500}
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Authentication modal"
-          >
-                    <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
-
-        {whichModal == "ContactModal" && <><a className="position-absolute" onClick={goToOther}>Back</a><ContactModal setWhichModal={setWhichModal} /></>}
-        {whichModal == "ListingModal" && <><button className="position-absolute py-1" onClick={closeModal}>X</button><ListingModal setWhichModal={setWhichModal} /></>}
+        className="rpgui-content splash-modal-position"
+        ref={modal}
+        closeTimeoutMS={500}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Authentication modal"
+      >
+        <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
+          {whichModal == "ContactModal" && (
+            <>
+              <a className="position-absolute" onClick={goToOther}>
+                Back
+              </a>
+              <ContactModal setWhichModal={setWhichModal} />
+            </>
+          )}
+          {whichModal == "ListingModal" && (
+            <>
+              <a href="#" onClick={closeModal}>
+                <div class="rpgui-container position-absolute">X</div>
+              </a>
+              <ListingModal setWhichModal={setWhichModal} />
+            </>
+          )}
         </div>
-          </Modal>
+      </Modal>
     </section>
   );
 }
