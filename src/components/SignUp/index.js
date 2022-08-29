@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import Modal from "react-modal";
-import { Link, useNavigate } from "react-router-dom";
-import { GameContext } from "../../ContextProvider";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import * as api from "../../api";
-import "./styles.css"
+import "./styles.css";
 
 Modal.setAppElement("#root");
 
@@ -17,8 +16,6 @@ export default function SignUp({ setWhichModal }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-
-  const [section, modal, homeSection] = useContext(GameContext);
 
   const navigate = useNavigate();
 
@@ -66,11 +63,7 @@ export default function SignUp({ setWhichModal }) {
       const { token } = await loginResponse.json();
       localStorage.setItem("token", token);
       localStorage.setItem("username", loginData.username);
-      fade(section.current);
-      fade(modal.current.node);
-      setTimeout(() => {
-        navigate("/home", { replace: true });
-      }, 800);
+      navigate("/home", { replace: true });
     } catch (err) {
       console.log(err);
     }
@@ -87,66 +80,64 @@ export default function SignUp({ setWhichModal }) {
     setLoading(false);
   };
 
-  function fade(element) {
-    var op = 1; // initial opacity
-    var timer = setInterval(function () {
-      if (op <= 0.1) {
-        clearInterval(timer);
-        element.style.display = "none";
-      }
-      element.style.opacity = op;
-      element.style.filter = "alpha(opacity=" + op * 100 + ")";
-      op -= op * 0.1;
-    }, 50);
-  }
-
   return (
-    <section className="d-flex flex-column text-center">
-      <h1>Welcome!</h1>
-      <p>Create a new account.</p>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <section className="d-flex flex-column text-center">
+        <h1>Welcome!</h1>
+        <p>Create a new account.</p>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          className='mb-1'
-          type="text"
-          label="Username"
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-        <br/>
-        <input
-          className='mb-1'
-          type="text"
-          label="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <br/>
-        <input
-          className='mb-1'
-          type="password"
-          label="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <br/>
-        <input
-          className='mb-1'
-          type="password"
-          label="Confirm Password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-        />
-        <br/>
-        <button type="submit" className="rpgui-button mb-1">Submit</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="mb-1"
+            type="text"
+            label="Username"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+          />
+          <br />
+          <input
+            className="mb-1"
+            type="text"
+            label="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <br />
+          <input
+            className="mb-1"
+            type="password"
+            label="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <br />
+          <input
+            className="mb-1"
+            type="password"
+            label="Confirm Password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+          />
+          <br />
+          <button type="submit" className="rpgui-button mb-1">
+            Submit
+          </button>
 
-        <br />
+          <br />
+        </form>
 
-      </form>
-
-      <p className="mt-1">
-        Already registered? <button className="bg-success" onClick={goToOther}>Login</button>
-      </p>
-    </section>
+        <p className="mt-1">
+          Already registered?{" "}
+          <button className="bg-success" onClick={goToOther}>
+            Login
+          </button>
+        </p>
+      </section>
+    </motion.div>
   );
 }
