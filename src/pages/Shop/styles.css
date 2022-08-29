@@ -12,13 +12,11 @@
   top: 10vw;
 }
 
-
 .splash-modal-position {
-  display:flex;
+  display: flex;
   justify-content: center !important;
   align-items: center !important;
 }
-
 
 .ReactModal__Overlay {
   opacity: 0;
