@@ -315,13 +315,13 @@ const Dashboard = ({ draw, height, width }) => {
 
     let playerPosX = 750;
     let playerPosY = 440;
+    let directionPlayerFace = playerImage;
 
     //If User Leaves Shop Set Position
     if (leaveShop) {
       playerPosX = 620;
       playerPosY = 300;
-
-      playerImage = playerImageDown;
+      directionPlayerFace = playerImageDown;
     }
 
     // Player Configuration
@@ -330,7 +330,7 @@ const Dashboard = ({ draw, height, width }) => {
         x: playerPosX, //Player Pos On X Axis
         y: playerPosY, // Player Pos On Y Axis
       },
-      image: playerImage, //Loading Player Image
+      image: directionPlayerFace, //Loading Player Image
       frames: {
         max: 4,
       },
@@ -558,6 +558,8 @@ const Dashboard = ({ draw, height, width }) => {
         keys.ArrowUp.pressed ||
         (keys.w.pressed && lastKeyDown === "ArrowUp")
       ) {
+        playerImageDown = playerImage;
+        player.image = playerImage;
         player.moving = true;
         player.image = player.sprites.up;
         for (let i = 0; i < boundaries.length; i++) {
