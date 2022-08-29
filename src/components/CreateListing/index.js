@@ -3,7 +3,7 @@ import "./styles.css";
 
 export default function CreateListing({ setIsOpen, closeModal }) {
   const [listingData, setListingData] = useState({
-    type: "",
+    type: "Sell",
     price: "",
     title: "",
     description: "",

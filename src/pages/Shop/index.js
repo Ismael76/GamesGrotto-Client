@@ -55,6 +55,9 @@ export default function Shop() {
   }
 
   const handleClick = (e) => {
+    if (e.target.innerText == "Buy") {
+      e.target.innerText = "Sell";
+    }
     setShowListing(true);
     setListingType(e.target.innerText);
   };

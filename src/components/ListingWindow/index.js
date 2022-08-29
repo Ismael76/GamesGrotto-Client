@@ -35,7 +35,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
   };
 
   function openModal(post) {
-    setPost(post)
+    setPost(post);
     setIsOpen(true);
   }
 
@@ -56,21 +56,23 @@ export default function ListingWindow({ listingType, setShowListing }) {
   }, []);
 
   const renderListing = () =>
-    listingData.map((val, key) => (
-      <tr key={key} className="border-golden">
-        <td className="p-3">{val.title}</td>
-        <td className="p-3">{val.description}</td>
-        <td className="p-3">£{val.price}</td>
-        <td className="p-3">{val.location}</td>
+    listingData
+      .filter((listing) => listing.type == listingType)
+      .map((val, key) => (
+        <tr key={key} className="border-golden">
+          <td className="p-3">{val.title}</td>
+          <td className="p-3">{val.description}</td>
+          <td className="p-3">£{val.price}</td>
+          <td className="p-3">{val.location}</td>
 
-        <button
-          className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={() =>openModal(val)}
-        >
-          More
-        </button>
-      </tr>
-    ));
+          <button
+            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
 
   function goToOther() {
     setWhichModal("ListingModal");
