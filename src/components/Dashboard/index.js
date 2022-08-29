@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { collisions } from "./collisions";
 import {
@@ -9,6 +9,7 @@ import {
 } from "./navigateZones";
 import { useNavigate } from "react-router-dom";
 import GameModal from "../GameModal";
+import { GameContext } from "../../ContextProvider";
 
 //Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
@@ -138,6 +139,8 @@ document.addEventListener("keyup", function (playerWalk) {
 });
 
 const Dashboard = ({ draw, height, width }) => {
+  const [section, modal, homeSection, leaveShop, setLeaveShop] =
+    useContext(GameContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("");
   const canvas = React.useRef();
@@ -148,16 +151,16 @@ const Dashboard = ({ draw, height, width }) => {
     const ctx = canvas.current.getContext("2d");
 
     //Getting Player Image To Render On Map
-    const playerImage = new Image();
+    let playerImage = new Image();
     playerImage.src = require("../../images/playerUp.png");
 
-    const playerImageDown = new Image();
+    let playerImageDown = new Image();
     playerImageDown.src = require("../../images/playerDown.png");
 
-    const playerImageRight = new Image();
+    let playerImageRight = new Image();
     playerImageRight.src = require("../../images/playerRight.png");
 
-    const playerImageLeft = new Image();
+    let playerImageLeft = new Image();
     playerImageLeft.src = require("../../images/playerLeft.png");
 
     //Boundaries Class Created To Deal With Boundaries Where Players Cant Move Over
@@ -310,11 +313,22 @@ const Dashboard = ({ draw, height, width }) => {
       }
     }
 
+    let playerPosX = 750;
+    let playerPosY = 440;
+
+    //If User Leaves Shop Set Position
+    if (leaveShop) {
+      playerPosX = 620;
+      playerPosY = 300;
+
+      playerImage = playerImageDown;
+    }
+
     // Player Configuration
     const player = new Sprite({
       position: {
-        x: 750, //Player Pos On X Axis
-        y: 440, // Player Pos On Y Axis
+        x: playerPosX, //Player Pos On X Axis
+        y: playerPosY, // Player Pos On Y Axis
       },
       image: playerImage, //Loading Player Image
       frames: {
@@ -358,7 +372,7 @@ const Dashboard = ({ draw, height, width }) => {
     ];
 
     function animate() {
-      window.requestAnimationFrame(animate);
+      const animationID = window.requestAnimationFrame(animate);
       gameSceneLayer.draw(); //Draw Game Map Onto Canvas
 
       //All Boundaries PLayers Cannot Walk Over
@@ -422,6 +436,7 @@ const Dashboard = ({ draw, height, width }) => {
             overlappingArea > (player.width * player.height) / 2
           ) {
             navigate("/shop", { replace: true });
+            window.cancelAnimationFrame(animationID);
             break;
           }
         }
@@ -503,6 +518,7 @@ const Dashboard = ({ draw, height, width }) => {
             overlappingArea > (player.width * player.height) / 2
           ) {
             navigate("/forum", { replace: true });
+            window.cancelAnimationFrame(animationID);
             break;
           }
         }

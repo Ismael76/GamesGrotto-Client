@@ -1,10 +1,10 @@
-import React, { useEffect, useContext, useState, useNavigate } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
 import { ListingWindow, CreateListing } from "../../components";
 
-
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   overlay: {
@@ -23,17 +23,16 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-
-
 export default function Shop() {
-  const [section, modal, homeSection] = useContext(GameContext);
+  const [section, modal, homeSection, leaveShop, setLeaveShop] =
+    useContext(GameContext);
   const [showListing, setShowListing] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [listingType, setListingType] = useState("")
+  const [listingType, setListingType] = useState("");
+
+  const navigate = useNavigate();
 
   // const navigate = useNavigate();
-
-
 
   function unfade(element) {
     var op = 0.1; // initial opacity
@@ -49,11 +48,10 @@ export default function Shop() {
   }
 
   const handleClick = (e) => {
-    console.log("The value of e is:", e)
+    console.log("The value of e is:", e);
     setShowListing(true);
-    setListingType(e.target.innerText)
+    setListingType(e.target.innerText);
   };
-
 
   function openModal() {
     setIsOpen(true);
@@ -63,6 +61,11 @@ export default function Shop() {
     setIsOpen(false);
   }
 
+  function handleBack() {
+    navigate("/home", { replace: true });
+    setLeaveShop(true);
+  }
+
   useEffect(() => {
     unfade(homeSection.current);
   }, []);
@@ -70,7 +73,10 @@ export default function Shop() {
   return (
     <section ref={homeSection} className="shop bg-dark">
       {showListing ? (
-        <ListingWindow listingType={listingType} setShowListing={setShowListing}/>
+        <ListingWindow
+          listingType={listingType}
+          setShowListing={setShowListing}
+        />
       ) : (
         <section className="rpgui-content">
           <div className="rpgui-container framed-golden-2 shop-window">
@@ -78,7 +84,7 @@ export default function Shop() {
               <a href="#" className="">
                 <div class="rpgui-icon exclamation flex-item"></div>
               </a>
-              <a href="#" className="">
+              <a href="#" onClick={handleBack}>
                 <div class="rpgui-container flex-item">Back</div>
               </a>
             </div>
@@ -118,7 +124,10 @@ export default function Shop() {
                 </div>
                 <div class="product-content">
                   <h3 class="title mx-md-5 py-1">
-                    <button onClick={openModal} className="rpgui-button d-block m-auto  ">
+                    <button
+                      onClick={openModal}
+                      className="rpgui-button d-block m-auto  "
+                    >
                       <a href="#">Sell</a>
                     </button>
                   </h3>
@@ -135,7 +144,7 @@ export default function Shop() {
             style={customStyles}
             contentLabel="Authentication modal"
           >
-            <CreateListing closeModal={closeModal}/>
+            <CreateListing closeModal={closeModal} />
           </Modal>
         </section>
       )}
