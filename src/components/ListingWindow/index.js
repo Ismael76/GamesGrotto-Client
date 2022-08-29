@@ -27,6 +27,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
+  const [listingData, setListingData] = useState();
 
   const dummyData = [
     {
@@ -74,7 +75,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
   ];
 
   // Type will be used when accessing database to differentiate between trades and buys
-  console.log("The gametype is: ", gameType);
+  // console.log("The gametype is: ", gameType);
 
   const handleBack = () => {
     setShowListing(false);
@@ -88,10 +89,24 @@ export default function ListingWindow({ listingType, setShowListing }) {
     setIsOpen(false);
   }
 
+  async function fetchData() {
+    const response = await fetch("http://localhost:5000/listings");
+    const data = await response.json();
+    setListingData(data)
+  }
+
+
+
+  console.log(listingData)
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const renderListing = () =>
-    dummyData.map((val, key) => (
+  listingData.map((val, key) => (
       <tr key={key} className="border-golden">
-        <td className="p-3">{val.name}</td>
+        <td className="p-3">{val.title}</td>
         <td className="p-3">{val.description}</td>
         <td className="p-3">£{val.price}</td>
         <td className="p-3">{val.location}</td>
@@ -110,35 +125,35 @@ export default function ListingWindow({ listingType, setShowListing }) {
   }
 
   return (
-
     <section className="rpgui-content">
-          {!modalIsOpen &&
-      <div className="rpgui-container framed-golden-2 shop-window">
-        <a href="#" onClick={handleBack}>
-          <div class="rpgui-container position-absolute">Back</div>
-        </a>
+      {!modalIsOpen && (
+        <div className="rpgui-container framed-golden-2 shop-window">
+          <a href="#" onClick={handleBack}>
+            <div className="rpgui-container position-absolute">Back</div>
+          </a>
 
-        <div className="d-flex flex-column pt-5">
-          <select
-            className="rpgui-dropdown"
-            onChange={(e) => {
-              setGameType(e.target.value);
-            }}
-          >
-            <option className="rpgui-dropdown-imp">Video Games</option>
-            <option className="rpgui-dropdown-imp">Board Games</option>
-          </select>
-          <table>
-            <tr>
-              <th className="p-3">Name</th>
-              <th className="p-3">Description</th>
-              <th className="p-3">Price</th>
-              <th className="p-3">Location</th>
-            </tr>
-            {renderListing()}
-          </table>
+          <div className="d-flex flex-column pt-5">
+            <select
+              className="rpgui-dropdown"
+              onChange={(e) => {
+                setGameType(e.target.value);
+              }}
+            >
+              <option className="rpgui-dropdown-imp">Video Games</option>
+              <option className="rpgui-dropdown-imp">Board Games</option>
+            </select>
+            <table>
+              <tr>
+                <th className="p-3">Name</th>
+                <th className="p-3">Description</th>
+                <th className="p-3">Price</th>
+                <th className="p-3">Location</th>
+              </tr>
+              {renderListing()}
+            </table>
+          </div>
         </div>
-      </div> }
+      )}
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
@@ -160,7 +175,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           {whichModal == "ListingModal" && (
             <>
               <a href="#" onClick={closeModal}>
-                <div class="rpgui-container position-absolute">X</div>
+                <div className="rpgui-container position-absolute">X</div>
               </a>
               <ListingModal setWhichModal={setWhichModal} />
             </>
