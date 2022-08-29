@@ -3,7 +3,7 @@
   align-items: center;
   left: calc(25vw + 2rem);
   top: 8vw;
-  max-width:50%;
+  max-width: 50%;
   max-height: 75%;
   overflow: auto;
 }
@@ -13,10 +13,8 @@
   top: 4%;
   height: 92%;
   overflow: auto;
-
 }
 
-
 .border-golden {
-  border: 4mm ridge rgba(255, 215, 0, .7);
+  border: 4mm ridge rgba(255, 215, 0, 0.7);
 }

@@ -1,6 +1,6 @@
 .shop {
   background: url("../../images/shopBackground.png") no-repeat center
-    center/100% fixed ;
+    center/100% fixed;
   width: 100vw;
   height: 100vh;
 }
@@ -10,6 +10,7 @@
   align-items: center;
   left: calc(30vw + 2rem);
   top: 10vw;
+  z-index: 1;
 }
 
 .splash-modal-position {
@@ -18,35 +19,30 @@
   align-items: center !important;
 }
 
-.ReactModal__Overlay {
-  opacity: 0;
-  transform: scale(1.1);
-  transition: all 500ms ease-in;
+/* Modal */
+
+.hide-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.ReactModal__Content {
-  opacity: 0;
-  transform: scale(1.1);
-  transition: all 500ms ease-in;
-}
-
-.ReactModal__Content--after-open {
-  opacity: 1;
-  transform: scale(1.5);
-}
-
-/* .ReactModal__Content--before-close {
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 700ms ease-out;
-} */
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-  transition: all 700ms;
+.show-modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }

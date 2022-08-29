@@ -27,7 +27,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
-  const [listingData, setListingData] = useState();
+  const [listingData, setListingData] = useState([]);
 
   const dummyData = [
     {
@@ -74,9 +74,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
     },
   ];
 
-  // Type will be used when accessing database to differentiate between trades and buys
-  // console.log("The gametype is: ", gameType);
-
   const handleBack = () => {
     setShowListing(false);
   };
@@ -92,19 +89,17 @@ export default function ListingWindow({ listingType, setShowListing }) {
   async function fetchData() {
     const response = await fetch("http://localhost:5000/listings");
     const data = await response.json();
-    setListingData(data)
+    setListingData(data);
   }
 
-
-
-  console.log(listingData)
+  console.log(listingData);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const renderListing = () =>
-  listingData.map((val, key) => (
+    listingData.map((val, key) => (
       <tr key={key} className="border-golden">
         <td className="p-3">{val.title}</td>
         <td className="p-3">{val.description}</td>
@@ -157,7 +152,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
-        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}

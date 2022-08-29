@@ -24,6 +24,7 @@ const customStyles = {
     opacity: "0.92",
   },
 };
+
 Modal.setAppElement("#root");
 
 export default function Splash() {

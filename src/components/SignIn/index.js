@@ -31,6 +31,7 @@ export default function SignIn({ setWhichModal }) {
       const response = await fetch("http://localhost:5000/auth/login", options);
       const { token } = await response.json();
       localStorage.setItem("token", token);
+      localStorage.setItem("username", loginData.username);
       fade(section.current);
       fade(modal.current.node);
       setTimeout(() => {
@@ -66,8 +67,8 @@ export default function SignIn({ setWhichModal }) {
     <section className="d-flex flex-column text-center align-self-center">
       <h1>Welcome!</h1>
       <p>Log in with your details.</p>
-    <br/>
-      <form onSubmit={handleSubmit} >
+      <br />
+      <form onSubmit={handleSubmit}>
         <input
           className="mb-1"
           type="text"
@@ -75,7 +76,7 @@ export default function SignIn({ setWhichModal }) {
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         ></input>
-            <br/>
+        <br />
         <input
           className="mb-1"
           type="password"
@@ -83,14 +84,18 @@ export default function SignIn({ setWhichModal }) {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         ></input>
-            <br/>
-        <button className="rpgui-button mb-1" type="submit" value="Login">Login</button>
-        <br/>
+        <br />
+        <button className="rpgui-button mb-1" type="submit" value="Login">
+          Login
+        </button>
+        <br />
       </form>
 
-
       <p className="mt-1">
-        Don't have an account? <button className="bg-success" onClick={goToOther}>Register</button>
+        Don't have an account?{" "}
+        <button className="bg-success" onClick={goToOther}>
+          Register
+        </button>
       </p>
     </section>
   );

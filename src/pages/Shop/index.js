@@ -55,7 +55,6 @@ export default function Shop() {
   }
 
   const handleClick = (e) => {
-    // console.log("The value of e is:", e);
     setShowListing(true);
     setListingType(e.target.innerText);
   };
@@ -143,8 +142,13 @@ export default function Shop() {
               </div>
             </div>
           </div>
-          <Modal
-            className="rpgui-content splash-modal-positio"
+          <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+            <div className="modal-content">
+              <CreateListing closeModal={closeModal} />
+            </div>
+          </div>
+          {/* <Modal
+            className="rpgui-content splash-modal-position"
             ref={modal}
             closeTimeoutMS={500}
             isOpen={modalIsOpen}
@@ -152,8 +156,7 @@ export default function Shop() {
             style={customStyles}
             contentLabel="Authentication modal"
           >
-            <CreateListing closeModal={closeModal} />
-          </Modal>
+          </Modal> */}
         </section>
       )}
     </section>
