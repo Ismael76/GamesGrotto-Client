@@ -10,6 +10,11 @@
 
 }
 
+.splash-modal-position {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 
 .forum-search {
     position: absolute;
@@ -17,7 +22,7 @@
     left: calc(25vw + 2rem);
     top: 1vw;
     width:50%;
-  
+
 
 
 }
