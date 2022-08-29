@@ -12,12 +12,11 @@
   max-width: 60%;
   top: 4%;
   height: 92%;
+  overflow: auto;
 
 }
 
 
 .border-golden {
-
   border: 4mm ridge rgba(255, 215, 0, .7);
-
 }

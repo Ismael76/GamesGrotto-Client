@@ -110,7 +110,9 @@ export default function ListingWindow({ listingType, setShowListing }) {
   }
 
   return (
+
     <section className="rpgui-content">
+          {!modalIsOpen &&
       <div className="rpgui-container framed-golden-2 shop-window">
         <a href="#" onClick={handleBack}>
           <div class="rpgui-container position-absolute">Back</div>
@@ -136,7 +138,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
             {renderListing()}
           </table>
         </div>
-      </div>
+      </div> }
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}

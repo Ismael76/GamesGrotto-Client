@@ -1,6 +1,6 @@
 .shop {
   background: url("../../images/shopBackground.png") no-repeat center
-    center/100% fixed;
+    center/100% fixed ;
   width: 100vw;
   height: 100vh;
 }
@@ -17,6 +17,7 @@
   display:flex;
   justify-content: center !important;
   align-items: center !important;
+  overflow: auto;
 }
 
 

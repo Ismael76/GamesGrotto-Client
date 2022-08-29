@@ -79,7 +79,7 @@ export default function Shop() {
   }, []);
 
   return (
-    <section ref={homeSection} className="shop bg-dark">
+    <section ref={homeSection} className="shop bg-light">
       {showListing ? (
         <ListingWindow
           listingType={listingType}
