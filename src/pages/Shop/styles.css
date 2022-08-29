@@ -13,6 +13,15 @@
   z-index: 1;
 }
 
+.shop-window-info {
+  position: absolute;
+  align-items: center;
+  left: calc(30vw + 2rem);
+  top: 8vw;
+  max-width: 50%;
+  z-index: 1;
+}
+
 .splash-modal-position {
   display: flex;
   justify-content: center !important;

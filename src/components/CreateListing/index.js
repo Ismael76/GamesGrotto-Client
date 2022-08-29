@@ -16,7 +16,7 @@ export default function CreateListing({ setIsOpen, closeModal }) {
   const submitListing = async (e) => {
     e.preventDefault();
     setIsOpen(false);
-
+    e.target.reset();
     if (listingData.type == "Trade") {
       listingData.price = 0;
     }
@@ -34,6 +34,7 @@ export default function CreateListing({ setIsOpen, closeModal }) {
     } catch (err) {
       console.log(err);
     }
+
   };
 
   return (
