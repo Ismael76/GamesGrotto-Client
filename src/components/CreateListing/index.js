@@ -6,7 +6,7 @@ export default function CreateListing({ closeModal }) {
     <section className="rpgui-content framed-golden sell-window">
       <div className="rpgui-container framed d-flex flex-column text-center">
         <a href="#" onClick={closeModal}>
-          <div class="rpgui-container position-absolute">X</div>
+          <div className="rpgui-container position-absolute">X</div>
         </a>
         <section className="d-flex flex-column text-center p-5">
           <h1>CREATE LISTING</h1>
