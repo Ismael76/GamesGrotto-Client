@@ -7,10 +7,19 @@ export default function GameProvider(props) {
   const modal = useRef();
   const homeSection = useRef();
   const [leaveShop, setLeaveShop] = useState(false);
+  const [leaveForum, setLeaveForum] = useState(false);
 
   return (
     <GameContext.Provider
-      value={[section, modal, homeSection, leaveShop, setLeaveShop]}
+      value={[
+        section,
+        modal,
+        homeSection,
+        leaveShop,
+        setLeaveShop,
+        leaveForum,
+        setLeaveForum,
+      ]}
     >
       {props.children}
     </GameContext.Provider>

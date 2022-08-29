@@ -24,8 +24,15 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function Shop() {
-  const [section, modal, homeSection, leaveShop, setLeaveShop] =
-    useContext(GameContext);
+  const [
+    section,
+    modal,
+    homeSection,
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+  ] = useContext(GameContext);
   const [showListing, setShowListing] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [listingType, setListingType] = useState("");
@@ -64,6 +71,7 @@ export default function Shop() {
   function handleBack() {
     navigate("/home", { replace: true });
     setLeaveShop(true);
+    setLeaveForum(false);
   }
 
   useEffect(() => {
