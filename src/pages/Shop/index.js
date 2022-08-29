@@ -36,6 +36,7 @@ export default function Shop() {
   const [showListing, setShowListing] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [listingType, setListingType] = useState("");
+  const [showInfo, setShowInfo] = useState(false)
 
   const navigate = useNavigate();
 
@@ -70,6 +71,10 @@ export default function Shop() {
     setIsOpen(false);
   }
 
+  function handleInfo() {
+    setShowInfo(true);
+  }
+
   function handleBack() {
     navigate("/home", { replace: true });
     setLeaveShop(true);
@@ -92,7 +97,7 @@ export default function Shop() {
           <div className="rpgui-container framed-golden-2 shop-window">
             <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
               <a href="#" className="">
-                <div className="rpgui-icon exclamation flex-item"></div>
+                <div onClick={handleInfo} className="rpgui-icon exclamation flex-item"></div>
               </a>
               <a href="#" onClick={handleBack}>
                 <div className="rpgui-container flex-item">Back</div>
@@ -152,6 +157,42 @@ export default function Shop() {
           </div>
         </section>
       )}
+
+
+      { showInfo && <section className="rpgui-content">
+          <div className="rpgui-container framed-golden shop-window-info">
+          <a href="#" onClick={() => setShowInfo(false)}>
+                <div className="rpgui-container flex-item">X</div>
+              </a>
+
+              <div className="d-flex flex-column text-center justify-content-center">
+              <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>
+              <p>In this shop you can find games of all types to buy or trade.
+              </p>
+              <p>Alternatively you can post its for sale or trade on the market place.
+              </p>
+              <h3>How to:</h3>
+              <p>If a game interests you, simply message the seller your offer and wait for a reply.
+              </p>
+              <div className="rpgui-container framed-grey">
+                <h2>Rules:</h2>
+                <ul className="list-unstyled pe-4">
+                  <li>1. Be polite</li>
+                  <br/>
+                  <li>2. Be civil</li>
+                  <br/>
+                  <li>3. Have fun</li>
+
+                </ul>
+              </div>
+
+
+
+
+
+              </div>
+          </div>
+        </section> }
     </section>
   );
 }
