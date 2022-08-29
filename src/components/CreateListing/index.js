@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-export default function CreateListing({ closeModal }) {
+export default function CreateListing({ setIsOpen, closeModal }) {
   const [listingData, setListingData] = useState({
-    type: "Sell",
+    type: "",
     price: "",
     title: "",
     description: "",
@@ -15,7 +15,11 @@ export default function CreateListing({ closeModal }) {
 
   const submitListing = async (e) => {
     e.preventDefault();
-    console.log(listingData);
+    setIsOpen(false);
+
+    if (listingData.type == "Trade") {
+      listingData.price = 0;
+    }
 
     const options = {
       method: "POST",
@@ -75,19 +79,30 @@ export default function CreateListing({ closeModal }) {
             </select>
 
             <br />
-            <input
-              className="mb-1"
-              type="text"
-              label="Price"
-              // onChange={(e) => setEmail(e.target.value)}
-              placeholder="Price"
-              onChange={(e) =>
-                setListingData((prev) => ({
-                  ...prev,
-                  price: e.target.value,
-                }))
-              }
-            />
+            {listingData.type == "Sell" ? (
+              <input
+                className="mb-1"
+                type="text"
+                label="Price"
+                // onChange={(e) => setEmail(e.target.value)}
+                placeholder="Price"
+                onChange={(e) =>
+                  setListingData((prev) => ({
+                    ...prev,
+                    price: e.target.value,
+                  }))
+                }
+              />
+            ) : (
+              <input
+                className="mb-1"
+                type="text"
+                label="Price"
+                placeholder="Price"
+                disabled
+              />
+            )}
+
             <br />
             <input
               className="mb-1"

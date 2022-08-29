@@ -144,19 +144,9 @@ export default function Shop() {
           </div>
           <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
             <div className="modal-content">
-              <CreateListing closeModal={closeModal} />
+              <CreateListing setIsOpen={setIsOpen} closeModal={closeModal} />
             </div>
           </div>
-          {/* <Modal
-            className="rpgui-content splash-modal-position"
-            ref={modal}
-            closeTimeoutMS={500}
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Authentication modal"
-          >
-          </Modal> */}
         </section>
       )}
     </section>
