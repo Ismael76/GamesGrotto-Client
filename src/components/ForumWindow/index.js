@@ -103,18 +103,17 @@ export default function ForumWindow() {
         {postData.length !=0 && <ul>{renderListing()}</ul>}
       </div>
       </>}
-      {modalIsOpen && <>
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
-        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Authentication modal"
-      ></Modal>
+      >
         <CommentModal post={post} closeModal={closeModal} />
-      </>}
+        </Modal>
+
     </section>
   );
 }
