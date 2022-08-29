@@ -1,7 +1,23 @@
 .forum-window {
     position: absolute;
     align-items: center;
-    left: calc(30vw + 2rem);
-    top: 10vw;
+    left: calc(25vw + 2rem);
+    top: 8vw;
+    width:50%;
+    height: 75%;
+    overflow:auto;
+
+
+}
+
+
+.forum-search {
+    position: absolute;
+    align-items: center;
+    left: calc(25vw + 2rem);
+    top: 1vw;
+    width:50%;
+  
+
 
 }
