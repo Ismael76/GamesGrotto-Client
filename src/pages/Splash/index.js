@@ -38,7 +38,7 @@ export default function Splash() {
       fade(section.current);
       setTimeout(() => {
         navigate("/home", { replace: true });
-      }, 800);
+      }, 500);
     }
     setIsOpen(true);
   }
@@ -57,9 +57,8 @@ export default function Splash() {
       element.style.opacity = op;
       element.style.filter = "alpha(opacity=" + op * 100 + ")";
       op -= op * 0.1;
-    }, 50);
+    }, 30);
   }
-
 
   return (
     // will check whether they already have an account, if they do they will be sent to the Dashboard, if they don't the modal will appear.
@@ -69,29 +68,36 @@ export default function Splash() {
       </video>
       <div className="enter-btn-container">
         {!modalIsOpen && (
-          <button onClick={openModal} className="enter-btn shadow-sm rpgui-button my-auto">
+          <button
+            onClick={openModal}
+            className="enter-btn shadow-sm rpgui-button my-auto"
+          >
             Enter
           </button>
         )}
       </div>
 
-        {!localStorage.getItem("token") &&
-      <Modal
-        className="rpgui-content splash-modal-position"
-        ref={modal}
-        closeTimeoutMS={500}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Authentication modal"
-      >
-        <div className="rpgui-container framed d-flex flex-column text-center">
-        <button className="position-absolute" onClick={closeModal}>X</button>
-        {whichModal == "register" && <SignUp setWhichModal={setWhichModal} />}
-        {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
-        </div>
-      </Modal>
-      }
+      {!localStorage.getItem("token") && (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          ref={modal}
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed d-flex flex-column text-center">
+            <button className="position-absolute" onClick={closeModal}>
+              X
+            </button>
+            {whichModal == "register" && (
+              <SignUp setWhichModal={setWhichModal} />
+            )}
+            {whichModal == "login" && <SignIn setWhichModal={setWhichModal} />}
+          </div>
+        </Modal>
+      )}
     </section>
   );
 }

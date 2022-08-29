@@ -8,24 +8,7 @@ import {
   forumSignboardPopupData,
 } from "./navigateZones";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-
-//Modal
-const customStyles = {
-  overlay: {
-    backgroundColor: "rgba(64, 223, 219,0)",
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    color: "black",
-    opacity: "0.92",
-  },
-};
+import GameModal from "../GameModal";
 
 //Array That Stores All Tiles That Is A Collision Tile
 const collisionsMap = [];
@@ -156,6 +139,7 @@ document.addEventListener("keyup", function (playerWalk) {
 
 const Dashboard = ({ draw, height, width }) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [whichModal, setWhichModal] = React.useState("");
   const canvas = React.useRef();
 
   const navigate = useNavigate();
@@ -462,10 +446,11 @@ const Dashboard = ({ draw, height, width }) => {
             }) &&
             overlappingArea > (player.width * player.height) / 2
           ) {
+            setWhichModal("forum");
             setIsOpen(true);
             break;
           } else {
-            setIsOpen(false);
+            // setIsOpen(false);
           }
         }
 
@@ -489,10 +474,11 @@ const Dashboard = ({ draw, height, width }) => {
             }) &&
             overlappingArea > (player.width * player.height) / 2
           ) {
+            setWhichModal("shop");
             setIsOpen(true);
             break;
           } else {
-            setIsOpen(false);
+            // setIsOpen(false);
           }
         }
 
@@ -649,25 +635,15 @@ const Dashboard = ({ draw, height, width }) => {
     animate();
   }, [draw, height, width]);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   return (
     <>
       <canvas ref={canvas} height={height} width={width} />
-      <Modal
-        className="rpgui-content splash-modal-position"
-        closeTimeoutMS={500}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Authentication modal"
-      >
-        <div className="rpgui-container framed d-flex flex-column text-center">
-          <div>Enter shop to sell, buy and trade games!</div>
-        </div>
-      </Modal>
+      <GameModal
+        modalIsOpen={modalIsOpen}
+        setIsOpen={setIsOpen}
+        whichModal={whichModal}
+        setWhichModal={setWhichModal}
+      />
     </>
   );
 };

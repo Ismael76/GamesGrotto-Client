@@ -6,3 +6,4 @@ export { default as CreateListing } from "./CreateListing";
 export { default as ForumWindow } from "./ForumWindow";
 export { default as ListingModal } from "./ListingModal";
 export { default as ContactModal } from "./ContactModal";
+export { default as GameModal } from "./GameModal";
