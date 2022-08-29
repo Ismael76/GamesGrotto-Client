@@ -109,7 +109,7 @@ export default function ForumWindow() {
     <section className="rpgui-content">
       <div className="rpgui-container framed-golden forum-search">
         <a href="#" onClick={handleBack}>
-          <div class="rpgui-container flex-item">Back</div>
+          <div className="rpgui-container flex-item">Back</div>
         </a>
         <form onSubmit={handleSubmit} className="d-flex mt-4">
           <input className="m-1" value="Search game here"></input>
@@ -118,7 +118,7 @@ export default function ForumWindow() {
       </div>
 
       <div className="rpgui-container framed-golden forum-window">
-        {/*     
+        {/*
         <h1>Take me far away from the mucky muck</h1>
         <hr className="golden"/>
         <h1>To a castle made of clouds</h1> */}

@@ -55,7 +55,7 @@ export default function Shop() {
   }
 
   const handleClick = (e) => {
-    console.log("The value of e is:", e);
+    // console.log("The value of e is:", e);
     setShowListing(true);
     setListingType(e.target.innerText);
   };
@@ -79,7 +79,7 @@ export default function Shop() {
   }, []);
 
   return (
-    <section ref={homeSection} className="shop bg-dark">
+    <section ref={homeSection} className="shop bg-light">
       {showListing ? (
         <ListingWindow
           listingType={listingType}
@@ -90,19 +90,19 @@ export default function Shop() {
           <div className="rpgui-container framed-golden-2 shop-window">
             <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
               <a href="#" className="">
-                <div class="rpgui-icon exclamation flex-item"></div>
+                <div className="rpgui-icon exclamation flex-item"></div>
               </a>
               <a href="#" onClick={handleBack}>
-                <div class="rpgui-container flex-item">Back</div>
+                <div className="rpgui-container flex-item">Back</div>
               </a>
             </div>
-            <div class="d-flex row justify-content-center pb-5 w-auto">
-              <div class="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+            <div className="d-flex row justify-content-center pb-5 w-auto">
+              <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                 <div>
-                  <div class="rpgui-icon chest-open"></div>
+                  <div className="rpgui-icon chest-open"></div>
                 </div>
-                <div class="product-content">
-                  <h3 class="title mx-md-5 py-1">
+                <div className="product-content">
+                  <h3 className="title mx-md-5 py-1">
                     <button
                       className="rpgui-button d-block m-auto"
                       onClick={handleClick}
@@ -112,12 +112,12 @@ export default function Shop() {
                   </h3>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+              <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                 <div>
-                  <div class="rpgui-icon shield"></div>
+                  <div className="rpgui-icon shield"></div>
                 </div>
-                <div class="product-content">
-                  <h3 class="title mx-md-5 py-1">
+                <div className="product-content">
+                  <h3 className="title mx-md-5 py-1">
                     <button className="rpgui-button d-block m-auto  ">
                       <a href="#" onClick={handleClick}>
                         Trade
@@ -126,12 +126,12 @@ export default function Shop() {
                   </h3>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+              <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                 <div>
-                  <div class="rpgui-icon cash"></div>
+                  <div className="rpgui-icon cash"></div>
                 </div>
-                <div class="product-content">
-                  <h3 class="title mx-md-5 py-1">
+                <div className="product-content">
+                  <h3 className="title mx-md-5 py-1">
                     <button
                       onClick={openModal}
                       className="rpgui-button d-block m-auto  "
@@ -144,7 +144,7 @@ export default function Shop() {
             </div>
           </div>
           <Modal
-            className="rpgui-content splash-modal-position"
+            className="rpgui-content splash-modal-positio"
             ref={modal}
             closeTimeoutMS={500}
             isOpen={modalIsOpen}
