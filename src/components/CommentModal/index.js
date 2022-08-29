@@ -44,7 +44,7 @@ export default function CommentModal({ post, closeModal }) {
 
     return (
         <section className="rpgui-container framed d-flex flex-column text-center">
-            <a href="#" onClick={closeModal}><div class="position-absolute">X</div></a>
+            <a href="" onClick={closeModal}><div class="position-absolute">X</div></a>
             {currentPost()}
             {commentData.length !=0 && renderComments()}
         </section>
