@@ -177,7 +177,10 @@ export default function ForumWindow() {
           )}
           {whichModal == "CreatePost" && (
             <>
-              <CreatePostModal closeModal={closeModal} />
+              <CreatePostModal
+                addToPosts={setPostData}
+                closeModal={closeModal}
+              />
             </>
           )}
         </Modal>

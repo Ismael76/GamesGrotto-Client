@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 
-export default function CreatePostModal({ closeModal }) {
+export default function CreatePostModal({ addToPosts, closeModal }) {
   const [postData, setPostData] = useState({
     title: "",
     text: "",
@@ -20,7 +20,9 @@ export default function CreatePostModal({ closeModal }) {
     try {
       const response = await fetch("http://localhost:5000/posts", options);
       const data = await response.json();
-      //   closeModal();
+
+      addToPosts((prev) => [...prev, data]);
+      closeModal();
       // window.location.reload()
       return data;
     } catch (err) {
@@ -28,7 +30,7 @@ export default function CreatePostModal({ closeModal }) {
     }
   };
 
-  closeModal();
+  useEffect(() => {}, [submitPost]);
 
   return (
     <section className="rpgui-container framed d-flex flex-column text-center">
