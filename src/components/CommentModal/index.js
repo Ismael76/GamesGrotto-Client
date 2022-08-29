@@ -6,6 +6,11 @@ import axios from "axios"
 export default function CommentModal({ post, closeModal }) {
 
     const [commentData, setCommentData] = useState([]);
+    const [postCommentData, setPostCommentData] = useState({
+        post_id: post.id,
+        text: "",
+        username: localStorage.getItem("username")
+    });
 
     useEffect(async () => {
         try {
@@ -42,11 +47,39 @@ export default function CommentModal({ post, closeModal }) {
             </>
         ))
 
+    const submitComment = async (e) => {
+        e.preventDefault();
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(postCommentData),
+        };
+
+        try {
+            const response = await fetch("http://localhost:5000/comments/", options);
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.log(err);
+            closeModal()
+        }
+
+    };
+
     return (
-        <section className="rpgui-container framed d-flex flex-column text-center">
-            <a href="" onClick={closeModal}><div class="position-absolute">X</div></a>
+        <section className="rpgui-container framed d-flex flex-column text-center comments-modal">
+            <a href="" onClick={closeModal}><div className="position-absolute">X</div></a>
             {currentPost()}
-            {commentData.length !=0 && renderComments()}
+            <form onSubmit={(e) => submitComment(e)}>
+                <textarea required placeholder="Enter comment" onChange={(e) =>
+                    setPostCommentData((prev) => ({
+                        ...prev,
+                        text: e.target.value,
+                    }))
+                }></textarea>
+                <button className="rpgui-button framed-golden">Submit Comment</button>
+            </form>
+            {commentData.length != 0 && renderComments()}
         </section>
     );
 }

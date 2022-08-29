@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import Modal from "react-modal";
 import CommentModal from "../CommentModal";
+import CreatePostModal from "../CreatePostModal"
 
 const customStyles = {
   overlay: {
@@ -37,20 +38,27 @@ export default function ForumWindow() {
   const navigate = useNavigate();
   const [postData, setPostData] = useState([])
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [whichModal, setWhichModal] = useState("")
   const [post, setPost] = useState();
 
-  useEffect(async () =>{
+  useEffect(async () => {
     try {
       const url = "http://localhost:5000/posts"
       const data = await axios.get(url)
       setPostData(data.data)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }, [])
 
-  const openModal = (post) => {
+  const openCommentModal = (post) => {
     setPost(post)
+    setWhichModal("DisplayComments")
+    setIsOpen(true)
+  }
+
+  const openCreatePostModal = () =>{
+    setWhichModal("CreatePost")
     setIsOpen(true)
   }
 
@@ -61,11 +69,11 @@ export default function ForumWindow() {
   const renderListing = () =>
     postData.map((item) => (
       <>
-        <div key={item.id} onClick={() =>openModal(item)}>
+        <div key={item.id} onClick={() => openCommentModal(item)}>
           <h3 className="p-3">{item.title}</h3>
           <p className="p-3">{item.text}</p>
           <p className="p-3 text-center">
-             Posted by {item.username} {/*on {item.date} */}
+            Posted by {item.username} {/*on {item.date} */}
           </p>
         </div>
         <hr className="golden" />
@@ -86,33 +94,43 @@ export default function ForumWindow() {
   return (
     <section className="rpgui-content">
       {!modalIsOpen && <>
-      <div className="rpgui-container framed-golden forum-search">
-        <a href="#" onClick={handleBack}>
-          <div className="rpgui-container flex-item">Back</div>
-        </a>
-        <form onSubmit={handleSubmit} className="d-flex mt-4">
-          <input className="m-1" placeholder="Search title here"></input>
-          <button className="m-1">Submit</button>
-        </form>
-      </div>
+        <div className="rpgui-container framed-golden forum-search">
+          <a href="#" onClick={handleBack}>
+            <div className="rpgui-container flex-item">Back</div>
+          </a>
+          <form onSubmit={handleSubmit} className="d-flex mt-4">
+            <input className="m-1" placeholder="Search title here"></input>
+            <button className="m-1">Submit</button>
+          </form>
+        </div>
 
-      <div className="rpgui-container framed-golden forum-window">
-        <h1>Forum Board</h1>
-        <hr className="golden" />
-        {postData.length ==0 && <h1>No Posts Available</h1>}
-        {postData.length !=0 && <ul>{renderListing()}</ul>}
-      </div>
+        <div className="rpgui-container framed-golden forum-window">
+          <h1>Forum Board</h1>
+          <hr className="golden" />
+          {postData.length == 0 && <h1>No Posts Available</h1>}
+          {postData.length != 0 && <ul>{renderListing()}</ul>}
+        </div>
+
+        <button className="rpgui-container framed-golden post-create" onClick={openCreatePostModal}>Create Post</button>
+
       </>}
+      
       <Modal
-        className="rpgui-content splash-modal-position"
+        className="rpgui-content splash-modal-position p-3"
         ref={modal}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Authentication modal"
       >
-        <CommentModal post={post} closeModal={closeModal} />
-        </Modal>
+        {whichModal=="DisplayComments"&&(<>
+        <CommentModal post={post} closeModal={closeModal} /></>)}
+        {whichModal=="CreatePost"&&(<>
+        <CreatePostModal closeModal={closeModal} /></>)}
+
+      </Modal>
+
+
 
     </section>
   );
