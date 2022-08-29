@@ -65,6 +65,7 @@ export default function SignUp({ setWhichModal }) {
 
       const { token } = await loginResponse.json();
       localStorage.setItem("token", token);
+      localStorage.setItem("username", loginData.username);
       fade(section.current);
       fade(modal.current.node);
       setTimeout(() => {
