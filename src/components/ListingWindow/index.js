@@ -59,14 +59,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
     listingData
       .filter((listing) => listing.type == listingType)
       .map((val, key) => (
-        <tr key={key} className="border-golden">
-          <td className="p-3">{val.title}</td>
-          <td className="p-3">{val.description}</td>
-          <td className="p-3">£{val.price}</td>
-          <td className="p-3">{val.location}</td>
+        <tr key={key} className="border-listings-table">
+          <td className="p-5 special-border">{val.title}</td>
+          <td className="p-5 special-border">{val.description}</td>
+          <td className="p-5 special-border">£{val.price}</td>
+          <td className="p-5 special-border">{val.location}</td>
 
           <button
-            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            className="rpgui-button px-3 mx-3 mt-4 my-auto py-auto"
             onClick={() => openModal(val)}
           >
             More
@@ -79,9 +79,9 @@ export default function ListingWindow({ listingType, setShowListing }) {
   }
 
   return (
-    <section className="rpgui-content">
+    <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
-        <div className="rpgui-container framed-golden-2 shop-window">
+        <div className="rpgui-container framed-golden-2 shop-window2">
           <a href="#" onClick={handleBack}>
             <div className="rpgui-container position-absolute">Back</div>
           </a>
@@ -98,10 +98,10 @@ export default function ListingWindow({ listingType, setShowListing }) {
             </select>
             <table>
               <tr>
-                <th className="p-3">Name</th>
-                <th className="p-3">Description</th>
-                <th className="p-3">Price</th>
-                <th className="p-3">Location</th>
+                <th className="p-4"><h2>Name</h2></th>
+                <th className="p-4"><h2>Description</h2></th>
+                <th className="p-4"><h2>Price</h2></th>
+                <th className="p-4"><h2>Location</h2></th>
               </tr>
               {renderListing()}
             </table>
