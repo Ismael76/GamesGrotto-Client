@@ -2,12 +2,22 @@
   position: absolute;
   align-items: center;
   left: calc(23vw + 2rem);
-  top: 8vw;
+  top: 2vw;
   z-index: 1;
+  max-height: 90vh;
+  overflow: auto;
+  width: 70vw;
 }
 
 .special-border {
-  border-right: 2mm groove rgba(133, 76, 48, .8);
+  border-right: 2mm groove rgba(133, 76, 48, 0.8);
+  width: 30vw;
+  word-break: break-all;
+  max-height: 100px;
+}
+
+.table-description {
+  width: 60vw;
 }
 
 .listing-modal {
@@ -18,5 +28,5 @@
 }
 
 .border-listings-table {
-  border: 2mm groove rgba(133, 76, 48, .8);
+  border: 2mm groove rgba(133, 76, 48, 0.8);
 }

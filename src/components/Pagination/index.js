@@ -8,8 +8,8 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
   }
 
   return (
-    <nav>
-      <ul className="pagination">
+    <nav className="d-flex flex-row justify-content-center w-100 pt-4">
+      <ul className="pagination  pe-4">
         {pageNumbers.map((number) => {
           return (
             <li key={number} className="page-item">
