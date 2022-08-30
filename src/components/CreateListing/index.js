@@ -34,7 +34,6 @@ export default function CreateListing({ setIsOpen, closeModal }) {
     } catch (err) {
       console.log(err);
     }
-
   };
 
   return (
