@@ -1,54 +1,64 @@
-#game{
-    width: 500px;
+.game {
+    width: 600px;
     height: 200px;
     border: 1px solid black;
     margin: auto;
-}
-
-#character{
-    width: 20px;
+  }
+  
+  #character {
+    width: 50px;
     height: 50px;
-    /* background-color: red; */
+    background-image: url(kirby.png);
+    background-size: 50px 50px;
     position: relative;
     top: 150px;
-}
-
-@keyframes jump{
-    0%{top: 150px;}
-    30%{top: 75px;}
-    70%{top: 75px;}
-    100%{top: 150px;}
-}
-
-.animate{
-    animation: jump 300ms linear;
-}
-
-#block{
+  }
+  
+  .jump {
+    animation: jump 0.3s linear;
+  }
+  
+  @keyframes jump {
+    0% {
+      top: 150px;
+    }
+  
+    30% {
+      top: 130px;
+    }
+  
+    50% {
+      top: 80px;
+    }
+  
+    80% {
+      top: 130px;
+    }
+  
+    100% {
+      top: 150px;
+    }
+  }
+  
+  #block {
     width: 20px;
-    height: 20px;
-    background-color: blue;
+    height: 40px;
     position: relative;
-    top: 130px;
-    left: 480px;
+    top: 110px;
+    left: 580px;
+  
+    background-image: url("kirby.png");
+    background-size: 20px 40px;
+  
     animation: block 1s infinite linear;
-}
-
-@keyframes block{
-    0%{left: 500px} 
-    100%{left: -20px}
-}
-
-@keyframes block2{
-    0%{left: 500px} 
-    100%{left: -30px}
-}
-
-@keyframes block3{
-    0%{left: 500px} 
-    100%{left: -40px}
-}
-
-#score {
-    text-align: center;
-}
+  }
+  
+  @keyframes block {
+    0% {
+      left: 580px;
+    }
+  
+    100% {
+      left: -20px;
+    }
+  }
