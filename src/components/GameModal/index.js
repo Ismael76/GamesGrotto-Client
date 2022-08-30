@@ -29,9 +29,9 @@ export default function GameModal({
     setIsOpen(false);
   }
 
-  return (
-    <>
-      {whichModal === "shop" ? (
+  function renderPopup() {
+    if (whichModal === "shop") {
+      return (
         <Modal
           className="rpgui-content splash-modal-position"
           closeTimeoutMS={500}
@@ -50,7 +50,9 @@ export default function GameModal({
             </div>
           </div>
         </Modal>
-      ) : (
+      );
+    } else if (whichModal === "dungeon") {
+      return (
         <Modal
           className="rpgui-content splash-modal-position"
           closeTimeoutMS={500}
@@ -64,15 +66,17 @@ export default function GameModal({
               X
             </button>
             <div className="mt-2">
-              <h1 className="game-modal-heading">PYRE COMMUNITY CENTRE</h1>
+              <h1 className="game-modal-heading">MINIGAME</h1>
               <p>
-                Enter Building To Communicate With Other Game Lovers Like
-                Yourself!
+                Climb down the steps to play an exciting minigame! Score as high
+                as you can and make it to the top 10 of the leaderboards!
               </p>
             </div>
           </div>
         </Modal>
-      )}
-    </>
-  );
+      );
+    }
+  }
+
+  return <>{renderPopup()}</>;
 }

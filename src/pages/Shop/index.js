@@ -36,7 +36,7 @@ export default function Shop() {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    if (e.target.innerText == "Buy") {
+    if (e.target.innerText == "BUY") {
       e.target.innerText = "Sell";
     }
     setShowListing(true);
