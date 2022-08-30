@@ -77,7 +77,7 @@ export default function RunnerGame() {
     }, []);
 
     function addScore(){
-        setScore(score +1)
+        setScore(prev => prev +1)
     }
   
 
