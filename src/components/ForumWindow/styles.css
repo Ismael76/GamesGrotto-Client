@@ -1,36 +1,41 @@
 .forum-window {
-    position: absolute;
-    align-items: center;
-    left: calc(25vw + 2rem);
-    top: 8vw;
-    width:50%;
-    height: 72.5%;
-    overflow:auto;
-
-
+  position: absolute;
+  align-items: center;
+  left: calc(25vw + 2rem);
+  top: 8vw;
+  width: 50%;
+  height: 72.5%;
+  overflow: auto;
 }
 
 .splash-modal-position {
-    display: flex;
-    justify-content: center !important;
-    align-items: center !important;
-  }
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
 
 .forum-search {
-    position: absolute;
-    align-items: center;
-    left: calc(25vw + 2rem);
-    top: 1vw;
-    width:50%;
+  position: absolute;
+  align-items: center;
+  left: calc(25vw + 2rem);
+  top: 1vw;
+  width: 50%;
 }
 
 .post-create {
-    display:flex;
-    position: absolute;
-    justify-content: center;
-    left: calc(37.5vw);
-    bottom: 1vw;
-    width:30%;
-    color: white;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  left: calc(37.5vw);
+  bottom: 1vw;
+  width: 30%;
+  color: white;
 }
 
+.modal-center {
+  position: absolute;
+  align-items: center;
+  left: calc(25vw + 2rem);
+  top: 35%;
+  width: 50%;
+}

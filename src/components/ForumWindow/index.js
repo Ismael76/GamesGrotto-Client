@@ -35,7 +35,7 @@ export default function ForumWindow() {
   const [whichModal, setWhichModal] = useState("");
   const [post, setPost] = useState();
 
-  useEffect(async () => {
+  const getPosts = async () => {
     try {
       const url = "http://localhost:5000/posts";
       const data = await axios.get(url);
@@ -43,6 +43,10 @@ export default function ForumWindow() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  useEffect(async () => {
+    getPosts();
   }, []);
 
   const openCommentModal = (post) => {
@@ -163,27 +167,23 @@ export default function ForumWindow() {
           </>
         )}
 
-        <Modal
-          className="rpgui-content splash-modal-position p-3"
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Authentication modal"
-        >
-          {whichModal == "DisplayComments" && (
-            <>
+        {whichModal == "DisplayComments" && (
+          <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+            <div className="modal-content modal-center">
               <CommentModal post={post} closeModal={closeModal} />
-            </>
-          )}
-          {whichModal == "CreatePost" && (
-            <>
+            </div>
+          </div>
+        )}
+        {whichModal == "CreatePost" && (
+          <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+            <div className="modal-content modal-center">
               <CreatePostModal
                 addToPosts={setPostData}
                 closeModal={closeModal}
               />
-            </>
-          )}
-        </Modal>
+            </div>
+          </div>
+        )}
       </section>
     </motion.div>
   );
