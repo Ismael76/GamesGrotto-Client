@@ -35,6 +35,7 @@ export default function ForumWindow() {
   const [whichModal, setWhichModal] = useState("");
   const [post, setPost] = useState();
   const [rerender, setRerender] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const getPosts = async () => {
     try {
@@ -46,7 +47,7 @@ export default function ForumWindow() {
     }
   };
 
-  useEffect( () => {
+  useEffect(() => {
     getPosts();
   }, [rerender]);
 
@@ -83,9 +84,15 @@ export default function ForumWindow() {
   // };
 
   const updateLikes = async (item, option) => {
-    const username = localStorage.getItem("username")
-    console.log(username)
-    const data = { id: item.id, username:username, option:option, likes: item.likes, dislikes: item.dislikes };
+    const username = localStorage.getItem("username");
+    console.log(username);
+    const data = {
+      id: item.id,
+      username: username,
+      option: option,
+      likes: item.likes,
+      dislikes: item.dislikes,
+    };
     const options = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -94,7 +101,7 @@ export default function ForumWindow() {
     try {
       const response = await fetch("http://localhost:5000/posts", options);
       const data = await response.json();
-      setRerender(Math.random())
+      setRerender(Math.random());
       return data;
     } catch (err) {
       console.log(err);
@@ -102,27 +109,41 @@ export default function ForumWindow() {
   };
 
   const renderListing = () =>
-    postData.map((item) => (
-      <>
-        <div key={item.id} onClick={() => openCommentModal(item)}>
-          <h3 className="p-3">{item.title}</h3>
+    postData
+      .filter((searchPost) => {
+        if (searchTerm == "") return searchPost;
+        else if (
+          searchPost.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchPost;
+      })
+      .map((item) => (
+        <>
+          <div key={item.id} onClick={() => openCommentModal(item)}>
+            <h3 className="p-3">{item.title}</h3>
 
-          <p className="p-3">{item.text}</p>
-          <p className="p-3 text-center">
-            Posted by {item.username} {/*on {item.date} */}
-          </p>
-        </div>
-        <div className="d-flex justify-content-around">
-          <button className="rpgui-button" onClick={() => updateLikes(item, "likes")}>
-            {item.likes.length}👍
-          </button>
-          <button className="rpgui-button" onClick={() => updateLikes(item, "dislikes")}>
-            {item.dislikes.length}👎
-          </button>
-        </div>
-        <hr className="golden" />
-      </>
-    ));
+            <p className="p-3">{item.text}</p>
+            <p className="p-3 text-center">
+              Posted by {item.username} {/*on {item.date} */}
+            </p>
+          </div>
+          <div className="d-flex justify-content-around">
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "likes")}
+            >
+              {item.likes.length}👍
+            </button>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "dislikes")}
+            >
+              {item.dislikes.length}👎
+            </button>
+          </div>
+          <hr className="golden" />
+        </>
+      ));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -149,7 +170,13 @@ export default function ForumWindow() {
                 <div className="rpgui-container flex-item">Back</div>
               </a>
               <form onSubmit={handleSubmit} className="d-flex mt-4">
-                <input className="m-1" placeholder="Search Title Here"></input>
+                <input
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
+                  className="m-1"
+                  placeholder="Search Title Here"
+                ></input>
                 <button className="m-1">Submit</button>
               </form>
             </div>
@@ -159,7 +186,6 @@ export default function ForumWindow() {
               <hr className="golden" />
               {postData.length == 0 && <h1>No Posts Available</h1>}
               {postData.length != 0 && <ul>{renderListing()}</ul>}
-              
             </div>
 
             <button

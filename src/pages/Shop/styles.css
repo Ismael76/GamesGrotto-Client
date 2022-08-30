@@ -8,7 +8,7 @@
 .shop-window {
   position: absolute;
   align-items: center;
-  left: calc(30vw + 2rem);
+  left: calc(25vw + 2rem);
   top: 10vw;
   z-index: 1;
 }
@@ -27,3 +27,11 @@
   justify-content: center !important;
   align-items: center !important;
 }
+
+/* .listing-window-container {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: auto;
+  text-align: center;
+} */

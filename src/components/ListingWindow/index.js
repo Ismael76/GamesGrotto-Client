@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useNavigate } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
-import { ListingModal, ContactModal } from "../../components";
+import { ListingModal, ContactModal, Pagination } from "../../components";
 
 import Modal from "react-modal";
 
@@ -27,8 +27,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
-  const [listingData, setListingData] = useState([]);
   const [listing, setListing] = useState();
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  //Pagination States
+  const [listingData, setListingData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   const handleBack = () => {
     setShowListing(false);
@@ -43,30 +49,51 @@ export default function ListingWindow({ listingType, setShowListing }) {
     setIsOpen(false);
   }
 
-  async function fetchData() {
-    const response = await fetch("http://localhost:5000/listings");
-    const data = await response.json();
-    setListingData(data);
-  }
-
-  console.log(listingData);
-
   useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("http://localhost:5000/listings");
+      const data = await response.json();
+      setListingData(data);
+    }
     fetchData();
   }, []);
 
-  const renderListing = () =>
-    listingData
-      .filter((listing) => listing.type == listingType)
+  const indexOfLastListing = currentPage * postsPerPage;
+  const indexOfFirstListing = indexOfLastListing - postsPerPage;
+
+  const saleData = listingData.filter((listing) => listing.type == "Sell");
+  const tradeData = listingData.filter((listing) => listing.type == "Trade");
+
+  const currentListingTrade = tradeData.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  );
+
+  const currentListingSale = saleData.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  );
+
+  const renderListingSale = () =>
+    currentListingSale
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
       .map((val, key) => (
-        <tr key={key} className="border-golden">
-          <td className="p-3">{val.title}</td>
-          <td className="p-3">{val.description}</td>
-          <td className="p-3">£{val.price}</td>
-          <td className="p-3">{val.location}</td>
+        <tr key={key} className="border-listings-table">
+          <td className="p-3 special-border">{val.title}</td>
+          <td className="p-3 special-border table-description">
+            {val.description}
+          </td>
+          <td className="p-3 special-border">£{val.price}</td>
+          <td className="p-3 special-border">{val.location}</td>
 
           <button
-            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            className="rpgui-button ms-3 px-3 mx-3 my-3 py-auto"
             onClick={() => openModal(val)}
           >
             More
@@ -74,20 +101,49 @@ export default function ListingWindow({ listingType, setShowListing }) {
         </tr>
       ));
 
+  const renderListingTrade = () =>
+    currentListingTrade
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
+      .map((val, key) => (
+        <tr key={key} className="border-listings-table">
+          <td className="p-5 special-border">{val.title}</td>
+          <td className="p-5 special-border table-description">
+            {val.description}
+          </td>
+          <td className="p-5 special-border">£{val.price}</td>
+          <td className="p-5 special-border">{val.location}</td>
+
+          <button
+            className="rpgui-button px-3 mx-3 mt-4 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   function goToOther() {
     setWhichModal("ListingModal");
   }
 
   return (
-    <section className="rpgui-content">
+    <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
-        <div className="rpgui-container framed-golden-2 shop-window">
+        <div className="rpgui-container framed-golden-2 shop-window2">
           <a href="#" onClick={handleBack}>
             <div className="rpgui-container position-absolute">Back</div>
           </a>
 
           <div className="d-flex flex-column pt-5">
-            <select
+            {/* <select
               className="rpgui-dropdown"
               onChange={(e) => {
                 setGameType(e.target.value);
@@ -95,16 +151,43 @@ export default function ListingWindow({ listingType, setShowListing }) {
             >
               <option className="rpgui-dropdown-imp">Video Games</option>
               <option className="rpgui-dropdown-imp">Board Games</option>
-            </select>
-            <table>
+            </select> */}
+            <input
+              type="text"
+              placeholder="Search Item..."
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            ></input>
+            <table className="listing-table">
               <tr>
-                <th className="p-3">Name</th>
-                <th className="p-3">Description</th>
-                <th className="p-3">Price</th>
-                <th className="p-3">Location</th>
+                <th className="p-4">
+                  <h2>Name</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Description</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Price</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Location</h2>
+                </th>
+                <th className="p-4">
+                  <h2>See more</h2>
+                </th>
               </tr>
-              {renderListing()}
+              {listingType == "Sell"
+                ? renderListingSale()
+                : renderListingTrade()}
             </table>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={
+                listingType == "Sell" ? saleData.length : tradeData.length
+              }
+              paginate={paginate}
+            />
           </div>
         </div>
       )}
