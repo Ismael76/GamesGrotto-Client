@@ -110,8 +110,8 @@ export default function Shop() {
                   </div>
                   <div className="product-content">
                     <h3 className="title mx-md-5 py-1">
-                      <button className="rpgui-button d-block m-auto  ">
-                        <a href="#" onClick={handleClick}>
+                      <button className="rpgui-button d-block m-auto" onClick={handleClick}>
+                        <a href="#">
                           Trade
                         </a>
                       </button>
