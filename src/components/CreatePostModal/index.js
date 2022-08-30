@@ -7,6 +7,8 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
     title: "",
     text: "",
     username: localStorage.getItem("username"),
+    likes: [],
+    dislikes: []
   });
 
   const submitPost = async (e) => {
