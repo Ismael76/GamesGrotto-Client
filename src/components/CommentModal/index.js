@@ -113,7 +113,7 @@ export default function CommentModal({ post, closeModal }) {
 
   return (
     <section className="rpgui-container framed d-flex flex-column text-center comments-modal">
-      <a href="#" onClick={closeModal}>
+      <a href="" onClick={closeModal}>
         <div className="position-absolute">X</div>
       </a>
       {currentPost()}

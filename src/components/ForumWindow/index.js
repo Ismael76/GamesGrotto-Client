@@ -45,7 +45,7 @@ export default function ForumWindow() {
     }
   };
 
-  useEffect(async () => {
+  useEffect( () => {
     getPosts();
   }, []);
 
@@ -64,26 +64,27 @@ export default function ForumWindow() {
     setIsOpen(false);
   };
 
-  const updateLikes = async (item) => {
-    item.likes = item.likes + 1;
-    const data = { id: item.id, likes: item.likes, dislikes: item.dislikes };
-    const options = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    try {
-      const response = await fetch("http://localhost:5000/posts", options);
-      const data = await response.json();
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const updateLikes = async (item) => {
+  //   item.likes = item.likes + 1;
+  //   const data = { id: item.id, likes: item.likes, dislikes: item.dislikes };
+  //   const options = {
+  //     method: "PATCH",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   };
+  //   try {
+  //     const response = await fetch("http://localhost:5000/posts", options);
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  const updateDislikes = async (item) => {
-    item.dislikes = item.dislikes + 1;
-    const data = { id: item.id, likes: item.likes, dislikes: item.dislikes };
+  const updateLikes = async (item, option) => {
+    const username = localStorage.getItem("username")
+    console.log(username)
+    const data = { id: item.id, username:username, option:option, likes: item.likes, dislikes: item.dislikes };
     const options = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -92,6 +93,25 @@ export default function ForumWindow() {
     try {
       const response = await fetch("http://localhost:5000/posts", options);
       const data = await response.json();
+      if (data == 1 && option == "likes"){
+        setPostData(...postData, postData[item.id-1].likes.append(username))
+      }
+      else if (data == 1 && option == "dislikes"){
+        setPostData(...postData, postData[item.id-1].dislikes.append(username))
+      }
+//       else if (data == -1 && option == "likes"){
+//         const index = item.likes.indexOf(username);
+//         if (index > -1) { 
+//           setPostData(...postData, postData.splice(index, 1));
+// }
+//       }
+//       else {
+//         const index = item.dislikes.indexOf(username);
+//         if (index > -1) { 
+//           setPostData(...postData, postData.splice(index, 1));
+//         }
+      // }
+
       return data;
     } catch (err) {
       console.log(err);
@@ -110,11 +130,11 @@ export default function ForumWindow() {
           </p>
         </div>
         <div className="d-flex justify-content-around">
-          <button className="rpgui-button" onClick={() => updateLikes(item)}>
-            {item.likes}👍
+          <button className="rpgui-button" onClick={() => updateLikes(item, "likes")}>
+            {postData[item.id-1].likes.length}👍
           </button>
-          <button className="rpgui-button" onClick={() => updateDislikes(item)}>
-            {item.dislikes}👎
+          <button className="rpgui-button" onClick={() => updateLikes(item, "dislikes")}>
+            {postData[item.id-1].dislikes.length}👎
           </button>
         </div>
         <hr className="golden" />
