@@ -139,15 +139,8 @@ document.addEventListener("keyup", function (playerWalk) {
 });
 
 const Dashboard = ({ draw, height, width }) => {
-  const [
-    section,
-    modal,
-    homeSection,
-    leaveShop,
-    setLeaveShop,
-    leaveForum,
-    setLeaveForum,
-  ] = useContext(GameContext);
+  const [leaveShop, setLeaveShop, leaveForum, setLeaveForum] =
+    useContext(GameContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("");
   const canvas = React.useRef();

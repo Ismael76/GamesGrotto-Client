@@ -27,60 +27,15 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
-
-  const dummyData = [
-    {
-      name: "Call of Duty",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 12,
-      location: "London",
-    },
-    {
-      name: "Fifa 12",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Battlefield 3",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 14,
-      location: "London",
-    },
-    {
-      name: "Battlefield 4",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Chess",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 16,
-      location: "London",
-    },
-    {
-      name: "Ludo",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 21,
-      location: "London",
-    },
-  ];
-
-  // Type will be used when accessing database to differentiate between trades and buys
-  console.log("The gametype is: ", gameType);
+  const [listingData, setListingData] = useState([]);
+  const [listing, setListing] = useState();
 
   const handleBack = () => {
     setShowListing(false);
   };
 
-  function openModal() {
+  function openModal(listing) {
+    setListing(listing);
     setIsOpen(true);
   }
 
@@ -88,22 +43,36 @@ export default function ListingWindow({ listingType, setShowListing }) {
     setIsOpen(false);
   }
 
-  const renderListing = () =>
-    dummyData.map((val, key) => (
-      <tr key={key} className="border-golden">
-        <td className="p-3">{val.name}</td>
-        <td className="p-3">{val.description}</td>
-        <td className="p-3">£{val.price}</td>
-        <td className="p-3">{val.location}</td>
+  async function fetchData() {
+    const response = await fetch("http://localhost:5000/listings");
+    const data = await response.json();
+    setListingData(data);
+  }
 
-        <button
-          className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={openModal}
-        >
-          More
-        </button>
-      </tr>
-    ));
+  console.log(listingData);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const renderListing = () =>
+    listingData
+      .filter((listing) => listing.type == listingType)
+      .map((val, key) => (
+        <tr key={key} className="border-golden">
+          <td className="p-3">{val.title}</td>
+          <td className="p-3">{val.description}</td>
+          <td className="p-3">£{val.price}</td>
+          <td className="p-3">{val.location}</td>
+
+          <button
+            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
 
   function goToOther() {
     setWhichModal("ListingModal");
@@ -111,36 +80,37 @@ export default function ListingWindow({ listingType, setShowListing }) {
 
   return (
     <section className="rpgui-content">
-      <div className="rpgui-container framed-golden-2 shop-window">
-        <a href="#" onClick={handleBack}>
-          <div class="rpgui-container position-absolute">Back</div>
-        </a>
+      {!modalIsOpen && (
+        <div className="rpgui-container framed-golden-2 shop-window">
+          <a href="#" onClick={handleBack}>
+            <div className="rpgui-container position-absolute">Back</div>
+          </a>
 
-        <div className="d-flex flex-column pt-5">
-          <select
-            className="rpgui-dropdown"
-            onChange={(e) => {
-              setGameType(e.target.value);
-            }}
-          >
-            <option className="rpgui-dropdown-imp">Video Games</option>
-            <option className="rpgui-dropdown-imp">Board Games</option>
-          </select>
-          <table>
-            <tr>
-              <th className="p-3">Name</th>
-              <th className="p-3">Description</th>
-              <th className="p-3">Price</th>
-              <th className="p-3">Location</th>
-            </tr>
-            {renderListing()}
-          </table>
+          <div className="d-flex flex-column pt-5">
+            <select
+              className="rpgui-dropdown"
+              onChange={(e) => {
+                setGameType(e.target.value);
+              }}
+            >
+              <option className="rpgui-dropdown-imp">Video Games</option>
+              <option className="rpgui-dropdown-imp">Board Games</option>
+            </select>
+            <table>
+              <tr>
+                <th className="p-3">Name</th>
+                <th className="p-3">Description</th>
+                <th className="p-3">Price</th>
+                <th className="p-3">Location</th>
+              </tr>
+              {renderListing()}
+            </table>
+          </div>
         </div>
-      </div>
+      )}
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
-        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
@@ -152,15 +122,15 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a className="position-absolute" onClick={goToOther}>
                 Back
               </a>
-              <ContactModal setWhichModal={setWhichModal} />
+              <ContactModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
           {whichModal == "ListingModal" && (
             <>
               <a href="#" onClick={closeModal}>
-                <div class="rpgui-container position-absolute">X</div>
+                <div className="rpgui-container position-absolute">X</div>
               </a>
-              <ListingModal setWhichModal={setWhichModal} />
+              <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
         </div>

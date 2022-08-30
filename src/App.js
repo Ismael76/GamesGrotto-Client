@@ -3,17 +3,20 @@ import { Splash, Shop, Home, Forum } from "./pages";
 import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 import PrivateRoutes from "./utils/PrivateRoute";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<PrivateRoutes />}>
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/forum" element={<Forum />} />
-      </Route>
-      <Route path="/" element={<Splash />} />
-    </Routes>
+    <AnimatePresence mode="wait">
+      <Routes>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/forum" element={<Forum />} />
+        </Route>
+        <Route path="/" element={<Splash />} />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
