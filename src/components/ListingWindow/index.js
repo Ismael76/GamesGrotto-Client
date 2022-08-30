@@ -102,6 +102,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
                 <th className="p-4"><h2>Description</h2></th>
                 <th className="p-4"><h2>Price</h2></th>
                 <th className="p-4"><h2>Location</h2></th>
+                <th className="p-4"><h2>See more</h2></th>
               </tr>
               {renderListing()}
             </table>
