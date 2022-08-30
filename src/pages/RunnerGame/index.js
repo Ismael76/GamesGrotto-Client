@@ -94,7 +94,6 @@ export default function RunnerGame() {
         return () => clearInterval(countDown)
     }, [])
 
-
     return (
         <>
             <div id="game">
