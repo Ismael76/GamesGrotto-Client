@@ -46,7 +46,8 @@ export default function Shop() {
       e.target.innerText = "Sell";
     }
     setShowListing(true);
-    setListingType(e.target.innerText);
+    let listingsToShow = e.target.innerText
+    setListingType(listingsToShow);
   };
 
   function openModal() {
@@ -108,7 +109,6 @@ export default function Shop() {
   };
 
   function renderUserListings() {
-    console.log(userListingData);
     if (userListingData.length != 0) {
       return userListingData.map((val, key) => (
         <tr key={key} className="border-listings-table">
