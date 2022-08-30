@@ -29,6 +29,9 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listing, setListing] = useState();
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  //Pagination States
   const [listingData, setListingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -55,7 +58,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
     fetchData();
   }, []);
 
-  //Gets Current Listings On Page
   const indexOfLastListing = currentPage * postsPerPage;
   const indexOfFirstListing = indexOfLastListing - postsPerPage;
 
@@ -73,38 +75,54 @@ export default function ListingWindow({ listingType, setShowListing }) {
   );
 
   const renderListingSale = () =>
-    currentListingSale.map((val, key) => (
-      <tr key={key} className="border-golden">
-        <td className="p-3">{val.title}</td>
-        <td className="p-3">{val.description}</td>
-        <td className="p-3">£{val.price}</td>
-        <td className="p-3">{val.location}</td>
+    currentListingSale
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
+      .map((val, key) => (
+        <tr key={key} className="border-golden">
+          <td className="p-3">{val.title}</td>
+          <td className="p-3">{val.description}</td>
+          <td className="p-3">£{val.price}</td>
+          <td className="p-3">{val.location}</td>
 
-        <button
-          className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={() => openModal(val)}
-        >
-          More
-        </button>
-      </tr>
-    ));
+          <button
+            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
 
   const renderListingTrade = () =>
-    currentListingTrade.map((val, key) => (
-      <tr key={key} className="border-golden">
-        <td className="p-3">{val.title}</td>
-        <td className="p-3">{val.description}</td>
-        <td className="p-3">£{val.price}</td>
-        <td className="p-3">{val.location}</td>
+    currentListingTrade
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
+      .map((val, key) => (
+        <tr key={key} className="border-golden">
+          <td className="p-3">{val.title}</td>
+          <td className="p-3">{val.description}</td>
+          <td className="p-3">£{val.price}</td>
+          <td className="p-3">{val.location}</td>
 
-        <button
-          className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={() => openModal(val)}
-        >
-          More
-        </button>
-      </tr>
-    ));
+          <button
+            className="rpgui-button px-3 mx-3 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -121,7 +139,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </a>
 
           <div className="d-flex flex-column pt-5">
-            <select
+            {/* <select
               className="rpgui-dropdown"
               onChange={(e) => {
                 setGameType(e.target.value);
@@ -129,7 +147,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
             >
               <option className="rpgui-dropdown-imp">Video Games</option>
               <option className="rpgui-dropdown-imp">Board Games</option>
-            </select>
+            </select> */}
+            <input
+              type="text"
+              placeholder="Search Item..."
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            ></input>
             <table>
               <tr>
                 <th className="p-3">Name</th>
