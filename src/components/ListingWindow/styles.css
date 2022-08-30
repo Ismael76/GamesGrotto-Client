@@ -30,3 +30,8 @@
 .border-listings-table {
   border: 2mm groove rgba(133, 76, 48, 0.8);
 }
+
+.show-modal {
+  position: absolute;
+  left: 50%;
+}

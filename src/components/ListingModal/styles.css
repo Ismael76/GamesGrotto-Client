@@ -1,11 +1,15 @@
 .for-sale-img {
-    width: 250px;
-    margin: auto;
-    height: 250px;
+  width: 250px;
+  margin: auto;
+  height: 250px;
 }
 
 .contact-seller-container {
-    top: 63%;
-    left: 50%;
-    transform: translateX(-50%);
+  top: 63%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.listing-modal {
+  width: 50vw;
 }

@@ -181,7 +181,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
                 ? renderListingSale()
                 : renderListingTrade()}
             </table>
-
             <Pagination
               postsPerPage={postsPerPage}
               totalPosts={
