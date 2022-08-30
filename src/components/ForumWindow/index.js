@@ -34,6 +34,7 @@ export default function ForumWindow() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = useState("");
   const [post, setPost] = useState();
+  const [rerender, setRerender] = useState();
 
   const getPosts = async () => {
     try {
@@ -47,7 +48,7 @@ export default function ForumWindow() {
 
   useEffect( () => {
     getPosts();
-  }, []);
+  }, [rerender]);
 
   const openCommentModal = (post) => {
     setPost(post);
@@ -93,25 +94,7 @@ export default function ForumWindow() {
     try {
       const response = await fetch("http://localhost:5000/posts", options);
       const data = await response.json();
-      if (data == 1 && option == "likes"){
-        setPostData(...postData, postData[item.id-1].likes.append(username))
-      }
-      else if (data == 1 && option == "dislikes"){
-        setPostData(...postData, postData[item.id-1].dislikes.append(username))
-      }
-//       else if (data == -1 && option == "likes"){
-//         const index = item.likes.indexOf(username);
-//         if (index > -1) { 
-//           setPostData(...postData, postData.splice(index, 1));
-// }
-//       }
-//       else {
-//         const index = item.dislikes.indexOf(username);
-//         if (index > -1) { 
-//           setPostData(...postData, postData.splice(index, 1));
-//         }
-      // }
-
+      setRerender(Math.random())
       return data;
     } catch (err) {
       console.log(err);
@@ -131,10 +114,10 @@ export default function ForumWindow() {
         </div>
         <div className="d-flex justify-content-around">
           <button className="rpgui-button" onClick={() => updateLikes(item, "likes")}>
-            {postData[item.id-1].likes.length}👍
+            {item.likes.length}👍
           </button>
           <button className="rpgui-button" onClick={() => updateLikes(item, "dislikes")}>
-            {postData[item.id-1].dislikes.length}👎
+            {item.dislikes.length}👎
           </button>
         </div>
         <hr className="golden" />
@@ -176,6 +159,7 @@ export default function ForumWindow() {
               <hr className="golden" />
               {postData.length == 0 && <h1>No Posts Available</h1>}
               {postData.length != 0 && <ul>{renderListing()}</ul>}
+              
             </div>
 
             <button
