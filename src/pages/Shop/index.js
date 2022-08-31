@@ -24,8 +24,14 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function Shop() {
-  const [leaveShop, setLeaveShop, leaveForum, setLeaveForum] =
-    useContext(GameContext);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+  ] = useContext(GameContext);
   const [showListing, setShowListing] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [listingType, setListingType] = useState("");
@@ -36,7 +42,7 @@ export default function Shop() {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    if (e.target.innerText == "Buy") {
+    if (e.target.innerText == "BUY") {
       e.target.innerText = "Sell";
     }
     setShowListing(true);
@@ -59,6 +65,10 @@ export default function Shop() {
     navigate("/home", { replace: true });
     setLeaveShop(true);
     setLeaveForum(false);
+    setOffset({
+      x: -150,
+      y: -1100,
+    });
   }
 
   useEffect(() => {
@@ -217,7 +227,11 @@ export default function Shop() {
             </div>
             <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
               <div className="modal-content">
-                <CreateListing setIsOpen={setIsOpen} closeModal={closeModal} />
+                <CreateListing
+                  setIsOpen={setIsOpen}
+                  closeModal={closeModal}
+                  setUserListingData={setUserListingData}
+                />
               </div>
             </div>
           </section>

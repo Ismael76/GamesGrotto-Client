@@ -26,8 +26,14 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function ForumWindow() {
-  const [leaveShop, setLeaveShop, leaveForum, setLeaveForum] =
-    useContext(GameContext);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+  ] = useContext(GameContext);
 
   const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
@@ -153,68 +159,62 @@ export default function ForumWindow() {
     navigate("/home", { replace: true });
     setLeaveForum(true);
     setLeaveShop(false);
+    setOffset({
+      x: -850,
+      y: -1100,
+    });
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      exit={{ opacity: 0 }}
-    >
-      <section className="rpgui-content">
-        {!modalIsOpen && (
-          <>
-            <div className="rpgui-container framed-golden forum-search">
-              <a href="" onClick={handleBack}>
-                <div className="rpgui-container flex-item">Back</div>
-              </a>
-              <form onSubmit={handleSubmit} className="d-flex mt-4">
-                <input
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                  }}
-                  className="m-1"
-                  placeholder="Search Title Here"
-                ></input>
-                <button className="m-1">Submit</button>
-              </form>
-            </div>
-
-            <div className="rpgui-container framed-golden forum-window">
-              <h1>Forum Board</h1>
-              <hr className="golden" />
-              {postData.length == 0 && <h1>No Posts Available</h1>}
-              {postData.length != 0 && <ul>{renderListing()}</ul>}
-            </div>
-
-            <button
-              className="rpgui-container framed-golden post-create"
-              onClick={openCreatePostModal}
-            >
-              Create Post
-            </button>
-          </>
-        )}
-
-        {whichModal == "DisplayComments" && (
-          <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
-            <div className="modal-content modal-center">
-              <CommentModal post={post} closeModal={closeModal} />
-            </div>
+    <section className="rpgui-content">
+      {!modalIsOpen && (
+        <>
+          <div className="rpgui-container framed-golden forum-search">
+            <a href="#" onClick={handleBack}>
+              <div className="rpgui-container flex-item">Back</div>
+            </a>
+            <form onSubmit={handleSubmit} className="d-flex mt-4">
+              <input
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+                className="m-1"
+                placeholder="Search Title Here"
+              ></input>
+              <button className="m-1">Submit</button>
+            </form>
           </div>
-        )}
-        {whichModal == "CreatePost" && (
-          <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
-            <div className="modal-content modal-center">
-              <CreatePostModal
-                addToPosts={setPostData}
-                closeModal={closeModal}
-              />
-            </div>
+
+          <div className="rpgui-container framed-golden forum-window">
+            <h1>Forum Board</h1>
+            <hr className="golden" />
+            {postData.length == 0 && <h1>No Posts Available</h1>}
+            {postData.length != 0 && <ul>{renderListing()}</ul>}
           </div>
-        )}
-      </section>
-    </motion.div>
+
+          <button
+            className="rpgui-container framed-golden post-create"
+            onClick={openCreatePostModal}
+          >
+            Create Post
+          </button>
+        </>
+      )}
+
+      {whichModal == "DisplayComments" && (
+        <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+          <div className="modal-content modal-center">
+            <CommentModal post={post} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+      {whichModal == "CreatePost" && (
+        <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+          <div className="modal-content modal-center">
+            <CreatePostModal addToPosts={setPostData} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
