@@ -6,3 +6,22 @@
   display: flex;
   flex-direction: column;
 }
+
+.score-modal {
+  width: 46%;
+  top: 2%;
+  height: 95%;
+  /* overflow: auto; */
+}
+
+.score-modal > div {
+  height: 100%;
+}
+
+.score-div {
+  height: 5%;
+}
+
+.golden {
+  margin: none;
+}

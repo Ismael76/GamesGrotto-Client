@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./styles.css";
+import axios from "axios";
 
 //Modal
 const customStyles = {
@@ -25,6 +26,18 @@ export default function GameModal({
   whichModal,
   setWhichModal,
 }) {
+  const [scoreData, setScoreData] = useState([]);
+
+  const fetchScores = async () => {
+    const url = `http://localhost:5000/scores/`;
+    const data = await axios.get(url);
+    setScoreData(data.data);
+  };
+
+  useEffect(() => {
+    fetchScores();
+  }, []);
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -111,6 +124,20 @@ export default function GameModal({
         </Modal>
       );
     } else if (whichModal === "leaderboard") {
+      const renderScores = () =>
+        scoreData.map((item) => (
+          <>
+            <div class="d-flex justify-content-around score-div" key={item.id}>
+              <p className="p-3 text-center">
+                {item.username}
+                {/*on {item.date} */}
+              </p>
+              <p className="p-3 text-center">{item.score}</p>
+            </div>
+            <hr className="golden" />
+          </>
+        ));
+
       return (
         <Modal
           className="rpgui-content splash-modal-position"
@@ -120,12 +147,17 @@ export default function GameModal({
           style={customStyles}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4 score-modal">
             <button className="position-absolute" onClick={closeModal}>
               X
             </button>
             <div className="mt-2">
               <h1 className="game-modal-heading">LEADERBOARDS</h1>
+              <hr className="golden" />
+              {scoreData.length == 0 && (
+                <h1 className="text-center">No highscores yet</h1>
+              )}
+              {scoreData.length != 0 && renderScores()}
             </div>
           </div>
         </Modal>
