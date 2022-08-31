@@ -49,7 +49,10 @@ export default function CommentModal({
   const renderComments = () =>
     commentData.map((item) => (
       <>
-        <div key={item.id} className="rpgui-container framed-golden2-relative my-3 mx-3 shadow-sm">
+        <div
+          key={item.id}
+          className="rpgui-container framed-golden2-relative my-3 mx-3 shadow-sm"
+        >
           <p className="p-3">{item.text}</p>
           <p className="p-3 text-center">
             Commented by {item.username} {/*on {item.date} */}
@@ -125,20 +128,20 @@ export default function CommentModal({
       </a>
       {currentPost()}
       <form onSubmit={(e) => submitComment(e)}>
-        <div className="rpgui-container framed-relative w-75 mx-auto mb-4" >
-        <textarea
-        className="bg-dark"
-          required
-          placeholder="Enter comment"
-          onChange={(e) => {
-            setPostCommentData((prev) => ({
-              ...prev,
-              text: e.target.value,
-            }));
-            setInputVal(e.target.value);
-          }}
-          value={inputVal}
-        ></textarea>
+        <div className="rpgui-container framed-relative w-75 mx-auto mb-4">
+          <textarea
+            className="bg-dark"
+            required
+            placeholder="Enter Comment..."
+            onChange={(e) => {
+              setPostCommentData((prev) => ({
+                ...prev,
+                text: e.target.value,
+              }));
+              setInputVal(e.target.value);
+            }}
+            value={inputVal}
+          ></textarea>
         </div>
         <button className="rpgui-button framed-golden mb-3">Comment</button>
       </form>
