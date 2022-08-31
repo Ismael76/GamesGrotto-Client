@@ -17,7 +17,7 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
   const comments = async () => {
     console.log(post)
     try {
-      const url = `http://localhost:5000/comments/${post.id}`;
+      const url = `https://games-grotto.herokuapp.com/comments/${post.id}`;
       const data = await axios.get(url);
       setCommentData(data.data);
 
@@ -72,7 +72,10 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
     };
 
     try {
-      const response = await fetch("http://localhost:5000/comments/", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/comments/",
+        options
+      );
       const data = await response.json();
       setCommentData((prev) => [...prev, postCommentData]);
       setInputVal("");
@@ -93,13 +96,17 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
       likes: item.likes,
       dislikes: item.dislikes,
     };
+
     const options = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
     try {
-      const response = await fetch("http://localhost:5000/comments/", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/comments/",
+        options
+      );
       const data = await response.json();
       setRerenderComments(Math.random());
       return data;

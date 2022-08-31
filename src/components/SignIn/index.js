@@ -25,7 +25,10 @@ export default function SignIn({ setWhichModal }) {
       body: JSON.stringify(loginData),
     };
     try {
-      const response = await fetch("http://localhost:5000/auth/login", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/auth/login",
+        options
+      );
       const { token } = await response.json();
       localStorage.setItem("token", token);
       localStorage.setItem("username", loginData.username);
