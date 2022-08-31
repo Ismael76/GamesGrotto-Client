@@ -113,8 +113,8 @@ export default function RunnerGame() {
             animateScript()
             return () => clearInterval(countDown)
         } else {
-            alert("Game over")
-            navigate("/home", { replace: true });
+            // alert("Game over")
+            // navigate("/home", { replace: true });
         }
 
     }, [gameLoop])
