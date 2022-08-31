@@ -23,12 +23,10 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function ListingWindow({ listingType, setShowListing }) {
-  const [gameType, setGameType] = useState("Video Game");
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listing, setListing] = useState();
-
   const [searchTerm, setSearchTerm] = useState("");
   //Pagination States
   const [listingData, setListingData] = useState([]);
@@ -82,7 +80,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
         </div>
       );
     }
-    currentListingSale
+    return currentListingSale
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
         else if (
@@ -91,7 +89,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           return searchItem;
       })
       .map((val, key) => (
-        <tr key={key} className="border-listings-table">
+        <tr key={key} className="border-listings-table shadow">
           <td className="p-3 special-border">{val.title}</td>
           <td className="p-3 special-border table-description">
             {val.description}
@@ -112,13 +110,13 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const renderListingTrade = () => {
     if (currentListingTrade.length == 0) {
       return (
-        <div className="no-listing">
+        <div className="no-listing d-flex flex-column">
           <h2>No Trade Listings To View, Sorry :(</h2>
           <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
         </div>
       );
     }
-    currentListingTrade
+    return currentListingTrade
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
         else if (
@@ -127,7 +125,8 @@ export default function ListingWindow({ listingType, setShowListing }) {
           return searchItem;
       })
       .map((val, key) => (
-        <tr key={key} className="border-listings-table">
+
+        <tr key={key} className="border-listings-table shadow">
           <td className="p-5 special-border">{val.title}</td>
           <td className="p-5 special-border table-description">
             {val.description}
@@ -157,16 +156,8 @@ export default function ListingWindow({ listingType, setShowListing }) {
           <div onClick={handleBack} className="rpgui-container position-absolute cross">Back</div>
 
           <div className="d-flex flex-column pt-5">
-            {/* <select
-              className="rpgui-dropdown"
-              onChange={(e) => {
-                setGameType(e.target.value);
-              }}
-            >
-              <option className="rpgui-dropdown-imp">Video Games</option>
-              <option className="rpgui-dropdown-imp">Board Games</option>
-            </select> */}
             <input
+              className="rounded shadow-sm"
               type="text"
               placeholder="Search Item..."
               onChange={(e) => {
@@ -196,14 +187,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
                   <h2>See more</h2>
                 </th>
               </tr>
-              {listingType == "BUY"
+              {listingType == "Sell"
                 ? renderListingSale()
                 : renderListingTrade()}
             </table>
             <Pagination
               postsPerPage={postsPerPage}
               totalPosts={
-                listingType == "BUY" ? saleData.length : tradeData.length
+                listingType == "Sell" ? saleData.length : tradeData.length
               }
               paginate={paginate}
             />

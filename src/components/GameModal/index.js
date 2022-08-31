@@ -151,7 +151,7 @@ export default function GameModal({
       const renderScores = () =>
         scoreData.map((item) => (
           <>
-            <div class="d-flex justify-content-around score-div" key={item.id}>
+            <div className="d-flex justify-content-around score-div" key={item.id}>
               <p className="p-3 text-center">
                 {item.username}
                 {/*on {item.date} */}

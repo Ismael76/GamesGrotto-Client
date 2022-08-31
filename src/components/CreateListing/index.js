@@ -75,7 +75,7 @@ export default function CreateListing({
               }
               className="rpgui-dropdown listing-dropdown mt-1 mb-1"
             >
-              <option value="Sell" selected>
+              <option defaultValue="Sell">
                 Sell
               </option>
               <option value="Trade">Trade</option>
@@ -121,7 +121,7 @@ export default function CreateListing({
               }
             />
             <input
-              className="mb-1 bg-dark" 
+              className="mb-1 bg-dark"
               type="text"
               label="Img URL"
               // onChange={(e) => setEmail(e.target.value)}
