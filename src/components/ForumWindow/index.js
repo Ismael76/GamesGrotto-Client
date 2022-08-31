@@ -170,7 +170,7 @@ export default function ForumWindow() {
                   setSearchTerm(e.target.value);
                 }}
                 className="m-1"
-                placeholder="Search Title Here..."
+                placeholder="Search Post Here..."
               ></input>
               <button className="m-1">Submit</button>
             </form>
