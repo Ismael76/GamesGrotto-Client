@@ -4,8 +4,12 @@ import { collisions } from "./collisions";
 import {
   shopNavigateData,
   forumNavigateData,
-  signBoardPopupData,
-  forumSignboardPopupData,
+  shopPopupData,
+  aboutPopupData,
+  minigamePopupData,
+  minigameNavigateData,
+  leaderboardPopupData,
+  navigateWebsiteData,
 } from "./navigateZones";
 import { useNavigate } from "react-router-dom";
 import GameModal from "../GameModal";
@@ -29,16 +33,37 @@ for (let i = 0; i < forumNavigateData.length; i += 50) {
   forumNavigate.push(forumNavigateData.slice(i, 50 + i));
 }
 
+//Array That Stores All Tiles That Trigger The Minigame
+const minigameNavigate = [];
+for (let i = 0; i < minigameNavigateData.length; i += 50) {
+  minigameNavigate.push(minigameNavigateData.slice(i, 50 + i));
+}
+
+const websiteNavigate = [];
+for (let i = 0; i < navigateWebsiteData.length; i += 50) {
+  websiteNavigate.push(navigateWebsiteData.slice(i, 50 + i));
+}
+
 //Array That Stores All Tiles That Trigger Signboard Modal Popup For Shop
-const signboardNavigate = [];
-for (let i = 0; i < signBoardPopupData.length; i += 50) {
-  signboardNavigate.push(signBoardPopupData.slice(i, 50 + i));
+const shopPopup = [];
+for (let i = 0; i < shopPopupData.length; i += 50) {
+  shopPopup.push(shopPopupData.slice(i, 50 + i));
+}
+
+const aboutPopup = [];
+for (let i = 0; i < aboutPopupData.length; i += 50) {
+  aboutPopup.push(aboutPopupData.slice(i, 50 + i));
 }
 
 //Array That Stores All Tiles That Trigger Signboard Modal Popup For Forum
-const forumSignboardNavigate = [];
-for (let i = 0; i < forumSignboardPopupData.length; i += 50) {
-  forumSignboardNavigate.push(forumSignboardPopupData.slice(i, 50 + i));
+const minigamePopup = [];
+for (let i = 0; i < minigamePopupData.length; i += 50) {
+  minigamePopup.push(minigamePopupData.slice(i, 50 + i));
+}
+
+const leaderboardPopup = [];
+for (let i = 0; i < leaderboardPopupData.length; i += 50) {
+  leaderboardPopup.push(leaderboardPopupData.slice(i, 50 + i));
 }
 
 const keys = {
@@ -64,6 +89,18 @@ const keys = {
     pressed: false,
   },
   d: {
+    pressed: false,
+  },
+  W: {
+    pressed: false,
+  },
+  A: {
+    pressed: false,
+  },
+  S: {
+    pressed: false,
+  },
+  D: {
     pressed: false,
   },
 };
@@ -103,6 +140,18 @@ document.addEventListener("keydown", function (playerWalk) {
       keys.d.pressed = true;
       lastKeyDown = "ArrowRight";
       break;
+    case "W":
+      keys.W.pressed = false;
+      break;
+    case "S":
+      keys.S.pressed = false;
+      break;
+    case "A":
+      keys.A.pressed = false;
+      break;
+    case "D":
+      keys.D.pressed = false;
+      break;
     default:
       break;
   }
@@ -133,6 +182,18 @@ document.addEventListener("keyup", function (playerWalk) {
     case "d":
       keys.d.pressed = false;
       break;
+    case "W":
+      keys.W.pressed = false;
+      break;
+    case "S":
+      keys.S.pressed = false;
+      break;
+    case "A":
+      keys.A.pressed = false;
+      break;
+    case "D":
+      keys.D.pressed = false;
+      break;
     default:
       break;
   }
@@ -140,13 +201,12 @@ document.addEventListener("keyup", function (playerWalk) {
 
 const Dashboard = ({ draw, height, width }) => {
   const [
-    section,
-    modal,
-    homeSection,
     leaveShop,
     setLeaveShop,
     leaveForum,
     setLeaveForum,
+    offset,
+    setOffset,
   ] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("");
@@ -187,16 +247,12 @@ const Dashboard = ({ draw, height, width }) => {
       }
     }
 
-    const offset = {
-      x: -280,
-      y: -1250,
-    };
     const boundaries = [];
 
     //All Collision Tiles
     collisionsMap.forEach((row, i) => {
       row.forEach((symbol, j) => {
-        if (symbol === 4071) {
+        if (symbol === 4247) {
           boundaries.push(
             new Boundary({
               position: {
@@ -214,7 +270,7 @@ const Dashboard = ({ draw, height, width }) => {
 
     shopNavigate.forEach((row, i) => {
       row.forEach((symbol, j) => {
-        if (symbol === 4071) {
+        if (symbol === 4247) {
           shopNavigateTiles.push(
             new Boundary({
               position: {
@@ -232,7 +288,7 @@ const Dashboard = ({ draw, height, width }) => {
 
     forumNavigate.forEach((row, i) => {
       row.forEach((symbol, j) => {
-        if (symbol === 4071) {
+        if (symbol === 4247) {
           forumNavigateTiles.push(
             new Boundary({
               position: {
@@ -245,13 +301,48 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
-    //All Navigate Tiles For Shop Signboard
-    const signboardNavigateTiles = [];
+    //All Navigate Tiles For Forum
+    const minigameNavigateTiles = [];
 
-    signboardNavigate.forEach((row, i) => {
+    minigameNavigate.forEach((row, i) => {
       row.forEach((symbol, j) => {
-        if (symbol === 4071) {
-          signboardNavigateTiles.push(
+        if (symbol === 4247) {
+          minigameNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    //All Navigate Tiles For Shop Signboard
+    const shopPopupTiles = [];
+
+    shopPopup.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4247) {
+          shopPopupTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    const aboutPopupTiles = [];
+
+    aboutPopup.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4247) {
+          aboutPopupTiles.push(
             new Boundary({
               position: {
                 x: j * Boundary.width + offset.x,
@@ -264,12 +355,46 @@ const Dashboard = ({ draw, height, width }) => {
     });
 
     //All Navigate Tiles For Forum Signboard
-    const forumSignboardNavigateTiles = [];
+    const minigamePopupTiles = [];
 
-    forumSignboardNavigate.forEach((row, i) => {
+    minigamePopup.forEach((row, i) => {
       row.forEach((symbol, j) => {
-        if (symbol === 4071) {
-          forumSignboardNavigateTiles.push(
+        if (symbol === 4247) {
+          minigamePopupTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    const leaderboardPopupTiles = [];
+
+    leaderboardPopup.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4247) {
+          leaderboardPopupTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
+    const websiteNavigateTiles = [];
+
+    websiteNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4247) {
+          websiteNavigateTiles.push(
             new Boundary({
               position: {
                 x: j * Boundary.width + offset.x,
@@ -326,16 +451,12 @@ const Dashboard = ({ draw, height, width }) => {
 
     //If User Leaves Shop Set Position
     if (leaveShop) {
-      playerPosX = 620;
-      playerPosY = 300;
       directionPlayerFace = playerImageDown;
     }
 
-    // if (leaveForum) {
-    //   playerPosX = 700;
-    //   playerPosY = 350;
-    //   directionPlayerFace = playerImageDown;
-    // }
+    if (leaveForum) {
+      directionPlayerFace = playerImageDown;
+    }
 
     // Player Configuration
     const player = new Sprite({
@@ -358,12 +479,24 @@ const Dashboard = ({ draw, height, width }) => {
     // Game Scene Configuration
     const gameScene = new Image();
     gameScene.src = require("./map.png");
+    console.log(offset.y);
     const gameSceneLayer = new Sprite({
       position: {
         x: offset.x,
         y: offset.y,
       },
       image: gameScene, //Loading Map Image
+    });
+
+    //Foreground Image
+    const gameSceneForegroundImage = new Image();
+    gameSceneForegroundImage.src = require("./foregroundObjects.png");
+    const gameSceneForegroundLayer = new Sprite({
+      position: {
+        x: offset.x,
+        y: offset.y,
+      },
+      image: gameSceneForegroundImage, //Loading Map Image
     });
 
     const checkCollision = ({ player, boundary }) => {
@@ -378,10 +511,15 @@ const Dashboard = ({ draw, height, width }) => {
     const moveables = [
       gameSceneLayer,
       ...boundaries,
+      gameSceneForegroundLayer,
       ...shopNavigateTiles,
       ...forumNavigateTiles,
-      ...signboardNavigateTiles,
-      ...forumSignboardNavigateTiles,
+      ...minigameNavigateTiles,
+      ...shopPopupTiles,
+      ...minigamePopupTiles,
+      ...aboutPopupTiles,
+      ...leaderboardPopupTiles,
+      ...websiteNavigateTiles,
     ];
 
     function animate() {
@@ -403,17 +541,35 @@ const Dashboard = ({ draw, height, width }) => {
         navigateZone.draw();
       });
 
+      minigameNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      websiteNavigateTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
       //All Navigation Tiles Players Walk Over For Shop Sign Board Popup
-      signboardNavigateTiles.forEach((navigateZone) => {
+      shopPopupTiles.forEach((navigateZone) => {
         navigateZone.draw();
       });
 
       //All Navigation Tiles Players Walk Over For Forum Sign Board Popup
-      forumSignboardNavigateTiles.forEach((navigateZone) => {
+      minigamePopupTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      aboutPopupTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      leaderboardPopupTiles.forEach((navigateZone) => {
         navigateZone.draw();
       });
 
       player.draw(); //Draw Player Onto Canvas
+
+      gameSceneForegroundLayer.draw();
 
       let moving = true;
       player.moving = false;
@@ -423,6 +579,10 @@ const Dashboard = ({ draw, height, width }) => {
         keys.a.pressed ||
         keys.s.pressed ||
         keys.d.pressed ||
+        keys.W.pressed ||
+        keys.A.pressed ||
+        keys.S.pressed ||
+        keys.D.pressed ||
         keys.ArrowDown.pressed ||
         keys.ArrowUp.pressed ||
         keys.ArrowLeft.pressed ||
@@ -454,8 +614,8 @@ const Dashboard = ({ draw, height, width }) => {
           }
         }
 
-        for (let i = 0; i < forumSignboardNavigateTiles.length; i++) {
-          const navigateZone = forumSignboardNavigateTiles[i];
+        for (let i = 0; i < websiteNavigateTiles.length; i++) {
+          const navigateZone = websiteNavigateTiles[i];
           const overlappingArea =
             (Math.min(
               player.position.x + player.width,
@@ -474,7 +634,33 @@ const Dashboard = ({ draw, height, width }) => {
             }) &&
             overlappingArea > (player.width * player.height) / 2
           ) {
-            setWhichModal("forum");
+            window.location.replace("https://www.getfutureproof.co.uk/");
+            window.cancelAnimationFrame(animationID);
+            break;
+          }
+        }
+
+        for (let i = 0; i < aboutPopupTiles.length; i++) {
+          const navigateZone = aboutPopupTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setWhichModal("about");
             setIsOpen(true);
             break;
           } else {
@@ -482,8 +668,90 @@ const Dashboard = ({ draw, height, width }) => {
           }
         }
 
-        for (let i = 0; i < signboardNavigateTiles.length; i++) {
-          const navigateZone = signboardNavigateTiles[i];
+        for (let i = 0; i < leaderboardPopupTiles.length; i++) {
+          const navigateZone = leaderboardPopupTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setWhichModal("leaderboard");
+            setIsOpen(true);
+            break;
+          } else {
+            // setIsOpen(false);
+          }
+        }
+
+        for (let i = 0; i < minigameNavigateTiles.length; i++) {
+          const navigateZone = minigameNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            navigate("/game", { replace: true });
+            window.cancelAnimationFrame(animationID);
+            break;
+          }
+        }
+
+        for (let i = 0; i < minigamePopupTiles.length; i++) {
+          const navigateZone = minigamePopupTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setWhichModal("dungeon");
+            setIsOpen(true);
+            break;
+          } else {
+            // setIsOpen(false);
+          }
+        }
+
+        for (let i = 0; i < shopPopupTiles.length; i++) {
+          const navigateZone = shopPopupTiles[i];
           const overlappingArea =
             (Math.min(
               player.position.x + player.width,
@@ -538,6 +806,7 @@ const Dashboard = ({ draw, height, width }) => {
       }
       if (
         keys.ArrowDown.pressed ||
+        keys.S.pressed ||
         (keys.s.pressed && lastKeyDown === "ArrowDown")
       ) {
         // Player Movement When Keys Are Pressed
@@ -569,6 +838,7 @@ const Dashboard = ({ draw, height, width }) => {
         }
       } else if (
         keys.ArrowUp.pressed ||
+        keys.W.pressed ||
         (keys.w.pressed && lastKeyDown === "ArrowUp")
       ) {
         playerImageDown = playerImage;
@@ -602,6 +872,7 @@ const Dashboard = ({ draw, height, width }) => {
         }
       } else if (
         keys.ArrowRight.pressed ||
+        keys.D.pressed ||
         (keys.d.pressed && lastKeyDown === "ArrowRight")
       ) {
         player.moving = true;
@@ -632,6 +903,7 @@ const Dashboard = ({ draw, height, width }) => {
         }
       } else if (
         keys.ArrowLeft.pressed ||
+        keys.A.pressed ||
         (keys.a.pressed && lastKeyDown === "ArrowLeft")
       ) {
         player.moving = true;

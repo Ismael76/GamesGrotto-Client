@@ -1,11 +1,23 @@
-.shop-window {
+.shop-window2 {
   position: absolute;
   align-items: center;
-  left: calc(25vw + 2rem);
-  top: 8vw;
-  max-width:50%;
-  max-height: 75%;
+  left: calc(23vw + 2rem);
+  top: 2vw;
+  z-index: 1;
+  max-height: 90vh;
   overflow: auto;
+  width: 70vw;
+}
+
+.special-border {
+  border-right: 2mm groove rgba(133, 76, 48, 0.8);
+  width: 30vw;
+  word-break: break-all;
+  max-height: 100px;
+}
+
+.table-description {
+  width: 60vw;
 }
 
 .listing-modal {
@@ -13,10 +25,13 @@
   top: 4%;
   height: 92%;
   overflow: auto;
-
 }
 
+.border-listings-table {
+  border: 2mm groove rgba(133, 76, 48, 0.8);
+}
 
-.border-golden {
-  border: 4mm ridge rgba(255, 215, 0, .7);
+.show-modal {
+  position: absolute;
+  left: 50%;
 }

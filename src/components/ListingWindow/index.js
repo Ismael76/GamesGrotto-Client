@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useNavigate } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
-import { ListingModal, ContactModal } from "../../components";
+import { ListingModal, ContactModal, Pagination } from "../../components";
 
 import Modal from "react-modal";
 
@@ -27,61 +27,21 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
-  const [listingData, setListingData] = useState();
+  const [listing, setListing] = useState();
 
-  const dummyData = [
-    {
-      name: "Call of Duty",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 12,
-      location: "London",
-    },
-    {
-      name: "Fifa 12",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Battlefield 3",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 14,
-      location: "London",
-    },
-    {
-      name: "Battlefield 4",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 13,
-      location: "London",
-    },
-    {
-      name: "Chess",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 16,
-      location: "London",
-    },
-    {
-      name: "Ludo",
-      description:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      price: 21,
-      location: "London",
-    },
-  ];
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Type will be used when accessing database to differentiate between trades and buys
-  // console.log("The gametype is: ", gameType);
+  //Pagination States
+  const [listingData, setListingData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   const handleBack = () => {
     setShowListing(false);
   };
 
-  function openModal() {
+  function openModal(listing) {
+    setListing(listing);
     setIsOpen(true);
   }
 
@@ -89,51 +49,101 @@ export default function ListingWindow({ listingType, setShowListing }) {
     setIsOpen(false);
   }
 
-  async function fetchData() {
-    const response = await fetch("http://localhost:5000/listings");
-    const data = await response.json();
-    setListingData(data)
-  }
-
-
-
-  console.log(listingData)
-
   useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("http://localhost:5000/listings");
+      const data = await response.json();
+      setListingData(data);
+    }
     fetchData();
   }, []);
 
-  const renderListing = () =>
-  listingData.map((val, key) => (
-      <tr key={key} className="border-golden">
-        <td className="p-3">{val.title}</td>
-        <td className="p-3">{val.description}</td>
-        <td className="p-3">£{val.price}</td>
-        <td className="p-3">{val.location}</td>
+  const indexOfLastListing = currentPage * postsPerPage;
+  const indexOfFirstListing = indexOfLastListing - postsPerPage;
 
-        <button
-          className="rpgui-button px-3 mx-3 my-auto py-auto"
-          onClick={openModal}
-        >
-          More
-        </button>
-      </tr>
-    ));
+  const saleData = listingData.filter((listing) => listing.type == "Sell");
+  const tradeData = listingData.filter((listing) => listing.type == "Trade");
+
+  const currentListingTrade = tradeData.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  );
+
+  const currentListingSale = saleData.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  );
+
+  const renderListingSale = () =>
+    currentListingSale
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
+      .map((val, key) => (
+        <tr key={key} className="border-listings-table">
+          <td className="p-3 special-border">{val.title}</td>
+          <td className="p-3 special-border table-description">
+            {val.description}
+          </td>
+          <td className="p-3 special-border">£{val.price}</td>
+          <td className="p-3 special-border">{val.location}</td>
+
+          <button
+            className="rpgui-button ms-3 px-3 mx-3 my-3 py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
+
+  const renderListingTrade = () =>
+    currentListingTrade
+      .filter((searchItem) => {
+        if (searchTerm == "") return searchItem;
+        else if (
+          searchItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchItem;
+      })
+      .map((val, key) => (
+        <tr key={key} className="border-listings-table">
+          <td className="p-5 special-border">{val.title}</td>
+          <td className="p-5 special-border table-description">
+            {val.description}
+          </td>
+          <td className="p-5 special-border">£{val.price}</td>
+          <td className="p-5 special-border">{val.location}</td>
+
+          <button
+            className="rpgui-button px-3 mx-3 mt-4 my-auto py-auto"
+            onClick={() => openModal(val)}
+          >
+            More
+          </button>
+        </tr>
+      ));
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   function goToOther() {
     setWhichModal("ListingModal");
   }
 
   return (
-    <section className="rpgui-content">
+    <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
-        <div className="rpgui-container framed-golden-2 shop-window">
+        <div className="rpgui-container framed-golden-2 shop-window2">
           <a href="#" onClick={handleBack}>
             <div className="rpgui-container position-absolute">Back</div>
           </a>
 
           <div className="d-flex flex-column pt-5">
-            <select
+            {/* <select
               className="rpgui-dropdown"
               onChange={(e) => {
                 setGameType(e.target.value);
@@ -141,23 +151,49 @@ export default function ListingWindow({ listingType, setShowListing }) {
             >
               <option className="rpgui-dropdown-imp">Video Games</option>
               <option className="rpgui-dropdown-imp">Board Games</option>
-            </select>
-            <table>
+            </select> */}
+            <input
+              type="text"
+              placeholder="Search Item..."
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            ></input>
+            <table className="listing-table">
               <tr>
-                <th className="p-3">Name</th>
-                <th className="p-3">Description</th>
-                <th className="p-3">Price</th>
-                <th className="p-3">Location</th>
+                <th className="p-4">
+                  <h2>Name</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Description</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Price</h2>
+                </th>
+                <th className="p-4">
+                  <h2>Location</h2>
+                </th>
+                <th className="p-4">
+                  <h2>See more</h2>
+                </th>
               </tr>
-              {renderListing()}
+              {listingType == "Sell"
+                ? renderListingSale()
+                : renderListingTrade()}
             </table>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={
+                listingType == "Sell" ? saleData.length : tradeData.length
+              }
+              paginate={paginate}
+            />
           </div>
         </div>
       )}
       <Modal
         className="rpgui-content splash-modal-position"
         ref={modal}
-        closeTimeoutMS={500}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
@@ -169,7 +205,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a className="position-absolute" onClick={goToOther}>
                 Back
               </a>
-              <ContactModal setWhichModal={setWhichModal} />
+              <ContactModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
           {whichModal == "ListingModal" && (
@@ -177,7 +213,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
               <a href="#" onClick={closeModal}>
                 <div className="rpgui-container position-absolute">X</div>
               </a>
-              <ListingModal setWhichModal={setWhichModal} />
+              <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}
         </div>

@@ -1,3 +1,8 @@
 .game-modal-heading {
   color: goldenrod !important;
 }
+
+.about-us {
+  display: flex;
+  flex-direction: column;
+}

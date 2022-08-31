@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import ReactDOM from "react-dom";
-import { Link, useNavigate } from "react-router-dom";
-import { GameContext } from "../../ContextProvider";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function SignIn({ setWhichModal }) {
-  const [section, modal, homeSection] = useContext(GameContext);
-
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -31,11 +28,8 @@ export default function SignIn({ setWhichModal }) {
       const response = await fetch("http://localhost:5000/auth/login", options);
       const { token } = await response.json();
       localStorage.setItem("token", token);
-      fade(section.current);
-      fade(modal.current.node);
-      setTimeout(() => {
-        navigate("/home", { replace: true });
-      }, 800);
+      localStorage.setItem("username", loginData.username);
+      navigate("/home", { replace: true });
     } catch (err) {
       console.log(err);
     }
@@ -45,53 +39,47 @@ export default function SignIn({ setWhichModal }) {
     setWhichModal("register");
   }
 
-  function fade(element) {
-    var op = 1; // initial opacity
-    var timer = setInterval(function () {
-      if (op <= 0.1) {
-        clearInterval(timer);
-        element.style.display = "none";
-      }
-      element.style.opacity = op;
-      element.style.filter = "alpha(opacity=" + op * 100 + ")";
-      op -= op * 0.1;
-    }, 50);
-  }
-
-  window.addEventListener("click", () => {
-    console.log(modal.current);
-  });
-
   return (
-    <section className="d-flex flex-column text-center align-self-center">
-      <h1>Welcome!</h1>
-      <p>Log in with your details.</p>
-    <br/>
-      <form onSubmit={handleSubmit} >
-        <input
-          className="mb-1"
-          type="text"
-          label="Username"
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        ></input>
-            <br/>
-        <input
-          className="mb-1"
-          type="password"
-          label="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        ></input>
-            <br/>
-        <button className="rpgui-button mb-1" type="submit" value="Login">Login</button>
-        <br/>
-      </form>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <section className="d-flex flex-column text-center align-self-center">
+        <h1>Welcome!</h1>
+        <p>Log in with your details.</p>
+        <br />
+        <form onSubmit={handleSubmit}>
+          <input
+            className="mb-1"
+            type="text"
+            label="Username"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+          ></input>
+          <br />
+          <input
+            className="mb-1"
+            type="password"
+            label="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          ></input>
+          <br />
+          <button className="rpgui-button mb-1" type="submit" value="Login">
+            Login
+          </button>
+          <br />
+        </form>
 
-
-      <p className="mt-1">
-        Don't have an account? <button className="bg-success" onClick={goToOther}>Register</button>
-      </p>
-    </section>
+        <p className="mt-1">
+          Don't have an account?{" "}
+          <button className="bg-success" onClick={goToOther}>
+            Register
+          </button>
+        </p>
+      </section>
+    </motion.div>
   );
 }

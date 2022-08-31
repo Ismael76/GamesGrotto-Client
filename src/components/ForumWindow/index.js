@@ -1,131 +1,220 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Modal from "react-modal";
+import CommentModal from "../CommentModal";
+import CreatePostModal from "../CreatePostModal";
+import { motion } from "framer-motion";
+
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    color: "black",
+    opacity: "1",
+  },
+};
+Modal.setAppElement("#root");
 
 export default function ForumWindow() {
   const [
-    section,
-    modal,
-    homeSection,
     leaveShop,
     setLeaveShop,
     leaveForum,
     setLeaveForum,
+    offset,
+    setOffset,
   ] = useContext(GameContext);
 
   const navigate = useNavigate();
+  const [postData, setPostData] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [whichModal, setWhichModal] = useState("");
+  const [post, setPost] = useState();
+  const [rerender, setRerender] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const dummyData = [
-    {
-      id: 1,
-      heading: "Hello Gamers",
-      content:
-        " I tried to get some Pikachus to get on a bus the other day. It was tough, in the end I had to poke em on.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 2,
-      heading: "Hello World",
-      content: "Hi guys",
-      username: "Billy",
-      date: "12/03/2022",
-    },
-    {
-      id: 3,
-      heading: "How do I access the shop?",
-      content:
-        "Playing Tetris has taught me an extremely valuable life lesson. If you fit in, you're going to disappear.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 4,
-      heading: "Hello Gamers",
-      content:
-        " Garbage men are the best team mates. They're used to carrying trash.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 5,
-      heading: "Hello Gamers",
-      content:
-        "My friend was so angry when he lost at the video game we were playing, that he smashed up his keyboard. He definitely lost Control.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 6,
-      heading: "Hello Gamers",
-      content:
-        "A botanist was playing Minecraft, and had to become a math teacher. He needed to calculate the cubic root.  ",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 7,
-      heading: "Hello Gamers",
-      content:
-        "I started making fun of the official Minecraft twitter account last week. I was gutted when they blocked me.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-    {
-      id: 8,
-      heading: "Hello Gamers",
-      content: "I asked a French man if he played video games. He said Wii.",
-      username: "Bob",
-      date: "12/03/2022",
-    },
-  ];
+  const getPosts = async () => {
+    try {
+      const url = "http://localhost:5000/posts";
+      const data = await axios.get(url);
+      setPostData(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, [rerender]);
+
+  const openCommentModal = (post) => {
+    setPost(post);
+    setWhichModal("DisplayComments");
+    setIsOpen(true);
+  };
+
+  const openCreatePostModal = () => {
+    setWhichModal("CreatePost");
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  // const updateLikes = async (item) => {
+  //   item.likes = item.likes + 1;
+  //   const data = { id: item.id, likes: item.likes, dislikes: item.dislikes };
+  //   const options = {
+  //     method: "PATCH",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   };
+  //   try {
+  //     const response = await fetch("http://localhost:5000/posts", options);
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const updateLikes = async (item, option) => {
+    const username = localStorage.getItem("username");
+    console.log(username);
+    const data = {
+      id: item.id,
+      username: username,
+      option: option,
+      likes: item.likes,
+      dislikes: item.dislikes,
+    };
+    const options = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    try {
+      const response = await fetch("http://localhost:5000/posts", options);
+      const data = await response.json();
+      setRerender(Math.random());
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const renderListing = () =>
-    dummyData.map((item) => (
-      <>
-        <li key={item.id}>
-          <h3 className="p-3">{item.heading}</h3>
-          <p className="p-3">{item.content}</p>
-          <p className="p-3 text-center">
-            Posted by {item.username} on {item.date}
-          </p>
-        </li>
-        <hr className="golden" />
-      </>
-    ));
+    postData
+      .filter((searchPost) => {
+        if (searchTerm == "") return searchPost;
+        else if (
+          searchPost.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+          return searchPost;
+      })
+      .map((item) => (
+        <>
+          <div key={item.id} onClick={() => openCommentModal(item)}>
+            <h3 className="p-3">{item.title}</h3>
 
-  const handleSubmit = () => {
-    console.log("SUBMIT");
+            <p className="p-3">{item.text}</p>
+            <p className="p-3 text-center">
+              Posted by {item.username} {/*on {item.date} */}
+            </p>
+          </div>
+          <div className="d-flex justify-content-around">
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "likes")}
+            >
+              {item.likes.length}👍
+            </button>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "dislikes")}
+            >
+              {item.dislikes.length}👎
+            </button>
+          </div>
+          <hr className="golden" />
+        </>
+      ));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   function handleBack() {
     navigate("/home", { replace: true });
     setLeaveForum(true);
     setLeaveShop(false);
+    setOffset({
+      x: -850,
+      y: -1100,
+    });
   }
 
   return (
     <section className="rpgui-content">
-      <div className="rpgui-container framed-golden forum-search">
-        <a href="#" onClick={handleBack}>
-          <div className="rpgui-container flex-item">Back</div>
-        </a>
-        <form onSubmit={handleSubmit} className="d-flex mt-4">
-          <input className="m-1" value="Search game here"></input>
-          <button className="m-1">Submit</button>
-        </form>
-      </div>
+      {!modalIsOpen && (
+        <>
+          <div className="rpgui-container framed-golden forum-search">
+            <a href="#" onClick={handleBack}>
+              <div className="rpgui-container flex-item">Back</div>
+            </a>
+            <form onSubmit={handleSubmit} className="d-flex mt-4">
+              <input
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+                className="m-1"
+                placeholder="Search Title Here"
+              ></input>
+              <button className="m-1">Submit</button>
+            </form>
+          </div>
 
-      <div className="rpgui-container framed-golden forum-window">
-        {/*
-        <h1>Take me far away from the mucky muck</h1>
-        <hr className="golden"/>
-        <h1>To a castle made of clouds</h1> */}
-        <h1>Forum Board</h1>
-        <hr className="golden" />
-        <ul>{renderListing()}</ul>
-      </div>
+          <div className="rpgui-container framed-golden forum-window">
+            <h1>Forum Board</h1>
+            <hr className="golden" />
+            {postData.length == 0 && <h1>No Posts Available</h1>}
+            {postData.length != 0 && <ul>{renderListing()}</ul>}
+          </div>
+
+          <button
+            className="rpgui-container framed-golden post-create"
+            onClick={openCreatePostModal}
+          >
+            Create Post
+          </button>
+        </>
+      )}
+
+      {whichModal == "DisplayComments" && (
+        <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+          <div className="modal-content modal-center">
+            <CommentModal post={post} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+      {whichModal == "CreatePost" && (
+        <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+          <div className="modal-content modal-center">
+            <CreatePostModal addToPosts={setPostData} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
