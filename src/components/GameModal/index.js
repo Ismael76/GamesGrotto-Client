@@ -88,6 +88,30 @@ export default function GameModal({
           </div>
         </Modal>
       );
+    } else if (whichModal === "logout") {
+      return (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+            <div className="position-absolute cross" onClick={closeModal}>
+              X
+            </div>
+            <div className="mt-2">
+              <h1 className="game-modal-heading">Return to Mainland</h1>
+              <p>
+                Climb aboard the boat if you wish to leave Pyre Town.
+              </p>
+              <button className="rpgui-button" onClick={()=>{localStorage.removeItem("token");}}>Logout</button>
+            </div>
+          </div>
+        </Modal>
+      );
     } else if (whichModal === "about") {
       return (
         <Modal

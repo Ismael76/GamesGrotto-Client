@@ -24,7 +24,7 @@ export default function ListingModal({ setWhichModal, listing }) {
           <h2>Username: {listing.username}</h2>
           <h2>Location: {listing.location}</h2>
 
-          <button className="rpgui-button" onClick={goToOther}>
+          <button className="rpgui-button bg-dark" onClick={goToOther}>
             Contact
           </button>
         </div>

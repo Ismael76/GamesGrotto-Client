@@ -243,7 +243,7 @@ export default function Shop() {
 
         {showInfo && (
           <section className="rpgui-content">
-            <div className="rpgui-container framed-golden shop-window-info">
+            <div className="rpgui-container framed-golden shop-window-info overflow-auto">
                 <div onClick={() => setShowInfo(false)} className="rpgui-container flex-item cross">X</div>
 
               <div className="d-flex flex-column text-center justify-content-center">

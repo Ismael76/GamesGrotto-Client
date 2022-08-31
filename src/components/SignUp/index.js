@@ -91,7 +91,7 @@ export default function SignUp({ setWhichModal }) {
 
         <form onSubmit={handleSubmit}>
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="text"
             minLength={3}
             maxLength={12}
@@ -101,7 +101,7 @@ export default function SignUp({ setWhichModal }) {
           />
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="email"
             label="Email"
             onChange={(e) => setEmail(e.target.value)}
@@ -110,7 +110,7 @@ export default function SignUp({ setWhichModal }) {
           />
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Password"
             minLength={8}
@@ -120,7 +120,7 @@ export default function SignUp({ setWhichModal }) {
           />
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Confirm Password"
             minLength={8}

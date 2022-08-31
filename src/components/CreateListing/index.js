@@ -52,7 +52,7 @@ export default function CreateListing({
           {/* <form onSubmit={handleSubmit}> */}
           <form onSubmit={(e) => submitListing(e)}>
             <input
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="text"
               label="Item Name"
               // onChange={(e) => setUsername(e.target.value)}
@@ -84,7 +84,7 @@ export default function CreateListing({
             <br />
             {listingData.type == "Sell" ? (
               <input
-                className="mb-1"
+                className="mb-1 bg-dark"
                 type="text"
                 label="Price"
                 // onChange={(e) => setEmail(e.target.value)}
@@ -98,7 +98,7 @@ export default function CreateListing({
               />
             ) : (
               <input
-                className="mb-1"
+                className="mb-1 bg-dark"
                 type="text"
                 label="Price"
                 placeholder="Price"
@@ -108,7 +108,7 @@ export default function CreateListing({
 
             <br />
             <input
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="text"
               label="Location"
               // onChange={(e) => setEmail(e.target.value)}
@@ -121,7 +121,7 @@ export default function CreateListing({
               }
             />
             <input
-              className="mb-1"
+              className="mb-1 bg-dark" 
               type="text"
               label="Img URL"
               // onChange={(e) => setEmail(e.target.value)}
@@ -136,7 +136,7 @@ export default function CreateListing({
 
             <br />
             <textarea
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="Description"
               label="Description"
               // onChange={(e) => setConfirmPassword(e.target.value)}
