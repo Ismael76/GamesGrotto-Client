@@ -8,7 +8,7 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
     text: "",
     username: localStorage.getItem("username"),
     likes: [],
-    dislikes: []
+    dislikes: [],
   });
 
   const submitPost = async (e) => {
@@ -20,7 +20,10 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/posts", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/posts",
+        options
+      );
       const data = await response.json();
 
       addToPosts((prev) => [...prev, data]);

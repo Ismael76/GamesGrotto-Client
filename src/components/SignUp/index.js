@@ -51,12 +51,12 @@ export default function SignUp({ setWhichModal }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/auth/register",
+        "https://games-grotto.herokuapp.com/auth/register",
         options
       );
 
       const loginResponse = await fetch(
-        "http://localhost:5000/auth/login",
+        "https://games-grotto.herokuapp.com/auth/login",
         optionsTwo
       );
 

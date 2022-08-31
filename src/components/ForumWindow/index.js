@@ -45,7 +45,7 @@ export default function ForumWindow() {
 
   const getPosts = async () => {
     try {
-      const url = "http://localhost:5000/posts";
+      const url = "https://games-grotto.herokuapp.com/posts";
       const data = await axios.get(url);
       setPostData(data.data);
     } catch (error) {
@@ -105,7 +105,10 @@ export default function ForumWindow() {
       body: JSON.stringify(data),
     };
     try {
-      const response = await fetch("http://localhost:5000/posts", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/posts",
+        options
+      );
       const data = await response.json();
       setRerender(Math.random());
       return data;
