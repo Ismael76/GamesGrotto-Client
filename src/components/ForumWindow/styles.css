@@ -22,14 +22,12 @@
   width: 50%;
 }
 
-.post-create {
-  display: flex;
+.post-create2 {
   position: absolute;
-  justify-content: center;
-  left: calc(37.5vw);
-  bottom: 1vw;
-  width: 30%;
-  color: white;
+  align-items: center;
+  left: calc(25vw + 2rem);
+  top: 10vw;
+  width: 50%;
 }
 
 .modal-center {
@@ -37,5 +35,13 @@
   align-items: center;
   left: calc(25vw + 2rem);
   top: 35%;
+  width: 50%;
+}
+
+.post-create {
+  position: absolute;
+  align-items: center;
+  left: calc(25vw + 2rem);
+  bottom:2vh;
   width: 50%;
 }

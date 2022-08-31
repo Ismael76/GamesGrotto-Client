@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 
-export default function CreatePostModal({ addToPosts, closeModal }) {
+export default function CreatePostModal({ setRerender, closeModal }) {
   const [postData, setPostData] = useState({
     title: "",
     text: "",
     username: localStorage.getItem("username"),
     likes: [],
-    dislikes: []
+    dislikes: [],
   });
 
   const submitPost = async (e) => {
@@ -23,7 +23,7 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
       const response = await fetch("http://localhost:5000/posts", options);
       const data = await response.json();
 
-      addToPosts((prev) => [...prev, data]);
+      setRerender(Math.random());
       closeModal();
       // window.location.reload()
       return data;
@@ -36,13 +36,13 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
 
   return (
     <section className="rpgui-container framed d-flex flex-column text-center">
-      <a href="#" onClick={closeModal}>
-        <div className="position-absolute">X</div>
+      <a onClick={closeModal}>
+        <div className="position-absolute cross">X</div>
       </a>
       <h1>Create Post</h1>
       <form onSubmit={(e) => submitPost(e)}>
         <input
-          className="mb-1"
+          className="mb-3 bg-dark"
           type="text"
           label="Title"
           placeholder="Title"
@@ -54,8 +54,8 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
             }))
           }
         />
-        <input
-          className="mb-1"
+        <textarea
+          className="mb-1 bg-dark"
           type="text"
           label="Text"
           placeholder="Text"
