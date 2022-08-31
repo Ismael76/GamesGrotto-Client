@@ -140,7 +140,7 @@ export default function CommentModal({
           value={inputVal}
         ></textarea>
         </div>
-        <button className="rpgui-button framed-golden mb-3">Comment</button>
+        <button className="rpgui-button framed-golden mb-3"> Comment</button>
       </form>
       {commentData.length != 0 && renderComments()}
     </section>
