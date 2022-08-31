@@ -179,7 +179,9 @@ export default function ForumWindow() {
           <div className="rpgui-container framed-golden forum-window mt-2">
             <h1 className="pt-3">FORUM BOARD</h1>
             <hr className="golden mx-4" />
-            {postData.length == 0 && <h1>No Posts Available</h1>}
+            {postData.length == 0 && (
+              <h1>There Are Currently No Posts Available To View!</h1>
+            )}
             {postData.length != 0 && (
               <ul className="d-flex flex-column justify-content-center me-4">
                 {renderListing()}
