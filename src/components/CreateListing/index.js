@@ -32,10 +32,7 @@ export default function CreateListing({
     };
 
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/listings/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/listings/", options);
       const data = await response.json();
       setUserListingData((prev) => [...prev, listingData]);
       return data;

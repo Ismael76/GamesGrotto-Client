@@ -2,25 +2,29 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 
-export default function CommentModal({ post, closeModal, rerenderComments, setRerenderComments }) {
+export default function CommentModal({
+  post,
+  closeModal,
+  rerenderComments,
+  setRerenderComments,
+}) {
   const [commentData, setCommentData] = useState([]);
   const [postCommentData, setPostCommentData] = useState({
     post_id: post.id,
     text: "",
     username: localStorage.getItem("username"),
-    likes:[],
-    dislikes:[]
+    likes: [],
+    dislikes: [],
   });
 
   const [inputVal, setInputVal] = useState("");
 
   const comments = async () => {
-    console.log(post)
+    console.log(post);
     try {
-      const url = `https://games-grotto.herokuapp.com/comments/${post.id}`;
+      const url = `http://localhost:5000/comments/${post.id}`;
       const data = await axios.get(url);
       setCommentData(data.data);
-
     } catch (error) {
       console.log(error);
     }
@@ -51,10 +55,16 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
             Commented by {item.username} {/*on {item.date} */}
           </p>
           <div className="d-flex justify-content-around">
-            <button className="rpgui-button" onClick={() => updateLikes(item, "likes")}>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "likes")}
+            >
               {item.likes.length}👍
             </button>
-            <button className="rpgui-button" onClick={() => updateLikes(item, "dislikes")}>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "dislikes")}
+            >
               {item.dislikes.length}👎
             </button>
           </div>
@@ -72,10 +82,7 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
     };
 
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
       setCommentData((prev) => [...prev, postCommentData]);
       setInputVal("");
@@ -84,7 +91,6 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
     } catch (err) {
       console.log(err);
     }
-    
   };
 
   const updateLikes = async (item, option) => {
@@ -103,10 +109,7 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
       body: JSON.stringify(data),
     };
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
       setRerenderComments(Math.random());
       return data;

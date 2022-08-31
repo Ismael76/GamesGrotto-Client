@@ -1,7 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
-import { ListingWindow, CreateListing } from "../../components";
+import {
+  ListingWindow,
+  CreateListing,
+  UserListingWindow,
+} from "../../components";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -78,60 +82,14 @@ export default function Shop() {
         headers: { "Content-Type": "application/json" },
       };
       const response = await fetch(
-        `https://games-grotto.herokuapp.com/listings/${localStorage.getItem(
-          "username"
-        )}`,
+        `http://localhost:5000/listings/${localStorage.getItem("username")}`,
         options
       );
       const data = await response.json();
       setUserListingData(data);
     }
     fetchData();
-  }, []);
-
-  const deleteListing = async (e, id) => {
-    e.preventDefault();
-
-    const deleteData = {
-      username: localStorage.getItem("username"),
-    };
-
-    const options = {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(deleteData),
-    };
-    const response = await fetch(
-      `https://games-grotto.herokuapp.com/listings/${id}`,
-      options
-    );
-    const data = await response.json();
-    setUserListingData(data);
-  };
-
-  function renderUserListings() {
-    console.log(userListingData);
-    if (userListingData.length != 0) {
-      return userListingData.map((val, key) => (
-        <tr key={key} className="border-listings-table">
-          <td className="p-3 special-border">{val.title}</td>
-          <td className="p-3 special-border table-description">
-            {val.description}
-          </td>
-          <td className="p-3 special-border">£{val.price}</td>
-          <td className="p-3 special-border">{val.location}</td>
-
-          <button
-            className="rpgui-button ms-3 px-3 mx-3 my-3 py-auto"
-            onClick={(e) => deleteListing(e, val.id)}
-          >
-            DELETE
-          </button>
-        </tr>
-      ));
-    }
-    return <h1>EMPTY</h1>;
-  }
+  }, [showUserListings, showListing]);
 
   return (
     <motion.div
@@ -276,22 +234,11 @@ export default function Shop() {
         )}
 
         {showUserListings && (
-          <section className="rpgui-content">
-            <div className="rpgui-container framed-golden shop-window-info">
-              <a href="#" onClick={() => setShowUserListings(false)}>
-                <div className="rpgui-container flex-item">X</div>
-              </a>
-
-              <div className="d-flex flex-column text-center justify-content-center">
-                <h1>
-                  {localStorage.getItem("username").toUpperCase() +
-                    "'s" +
-                    " LISTINGS"}
-                </h1>
-                <table>{renderUserListings()}</table>
-              </div>
-            </div>
-          </section>
+          <UserListingWindow
+            userListingData={userListingData}
+            setUserListingData={setUserListingData}
+            setShowUserListings={setShowUserListings}
+          />
         )}
       </section>
     </motion.div>

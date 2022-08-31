@@ -29,7 +29,7 @@ export default function GameModal({
   const [scoreData, setScoreData] = useState([]);
 
   const fetchScores = async () => {
-    const url = `https://games-grotto.herokuapp.com/scores/`;
+    const url = `http://localhost:5000/scores/`;
     const data = await axios.get(url);
     setScoreData(data.data);
   };

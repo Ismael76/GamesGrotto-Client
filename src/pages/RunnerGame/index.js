@@ -50,8 +50,7 @@ export default function RunnerGame() {
 
   async function updateScore(finalScore) {
     console.log(finalScore);
-    const data = (await axios.get("https://games-grotto.herokuapp.com/scores/"))
-      .data;
+    const data = (await axios.get("http://localhost:5000/scores/")).data;
     const scoreNumber = data.length;
     if (scoreNumber < 10) {
       const scoreData = {
@@ -64,10 +63,7 @@ export default function RunnerGame() {
         body: JSON.stringify(scoreData),
       };
       try {
-        const response = await fetch(
-          "https://games-grotto.herokuapp.com/scores/",
-          options
-        );
+        const response = await fetch("http://localhost:5000/scores/", options);
         const data = await response.json();
         return data;
       } catch (err) {
@@ -84,10 +80,7 @@ export default function RunnerGame() {
         body: JSON.stringify(scoreData),
       };
       try {
-        const response = await fetch(
-          "https://games-grotto.herokuapp.com/scores/",
-          options
-        );
+        const response = await fetch("http://localhost:5000/scores/", options);
         const data = await response.json();
         return data;
       } catch (err) {
