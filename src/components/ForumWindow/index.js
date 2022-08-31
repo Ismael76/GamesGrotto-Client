@@ -110,33 +110,36 @@ export default function ForumWindow() {
       })
       .map((item) => (
         <section>
-        <div className="rpgui-container framed-relative">
-          <div key={item.id} onClick={() => openCommentModal(item)} className="rpgui-container framed-golden-relative">
-            <h3 className="p-3">{item.title}</h3>
+          <div className="rpgui-container framed-relative">
+            <div
+              key={item.id}
+              onClick={() => openCommentModal(item)}
+              className="rpgui-container framed-golden-relative"
+            >
+              <h3 className="p-3">{item.title}</h3>
 
-            <p className="p-3">{item.text}</p>
-            <p className="p-3 text-center">
-              Posted by {item.username} {/*on {item.date} */}
-            </p>
+              <p className="p-3">{item.text}</p>
+              <p className="p-3 text-center">
+                Posted by {item.username} {/*on {item.date} */}
+              </p>
+            </div>
+            <div className="d-flex justify-content-around pt-2">
+              <button
+                className="rpgui-button"
+                onClick={() => updateLikes(item, "likes")}
+              >
+                {item.likes.length}👍
+              </button>
+              <button
+                className="rpgui-button"
+                onClick={() => updateLikes(item, "dislikes")}
+              >
+                {item.dislikes.length}👎
+              </button>
+            </div>
           </div>
-          <div className="d-flex justify-content-around pt-2">
-            <button
-              className="rpgui-button"
-              onClick={() => updateLikes(item, "likes")}
-            >
-              {item.likes.length}👍
-            </button>
-            <button
-              className="rpgui-button"
-              onClick={() => updateLikes(item, "dislikes")}
-            >
-              {item.dislikes.length}👎
-            </button>
-          </div>
-        </div>
-        <hr className="golden" />
+          <hr className="golden" />
         </section>
-
       ));
 
   const handleSubmit = (e) => {
@@ -171,10 +174,16 @@ export default function ForumWindow() {
           </div>
 
           <div className="rpgui-container framed-golden forum-window mt-2">
-            <h1 className="pt-3">Forum Board</h1>
+            <h1 className="pt-3">FORUM BOARD</h1>
             <hr className="golden mx-4" />
-            {postData.length == 0 && <h1>No Posts Available</h1>}
-            {postData.length != 0 && <ul className="d-flex flex-column justify-content-center me-4">{renderListing()}</ul>}
+            {postData.length == 0 && (
+              <h1>There Are Currently No Posts Available To View!</h1>
+            )}
+            {postData.length != 0 && (
+              <ul className="d-flex flex-column justify-content-center me-4">
+                {renderListing()}
+              </ul>
+            )}
           </div>
 
           <button

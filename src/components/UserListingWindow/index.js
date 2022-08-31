@@ -46,7 +46,12 @@ export default function UserListingWindow({
         </tr>
       ));
     }
-    return <h1>You Currently Have No Listings To View!</h1>;
+    return (
+      <div>
+        <h1>You Currently Have No Listings To View!</h1>
+        <img src="https://www.nicepng.com/png/full/28-288275_cash-cash-pixel-art-png.png"></img>
+      </div>
+    );
   }
   return (
     <section className="rpgui-content">

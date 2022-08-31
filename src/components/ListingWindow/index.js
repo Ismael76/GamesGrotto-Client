@@ -73,7 +73,15 @@ export default function ListingWindow({ listingType, setShowListing }) {
     indexOfLastListing
   );
 
-  const renderListingSale = () =>
+  const renderListingSale = () => {
+    if (currentListingSale.length == 0) {
+      return (
+        <div className="no-listing">
+          <h2>No Sale Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+        </div>
+      );
+    }
     currentListingSale
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
@@ -99,8 +107,17 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </button>
         </tr>
       ));
+  };
 
-  const renderListingTrade = () =>
+  const renderListingTrade = () => {
+    if (currentListingTrade.length == 0) {
+      return (
+        <div className="no-listing">
+          <h2>No Trade Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+        </div>
+      );
+    }
     currentListingTrade
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
@@ -115,7 +132,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
           <td className="p-5 special-border table-description">
             {val.description}
           </td>
-          <td className="p-5 special-border">£{val.price}</td>
           <td className="p-5 special-border">{val.location}</td>
 
           <button
@@ -126,6 +142,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </button>
         </tr>
       ));
+  };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -164,9 +181,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
                 <th className="p-4">
                   <h2>Description</h2>
                 </th>
-                <th className="p-4">
-                  <h2>Price</h2>
-                </th>
+                {listingType == "Sell" ? (
+                  <th className="p-4">
+                    <h2>Price</h2>
+                  </th>
+                ) : (
+                  <></>
+                )}
+
                 <th className="p-4">
                   <h2>Location</h2>
                 </th>
