@@ -10,22 +10,7 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const customStyles = {
-  overlay: {
-    backgroundColor: "rgba(64, 223, 219,0.3)",
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    color: "black",
-    opacity: "0.92",
-  },
-};
-Modal.setAppElement("#root");
+
 
 export default function Shop() {
   const [
@@ -152,50 +137,50 @@ export default function Shop() {
           </div>
         ) : (
           <section className="rpgui-content">
-            <div className="rpgui-container framed-golden-2 shop-window">
+            <div className="rpgui-container framed-golden-2 shop-window shadow-lg">
               <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
-                <a href="#" className="">
+              <a>
                   <div
                     onClick={handleInfo}
-                    className="rpgui-icon exclamation flex-item"
+                    className="rpgui-icon exclamation flex-item cross"
                   ></div>
                 </a>
-                <a href="#" onClick={handleBack}>
-                  <div className="rpgui-container flex-item">Back</div>
+                <a onClick={handleBack}>
+                  <div className="rpgui-container flex-item cross">Back</div>
                 </a>
               </div>
               <div className="d-flex row justify-content-center pb-5 w-auto">
-                <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+                <div className="col-lg-5 col-md-5 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                   <div>
                     <div className="rpgui-icon chest-open"></div>
                   </div>
                   <div className="product-content">
                     <h3 className="title mx-md-5 py-1">
                       <button
-                        className="rpgui-button d-block m-auto"
+                        className="rpgui-button d-block m-auto cross"
                         onClick={handleClick}
                       >
-                        <a href="#">BUY</a>
+                        BUY
                       </button>
                     </h3>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+                <div className="col-lg-5 col-md-5 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                   <div>
                     <div className="rpgui-icon shield"></div>
                   </div>
                   <div className="product-content">
                     <h3 className="title mx-md-5 py-1">
                       <button
-                        className="rpgui-button d-block m-auto"
+                        className="rpgui-button d-block m-auto cross"
                         onClick={handleClick}
                       >
-                        <a href="#">TRADE</a>
+                        TRADE
                       </button>
                     </h3>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+                <div className="col-lg-5 col-md-5 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                   <div>
                     <div className="rpgui-icon cash"></div>
                   </div>
@@ -203,14 +188,14 @@ export default function Shop() {
                     <h3 className="title mx-md-5 py-1">
                       <button
                         onClick={openModal}
-                        className="rpgui-button d-block m-auto  "
+                        className="rpgui-button d-block m-auto cross"
                       >
-                        <a href="#">SELL</a>
+                        SELL
                       </button>
                     </h3>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
+                <div className="col-lg-5 col-md-5 col-sm-6 d-flex flex-column pt-3 justify-content-center align-items-center rpgui-container framed-grey shadow mx-3">
                   <div>
                     <div className="rpgui-icon star"></div>
                   </div>
@@ -220,9 +205,9 @@ export default function Shop() {
                         onClick={() => {
                           setShowUserListings(true);
                         }}
-                        className="rpgui-button d-block m-auto  "
+                        className="rpgui-button d-block m-auto cross"
                       >
-                        <a href="#">MY LISTINGS</a>
+                        MY LISTINGS
                       </button>
                     </h3>
                   </div>
@@ -243,10 +228,8 @@ export default function Shop() {
 
         {showInfo && (
           <section className="rpgui-content">
-            <div className="rpgui-container framed-golden shop-window-info">
-              <a href="#" onClick={() => setShowInfo(false)}>
-                <div className="rpgui-container flex-item">X</div>
-              </a>
+            <div className="rpgui-container framed-golden shop-window-info overflow-auto shadow-lg">
+                <div onClick={() => setShowInfo(false)} className="rpgui-container flex-item cross">X</div>
 
               <div className="d-flex flex-column text-center justify-content-center">
                 <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>
@@ -262,7 +245,7 @@ export default function Shop() {
                   If a game interests you, simply message the seller your offer
                   along with your contact details and wait for a reply.
                 </p>
-                <div className="rpgui-container framed-grey">
+                <div className="rpgui-container framed-grey shadow-sm">
                   <h2>Rules:</h2>
                   <ul className="list-unstyled pe-4">
                     <li>1. Be polite</li>

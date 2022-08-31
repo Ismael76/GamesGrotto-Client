@@ -52,7 +52,7 @@ export default function SignIn({ setWhichModal }) {
         <br />
         <form onSubmit={handleSubmit}>
           <input
-            className="mb-1"
+            className="mb- bg-dark"
             type="text"
             label="Username"
             onChange={(e) => setUsername(e.target.value)}
@@ -60,7 +60,7 @@ export default function SignIn({ setWhichModal }) {
           ></input>
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Password"
             onChange={(e) => setPassword(e.target.value)}

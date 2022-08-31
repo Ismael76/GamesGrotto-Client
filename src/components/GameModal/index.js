@@ -54,9 +54,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">SHOP</h1>
               <p>Enter Shop To Sell, Trade &#38; Buy Games!</p>
@@ -75,15 +75,39 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">MINIGAME</h1>
               <p>
                 Climb down the steps to play an exciting minigame! Score as high
                 as you can and make it to the top 10 of the leaderboards!
               </p>
+            </div>
+          </div>
+        </Modal>
+      );
+    } else if (whichModal === "logout") {
+      return (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+            <div className="position-absolute cross" onClick={closeModal}>
+              X
+            </div>
+            <div className="mt-2">
+              <h1 className="game-modal-heading">Return to Mainland</h1>
+              <p>
+                Climb aboard the boat if you wish to leave Pyre Town.
+              </p>
+              <button className="rpgui-button" onClick={()=>{localStorage.removeItem("token");}}>Logout</button>
             </div>
           </div>
         </Modal>
@@ -99,9 +123,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">ABOUT</h1>
               <p>Created By:</p>
@@ -127,7 +151,7 @@ export default function GameModal({
       const renderScores = () =>
         scoreData.map((item) => (
           <>
-            <div class="d-flex justify-content-around score-div" key={item.id}>
+            <div className="d-flex justify-content-around score-div" key={item.id}>
               <p className="p-3 text-center">
                 {item.username}
                 {/*on {item.date} */}
@@ -147,10 +171,10 @@ export default function GameModal({
           style={customStyles}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4 score-modal">
-            <button className="position-absolute" onClick={closeModal}>
+          <div className="rpgui-container framed-golden d-flex flex-column text-center p-4 score-modal">
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">LEADERBOARDS</h1>
               <hr className="golden" />

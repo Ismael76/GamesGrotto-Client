@@ -12,11 +12,10 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
       <ul className="pagination  pe-4">
         {pageNumbers.map((number) => {
           return (
-            <li key={number} className="page-item">
+            <li key={number} className="page-item shadow">
               <a
                 onClick={() => paginate(number)}
-                href="#"
-                className="page-link"
+                className="page-link bg-transparent border-light rounded"
               >
                 {number}
               </a>
