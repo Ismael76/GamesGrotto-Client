@@ -57,17 +57,6 @@
     border: 2px solid black;
 }
 
-/* .gameCanvas {
-    position: absolute;
-    background: url("map.png");
-    background-size: contain;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 50%;
-    width: 50%;
-    border: 2px solid black;
-} */
 
 .game {
     width: 960px;
@@ -84,40 +73,7 @@
     color: white
 }
 
-/* <<< Commented out animation attempt >>> */
-/* .infinite{
-    content: '';
-    position: relative;
-    width:800px;
-    height: 160px;
 
-    transform-origin: bottom;
-    transform-style: preserve-3d;
-    transform: perspective(500px) rotateX(30deg);
-}
-
-#character {
-    width: 100px;
-    height: 100px;
-    width: calc(50px / 4);
-    background-image: url(playerRight.png);
-    background-size: 50px 50px;
-    transform: perspective(500px) rotateX(-25deg) translateY(-150px);
-    -webkit-box-reflect: below 1px linear-gradient (transparent 90%, #0004);
-    animation: animateSprite 0.5s step(4) infinite;
-    background-repeat: no-repeat;
-    position: relative;
-    top: 195px;
-}
-
-@keyframes animateSprite{
-    from{
-        background-position:0;
-    }
-    to{
-        background-position:50;
-    }
-} */
 
 #character {
     width: 2rem;
@@ -129,21 +85,6 @@
     /* animation: animateSprite 1s steps(2) infinite; */
     top: 17rem;
 }
-
-/* #character {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    width: calc(192px/4);
-    background-image: url(playerRight.png);
-    background-repeat: no-repeat;
-    animation: animateSprite 1s steps(2) infinite;
-    top: 195px;
-} */
-
 
 .jump {
     animation: jump 0.5s linear;
@@ -170,15 +111,6 @@
         top: 17rem;
     }
 }
-/*
-@keyframes animateSprite{
-    from{
-        background-position:0;
-    }
-    to{
-        background-position: -192px;
-    }
-} */
 
 #block {
     width: 2.5rem;
