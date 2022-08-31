@@ -1,7 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./styles.css";
 import { GameContext } from "../../ContextProvider";
-import { ListingWindow, CreateListing } from "../../components";
+import {
+  ListingWindow,
+  CreateListing,
+  UserListingWindow,
+} from "../../components";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -274,22 +278,11 @@ export default function Shop() {
         )}
 
         {showUserListings && (
-          <section className="rpgui-content">
-            <div className="rpgui-container framed-golden shop-window-info">
-              <a href="#" onClick={() => setShowUserListings(false)}>
-                <div className="rpgui-container flex-item">X</div>
-              </a>
-
-              <div className="d-flex flex-column text-center justify-content-center">
-                <h1>
-                  {localStorage.getItem("username").toUpperCase() +
-                    "'s" +
-                    " LISTINGS"}
-                </h1>
-                <table>{renderUserListings()}</table>
-              </div>
-            </div>
-          </section>
+          <UserListingWindow
+            userListingData={userListingData}
+            setUserListingData={setUserListingData}
+            setShowUserListings={setShowUserListings}
+          />
         )}
       </section>
     </motion.div>
