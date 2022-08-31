@@ -34,7 +34,7 @@ export default function RunnerGame() {
             );
 
             // detect collision
-            if (cactusLeft < 100 && cactusLeft > 0 && dinoTop >= 175) {
+            if (cactusLeft < 40 && cactusLeft > 0 && dinoTop > 175) {
                 // collision
                 cactus.id = ""
                 let finalScore = count.current
