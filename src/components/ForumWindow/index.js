@@ -42,6 +42,7 @@ export default function ForumWindow() {
   const [post, setPost] = useState();
   const [rerender, setRerender] = useState();
   const [searchTerm, setSearchTerm] = useState("");
+  const [rerenderComments, setRerenderComments] = useState();
 
   const getPosts = async () => {
     try {
@@ -55,10 +56,12 @@ export default function ForumWindow() {
 
   useEffect(() => {
     getPosts();
+    
   }, [rerender]);
 
   const openCommentModal = (post) => {
     setPost(post);
+    setRerenderComments(Math.random())
     setWhichModal("DisplayComments");
     setIsOpen(true);
   };
@@ -71,23 +74,6 @@ export default function ForumWindow() {
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  // const updateLikes = async (item) => {
-  //   item.likes = item.likes + 1;
-  //   const data = { id: item.id, likes: item.likes, dislikes: item.dislikes };
-  //   const options = {
-  //     method: "PATCH",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   };
-  //   try {
-  //     const response = await fetch("http://localhost:5000/posts", options);
-  //     const data = await response.json();
-  //     return data;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const updateLikes = async (item, option) => {
     const username = localStorage.getItem("username");
@@ -204,14 +190,14 @@ export default function ForumWindow() {
       {whichModal == "DisplayComments" && (
         <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
           <div className="modal-content modal-center">
-            <CommentModal post={post} closeModal={closeModal} />
+            <CommentModal post={post} closeModal={closeModal} rerenderComments={rerenderComments} setRerenderComments={setRerenderComments}/>
           </div>
         </div>
       )}
       {whichModal == "CreatePost" && (
         <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
           <div className="modal-content modal-center">
-            <CreatePostModal addToPosts={setPostData} closeModal={closeModal} />
+            <CreatePostModal setRerender={setRerender} closeModal={closeModal} />
           </div>
         </div>
       )}

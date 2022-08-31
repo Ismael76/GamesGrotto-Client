@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cross {
+  /* color and border */
+  color: yellow;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  font-size: 1em;
+  line-height: 22px;
+  text-decoration: none;
+}
+
+/* default gui link */
+.cross:hover {
+  text-decoration: underline;
+}
