@@ -171,7 +171,7 @@ export default function GameModal({
           style={customStyles}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4 score-modal">
+          <div className="rpgui-container framed-golden d-flex flex-column text-center p-4 score-modal">
             <div className="position-absolute cross" onClick={closeModal}>
               X
             </div>
