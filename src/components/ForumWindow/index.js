@@ -119,7 +119,7 @@ export default function ForumWindow() {
               Posted by {item.username} {/*on {item.date} */}
             </p>
           </div>
-          <div className="d-flex justify-content-around">
+          <div className="d-flex justify-content-around pt-2">
             <button
               className="rpgui-button"
               onClick={() => updateLikes(item, "likes")}
@@ -203,7 +203,7 @@ export default function ForumWindow() {
       )}
       {whichModal == "CreatePost" && (
         <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
-          <div className="modal-content modal-center">
+          <div className="modal-content post-create2">
             <CreatePostModal
               setRerender={setRerender}
               closeModal={closeModal}

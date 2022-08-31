@@ -28,13 +28,15 @@
     background-image: url('map.png');
     background-repeat: repeat-x;
     background-size: contain;
-    animation: slideleft 600s infinite linear;
-    -webkit-animation: slideleft 600s infinite linear;
+    animation: slideleft 10s infinite linear;
+    -webkit-animation: slideleft 10s infinite linear;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 50%;
-    width: 50%;
+    /* height: 50%;
+    width: 50%; */
+    width: 960px;
+    height: 480px;
     border: 2px solid black;
 }
 
@@ -51,8 +53,8 @@
 } */
 
 .game {
-    width: 1200px;
-    height: 400px;
+    width: 960px;
+    height: 480px !important; 
     border: 1px solid black;
     margin: auto;
 }
@@ -104,11 +106,27 @@
     width: 100px;
     height: 100px;
     background-image: url(playerRight.png);
-    background-size: 50px 50px;
+    width: calc(192px/4);
     background-repeat: no-repeat;
     position: relative;
-    top: 195px;
+    /* animation: animateSprite 1s steps(2) infinite; */
+    top: 17rem;
 }
+
+/* #character {
+    position: absolute; 
+    width: 100px;
+    height: 100px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: calc(192px/4);
+    background-image: url(playerRight.png);
+    background-repeat: no-repeat;
+    animation: animateSprite 1s steps(2) infinite;
+    top: 195px;
+} */
+
 
 .jump {
     animation: jump 0.3s linear;
@@ -135,6 +153,15 @@
         top: 195px;
     }
 }
+/* 
+@keyframes animateSprite{
+    from{
+        background-position:0;
+    }
+    to{
+        background-position: -192px;
+    }
+} */
 
 #block {
     width: 40px;
