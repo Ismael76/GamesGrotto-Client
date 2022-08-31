@@ -1,93 +1,95 @@
 .gameCanvas {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 50%;
-    width:50%;
-    border: 2px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  width: 50%;
+  border: 2px solid black;
 }
 
 .game {
-    width: 1200px;
-    height: 400px;
-    border: 1px solid black;
-    margin: auto;
+  width: 1200px;
+  height: 400px;
+  border: 1px solid black;
+  margin: auto;
+}
+
+#character {
+  height: 100px;
+  background-image: url(playerRight.png);
+  width: calc(1536px / 4);
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 300px;
+}
+
+.girl {
+  position: relative;
+  height: 160px;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/15979/running.png");
+  width: calc(1536px / 20);
+  transform: perspective(500px) rotateX(-25deg) translateY(-150px);
+  -webkit-box-reflect: below 1px linear-gradient(transparent 90%, #0004);
+  animation: animateGirl 1s steps(6) infinite;
+}
+
+@keyframes animateGirl {
+  from {
+    background-position: 0;
   }
-  
-  #character {
-    height: 100px;
-    background-image: url(playerRight.png);
-    width: calc(1536px / 4);
-    background-size: 50px 50px;
-    background-repeat: no-repeat;
-    position: relative;
+  to {
+    background-position: -1536px;
+  }
+}
+
+.jump {
+  animation: jump 0.3s linear;
+}
+
+@keyframes jump {
+  0% {
     top: 300px;
   }
 
-  .girl{
-    position: relative; 
-    height: 160px;
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/15979/running.png");
-    width: calc(1536px / 20);
-    transform: perspective(500px) rotateX(-25deg) translateY(-150px);
-    -webkit-box-reflect: below 1px linear-gradient(transparent 90%, #0004);
-    animation: animateGirl 1s steps(6) infinite;
+  30% {
+    top: 260px;
   }
-  
-  @keyframes animateGirl{
-    from{
-      background-position: 0;
-    }to{
-      background-position: -1536px;
-    }
-  
-  .jump {
-    animation: jump 0.3s linear;
+
+  50% {
+    top: 160px;
   }
-  
-  @keyframes jump {
-    0% {
-      top: 300px;
-    }
-  
-    30% {
-      top: 260px;
-    }
-  
-    50% {
-      top: 160px;
-    }
-  
-    80% {
-      top: 260px;
-    }
-  
-    100% {
-      top: 300px;
-    }
+
+  80% {
+    top: 260px;
   }
-  
-  #block {
-    width: 40px;
-    height: 80px;
-    position: relative;
-    top: 220px;
+
+  100% {
+    top: 300px;
+  }
+}
+
+#block {
+  width: 40px;
+  height: 80px;
+  position: relative;
+  top: 220px;
+  left: 1160px;
+
+  background-image: url("rock.png");
+  background-size: 10px 40px;
+  background-repeat: no-repeat;
+
+  animation: block 1s infinite linear;
+}
+
+@keyframes block {
+  0% {
     left: 1160px;
-  
-    background-image: url("rock.png");
-    background-size: 10px 40px;
-    background-repeat: no-repeat;
-  
-    animation: block 1s infinite linear;
   }
-  
-  @keyframes block {
-    0% {
-      left: 1160px;
-    }
-  
-    100% {
-      left: -40px;
-    }
+
+  100% {
+    left: -40px;
   }
+}
