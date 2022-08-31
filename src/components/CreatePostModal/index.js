@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 
-export default function CreatePostModal({ addToPosts, closeModal }) {
+export default function CreatePostModal({ setRerender, closeModal }) {
   const [postData, setPostData] = useState({
     title: "",
     text: "",
     username: localStorage.getItem("username"),
     likes: [],
     dislikes: [],
+
   });
 
   const submitPost = async (e) => {
@@ -26,7 +27,7 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
       );
       const data = await response.json();
 
-      addToPosts((prev) => [...prev, data]);
+      setRerender(Math.random());
       closeModal();
       // window.location.reload()
       return data;
@@ -39,8 +40,8 @@ export default function CreatePostModal({ addToPosts, closeModal }) {
 
   return (
     <section className="rpgui-container framed d-flex flex-column text-center">
-      <a href="#" onClick={closeModal}>
-        <div className="position-absolute">X</div>
+      <a onClick={closeModal}>
+        <div className="position-absolute cross">X</div>
       </a>
       <h1>Create Post</h1>
       <form onSubmit={(e) => submitPost(e)}>
