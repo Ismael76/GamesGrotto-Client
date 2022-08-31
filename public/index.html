@@ -23,6 +23,7 @@
 
     }
 
+
   </style>
   <script src="dist/rpgui.js"></script>
   <script src="https://kit.fontawesome.com/c6afa9010a.js" crossorigin="anonymous"></script>
@@ -33,24 +34,24 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-  <i id="sound-btn" class="fa-solid fa-volume-high sound"></i>
+  <i id="sound-btn" class="fa-solid fa-volume-high sound rpgui-cursor-point"></i>
 
   <!-- <script src="dist/rpgui.js"></script> -->
   <script>
     soundBtn = document.getElementById("sound-btn")
     soundBtn.addEventListener("click", ()=>{
-      if (soundBtn.class == "fa-solid fa-volume-high sound"){
+      if (soundBtn.class == "fa-solid fa-volume-high sound rpgui-cursor-point"){
           sound.pause()
-          soundBtn.class = "fa-solid fa-volume-slash sound"
+          soundBtn.class = "fa-solid fa-volume-slash sound rpgui-cursor-point"
       } else{
         sound.play()
-        soundBtn.class = "fa-solid fa-volume-high sound"
+        soundBtn.class = "fa-solid fa-volume-high sound rpgui-cursor-point"
       }
     })
 
     // console.log(soundBtn.innerText)
     // if (soundBtn)
-   
+
     var sound = new Howl({
       src: ['./backgroundMusic.mp3'],
       autoplay: true,
