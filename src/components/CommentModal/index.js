@@ -10,6 +10,8 @@ export default function CommentModal({ post, closeModal }) {
     username: localStorage.getItem("username"),
   });
 
+  const [inputVal, setInputVal] = useState("");
+
   const comments = async () => {
     try {
       const url = `http://localhost:5000/comments/${post.id}`;
@@ -71,6 +73,8 @@ export default function CommentModal({ post, closeModal }) {
     try {
       const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
+      setCommentData((prev) => [...prev, postCommentData]);
+      setInputVal("");
       return data;
     } catch (err) {
       console.log(err);
@@ -121,12 +125,14 @@ export default function CommentModal({ post, closeModal }) {
         <textarea
           required
           placeholder="Enter comment"
-          onChange={(e) =>
+          onChange={(e) => {
             setPostCommentData((prev) => ({
               ...prev,
               text: e.target.value,
-            }))
-          }
+            }));
+            setInputVal(e.target.value);
+          }}
+          value={inputVal}
         ></textarea>
         <button className="rpgui-button framed-golden">Submit Comment</button>
       </form>
