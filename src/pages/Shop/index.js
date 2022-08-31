@@ -50,7 +50,8 @@ export default function Shop() {
       e.target.innerText = "Sell";
     }
     setShowListing(true);
-    setListingType(e.target.innerText);
+    let listingsToShow = e.target.innerText
+    setListingType(listingsToShow);
   };
 
   function openModal() {
@@ -89,7 +90,50 @@ export default function Shop() {
       setUserListingData(data);
     }
     fetchData();
-  }, [showUserListings, showListing]);
+  }, []);
+
+  const deleteListing = async (e, id) => {
+    e.preventDefault();
+
+    const deleteData = {
+      username: localStorage.getItem("username"),
+    };
+
+    const options = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(deleteData),
+    };
+    const response = await fetch(
+      `http://localhost:5000/listings/${id}`,
+      options
+    );
+    const data = await response.json();
+    setUserListingData(data);
+  };
+
+  function renderUserListings() {
+    if (userListingData.length != 0) {
+      return userListingData.map((val, key) => (
+        <tr key={key} className="border-listings-table">
+          <td className="p-3 special-border">{val.title}</td>
+          <td className="p-3 special-border table-description">
+            {val.description}
+          </td>
+          <td className="p-3 special-border">£{val.price}</td>
+          <td className="p-3 special-border">{val.location}</td>
+
+          <button
+            className="rpgui-button ms-3 px-3 mx-3 my-3 py-auto"
+            onClick={(e) => deleteListing(e, val.id)}
+          >
+            DELETE
+          </button>
+        </tr>
+      ));
+    }
+    return <h1>EMPTY</h1>;
+  }
 
   return (
     <motion.div

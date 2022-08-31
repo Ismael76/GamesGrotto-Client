@@ -109,8 +109,9 @@ export default function ForumWindow() {
           return searchPost;
       })
       .map((item) => (
-        <>
-          <div key={item.id} onClick={() => openCommentModal(item)}>
+        <section>
+        <div className="rpgui-container framed-relative">
+          <div key={item.id} onClick={() => openCommentModal(item)} className="rpgui-container framed-golden-relative">
             <h3 className="p-3">{item.title}</h3>
 
             <p className="p-3">{item.text}</p>
@@ -118,7 +119,7 @@ export default function ForumWindow() {
               Posted by {item.username} {/*on {item.date} */}
             </p>
           </div>
-          <div className="d-flex justify-content-around">
+          <div className="d-flex justify-content-around pt-2">
             <button
               className="rpgui-button"
               onClick={() => updateLikes(item, "likes")}
@@ -132,8 +133,10 @@ export default function ForumWindow() {
               {item.dislikes.length}👎
             </button>
           </div>
-          <hr className="golden" />
-        </>
+        </div>
+        <hr className="golden" />
+        </section>
+
       ));
 
   const handleSubmit = (e) => {
@@ -170,11 +173,11 @@ export default function ForumWindow() {
             </form>
           </div>
 
-          <div className="rpgui-container framed-golden forum-window">
-            <h1>Forum Board</h1>
-            <hr className="golden" />
+          <div className="rpgui-container framed-golden forum-window mt-2">
+            <h1 className="pt-3">Forum Board</h1>
+            <hr className="golden mx-4" />
             {postData.length == 0 && <h1>No Posts Available</h1>}
-            {postData.length != 0 && <ul>{renderListing()}</ul>}
+            {postData.length != 0 && <ul className="d-flex flex-column justify-content-center me-4">{renderListing()}</ul>}
           </div>
 
           <button
@@ -200,7 +203,7 @@ export default function ForumWindow() {
       )}
       {whichModal == "CreatePost" && (
         <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
-          <div className="modal-content modal-center">
+          <div className="modal-content post-create2">
             <CreatePostModal
               setRerender={setRerender}
               closeModal={closeModal}

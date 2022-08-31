@@ -42,7 +42,7 @@ export default function CreatePostModal({ setRerender, closeModal }) {
       <h1>Create Post</h1>
       <form onSubmit={(e) => submitPost(e)}>
         <input
-          className="mb-1"
+          className="mb-3 bg-dark"
           type="text"
           label="Title"
           placeholder="Title"
@@ -54,8 +54,8 @@ export default function CreatePostModal({ setRerender, closeModal }) {
             }))
           }
         />
-        <input
-          className="mb-1"
+        <textarea
+          className="mb-1 bg-dark"
           type="text"
           label="Text"
           placeholder="Text"

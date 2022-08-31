@@ -30,7 +30,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
   const [listing, setListing] = useState();
 
   const [searchTerm, setSearchTerm] = useState("");
-
   //Pagination States
   const [listingData, setListingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +50,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:5000/listings");
+      const response = await fetch("http://localhost:5000/listings/");
       const data = await response.json();
       setListingData(data);
     }
@@ -199,14 +198,14 @@ export default function ListingWindow({ listingType, setShowListing }) {
                   <h2>See more</h2>
                 </th>
               </tr>
-              {listingType == "Sell"
+              {listingType == "BUY"
                 ? renderListingSale()
                 : renderListingTrade()}
             </table>
             <Pagination
               postsPerPage={postsPerPage}
               totalPosts={
-                listingType == "Sell" ? saleData.length : tradeData.length
+                listingType == "BUY" ? saleData.length : tradeData.length
               }
               paginate={paginate}
             />
