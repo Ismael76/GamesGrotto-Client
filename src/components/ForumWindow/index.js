@@ -26,8 +26,14 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function ForumWindow() {
-  const [leaveShop, setLeaveShop, leaveForum, setLeaveForum] =
-    useContext(GameContext);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+  ] = useContext(GameContext);
 
   const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
@@ -153,6 +159,10 @@ export default function ForumWindow() {
     navigate("/home", { replace: true });
     setLeaveForum(true);
     setLeaveShop(false);
+    setOffset({
+      x: -850,
+      y: -1100,
+    });
   }
 
   return (
@@ -166,7 +176,7 @@ export default function ForumWindow() {
         {!modalIsOpen && (
           <>
             <div className="rpgui-container framed-golden forum-search">
-              <a href="" onClick={handleBack}>
+              <a href="#" onClick={handleBack}>
                 <div className="rpgui-container flex-item">Back</div>
               </a>
               <form onSubmit={handleSubmit} className="d-flex mt-4">

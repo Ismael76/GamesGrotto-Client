@@ -200,8 +200,14 @@ document.addEventListener("keyup", function (playerWalk) {
 });
 
 const Dashboard = ({ draw, height, width }) => {
-  const [leaveShop, setLeaveShop, leaveForum, setLeaveForum] =
-    useContext(GameContext);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+  ] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("");
   const canvas = React.useRef();
@@ -241,10 +247,6 @@ const Dashboard = ({ draw, height, width }) => {
       }
     }
 
-    const offset = {
-      x: -280,
-      y: -1250,
-    };
     const boundaries = [];
 
     //All Collision Tiles
@@ -449,16 +451,12 @@ const Dashboard = ({ draw, height, width }) => {
 
     //If User Leaves Shop Set Position
     if (leaveShop) {
-      playerPosX = 620;
-      playerPosY = 300;
       directionPlayerFace = playerImageDown;
     }
 
-    // if (leaveForum) {
-    //   playerPosX = 700;
-    //   playerPosY = 350;
-    //   directionPlayerFace = playerImageDown;
-    // }
+    if (leaveForum) {
+      directionPlayerFace = playerImageDown;
+    }
 
     // Player Configuration
     const player = new Sprite({
@@ -481,6 +479,7 @@ const Dashboard = ({ draw, height, width }) => {
     // Game Scene Configuration
     const gameScene = new Image();
     gameScene.src = require("./map.png");
+    console.log(offset.y);
     const gameSceneLayer = new Sprite({
       position: {
         x: offset.x,
