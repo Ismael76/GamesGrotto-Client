@@ -48,7 +48,7 @@ export default function SignUp({ setWhichModal }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
     };
-
+    if (password == confirmPassword) {
     try {
       const response = await fetch(
         "http://localhost:5000/auth/register",
@@ -67,10 +67,8 @@ export default function SignUp({ setWhichModal }) {
     } catch (err) {
       console.log(err);
     }
-
-    if (password !== confirmPassword) {
+    } else if (password !== confirmPassword) {
       setErrorMessage("Passwords must match.");
-      return;
     }
 
     setLoading(true);
@@ -95,6 +93,8 @@ export default function SignUp({ setWhichModal }) {
           <input
             className="mb-1"
             type="text"
+            minLength={3}
+            maxLength={12}
             label="Username"
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
@@ -102,16 +102,19 @@ export default function SignUp({ setWhichModal }) {
           <br />
           <input
             className="mb-1"
-            type="text"
+            type="email"
             label="Email"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
+
           />
           <br />
           <input
             className="mb-1"
             type="password"
             label="Password"
+            minLength={8}
+            maxLength={30}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
@@ -120,6 +123,8 @@ export default function SignUp({ setWhichModal }) {
             className="mb-1"
             type="password"
             label="Confirm Password"
+            minLength={8}
+            maxLength={30}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
           />
