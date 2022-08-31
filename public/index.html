@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Buy, sell and trade games within our shop" />
-  <title>Games Grotto</title>
-  <link href="dist/rpgui.css" rel="stylesheet" type="text/css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <style>
-    .sound {
-      position: absolute;
-      top: 1vw;
-      right: 1vw;
-      z-index: 3;
-      opacity:0.9;
-
-    }
-
-
-  </style>
-  <script src="dist/rpgui.js"></script>
-  <script src="https://kit.fontawesome.com/c6afa9010a.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"
-    integrity="sha256-D+v9meJzO2kOysLcNsgohfWBprXHO2WJWJj/hUhBX1s=" crossorigin="anonymous"></script>
-</head>
-
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <i id="sound-btn" class="fa-solid fa-volume-high sound rpgui-cursor-point"></i>
-
-  <!-- <script src="dist/rpgui.js"></script> -->
-  <script>
-    soundBtn = document.getElementById("sound-btn")
-    soundBtn.addEventListener("click", ()=>{
-      if (soundBtn.class == "fa-solid fa-volume-high sound rpgui-cursor-point"){
-          sound.pause()
-          soundBtn.class = "fa-solid fa-volume-slash sound rpgui-cursor-point"
-      } else{
-        sound.play()
-        soundBtn.class = "fa-solid fa-volume-high sound rpgui-cursor-point"
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Buy, sell and trade games within our shop"
+    />
+    <title>Games Grotto</title>
+    <link href="dist/rpgui.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <style>
+      .sound {
+        position: absolute;
+        top: 1vw;
+        right: 1vw;
+        z-index: 3;
+        opacity: 0.9;
       }
-    })
+    </style>
+    <script src="dist/rpgui.js"></script>
+    <script
+      src="https://kit.fontawesome.com/c6afa9010a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"
+      integrity="sha256-D+v9meJzO2kOysLcNsgohfWBprXHO2WJWJj/hUhBX1s="
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-    // console.log(soundBtn.innerText)
-    // if (soundBtn)
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <i
+      id="sound-btn"
+      class="fa-solid fa-volume-high sound rpgui-cursor-point"
+    ></i>
 
-    var sound = new Howl({
-      src: ['./backgroundMusic.mp3'],
-      autoplay: true,
-      loop: true,
-      volume: 0.1
-    });
-    sound.play();
-  </script>
-</body>
 
+    <script>
+      soundBtn = document.getElementById("sound-btn");
+      soundBtn.addEventListener("click", () => {
+        if (
+          soundBtn.class == "fa-solid fa-volume-high sound rpgui-cursor-point"
+        ) {
+          sound.pause();
+          soundBtn.class = "fa-solid fa-volume-slash sound rpgui-cursor-point";
+        } else {
+          sound.play();
+          soundBtn.class = "fa-solid fa-volume-high sound rpgui-cursor-point";
+        }
+      });
+      var sound = new Howl({
+        src: ["./backgroundMusic.mp3"],
+        autoplay: true,
+        loop: true,
+        volume: 0.1,
+      });
+      sound.play();
+    </script>
+  </body>
 </html>
