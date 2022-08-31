@@ -10,8 +10,6 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-
-
 export default function Shop() {
   const [
     leaveShop,
@@ -35,7 +33,7 @@ export default function Shop() {
       e.target.innerText = "Sell";
     }
     setShowListing(true);
-    let listingsToShow = e.target.innerText
+    let listingsToShow = e.target.innerText;
     setListingType(listingsToShow);
   };
 
@@ -56,7 +54,7 @@ export default function Shop() {
     setLeaveShop(true);
     setLeaveForum(false);
     setOffset({
-      x: -150,
+      x: -800,
       y: -1100,
     });
   }
@@ -139,7 +137,7 @@ export default function Shop() {
           <section className="rpgui-content">
             <div className="rpgui-container framed-golden-2 shop-window shadow-lg">
               <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
-              <a>
+                <a>
                   <div
                     onClick={handleInfo}
                     className="rpgui-icon exclamation flex-item cross"
@@ -229,7 +227,12 @@ export default function Shop() {
         {showInfo && (
           <section className="rpgui-content">
             <div className="rpgui-container framed-golden shop-window-info overflow-auto shadow-lg">
-                <div onClick={() => setShowInfo(false)} className="rpgui-container flex-item cross">X</div>
+              <div
+                onClick={() => setShowInfo(false)}
+                className="rpgui-container flex-item cross"
+              >
+                X
+              </div>
 
               <div className="d-flex flex-column text-center justify-content-center">
                 <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>

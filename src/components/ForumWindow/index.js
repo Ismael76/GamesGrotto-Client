@@ -151,7 +151,7 @@ export default function ForumWindow() {
     setLeaveForum(true);
     setLeaveShop(false);
     setOffset({
-      x: -850,
+      x: -1550,
       y: -1100,
     });
   }
@@ -161,7 +161,12 @@ export default function ForumWindow() {
       {!modalIsOpen && (
         <>
           <div className="rpgui-container framed-golden forum-search">
-              <div onClick={handleBack} className="rpgui-container flex-item cross">Back</div>
+            <div
+              onClick={handleBack}
+              className="rpgui-container flex-item cross"
+            >
+              Back
+            </div>
             <form onSubmit={handleSubmit} className="d-flex mt-4">
               <input
                 onChange={(e) => {
