@@ -95,12 +95,13 @@ export default function RunnerGame() {
     }, [])
 
     return (
-        <>
+        <section className="gameCanvas">
             <div id="game">
                 <div id="character"></div>
-                <div id="block"></div>
-            </div>
+                    <div id="block"></div>
+                </div>
             <h1 id="score">{score}</h1>
-        </>
+        </section>
+
     );
 }
