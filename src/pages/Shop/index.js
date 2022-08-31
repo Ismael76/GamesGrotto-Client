@@ -227,7 +227,11 @@ export default function Shop() {
             </div>
             <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
               <div className="modal-content">
-                <CreateListing setIsOpen={setIsOpen} closeModal={closeModal} />
+                <CreateListing
+                  setIsOpen={setIsOpen}
+                  closeModal={closeModal}
+                  setUserListingData={setUserListingData}
+                />
               </div>
             </div>
           </section>

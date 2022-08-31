@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-export default function CreateListing({ setIsOpen, closeModal }) {
+export default function CreateListing({
+  setIsOpen,
+  closeModal,
+  setUserListingData,
+}) {
   const [listingData, setListingData] = useState({
     type: "Sell",
     price: "",
@@ -30,6 +34,7 @@ export default function CreateListing({ setIsOpen, closeModal }) {
     try {
       const response = await fetch("http://localhost:5000/listings/", options);
       const data = await response.json();
+      setUserListingData((prev) => [...prev, listingData]);
       return data;
     } catch (err) {
       console.log(err);
