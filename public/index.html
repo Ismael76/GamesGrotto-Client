@@ -8,6 +8,10 @@
       name="description"
       content="Buy, sell and trade games within our shop"
     />
+    <meta
+    name="Author"
+    content="Elliot, Ismael, Rameez and Thilak"
+  />
     <title>Games Grotto</title>
     <link href="dist/rpgui.css" rel="stylesheet" type="text/css" />
     <link
@@ -24,8 +28,7 @@
         position: absolute;
         top: 1vw;
         right: 1vw;
-        z-index: 3;
-        opacity: 0.9;
+        z-index: 5;
       }
     </style>
     <script src="dist/rpgui.js"></script>
@@ -41,7 +44,7 @@
   </head>
 
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>You need to enable JavaScript to enjoy the beautiful world of Pyre.</noscript>
     <div id="root"></div>
     <i
       id="sound-btn"
@@ -53,20 +56,20 @@
       soundBtn = document.getElementById("sound-btn");
       soundBtn.addEventListener("click", () => {
         if (
-          soundBtn.class == "fa-solid fa-volume-high sound rpgui-cursor-point"
+          soundBtn.className == "fa-solid fa-volume-high sound rpgui-cursor-point"
         ) {
           sound.pause();
-          soundBtn.class = "fa-solid fa-volume-slash sound rpgui-cursor-point";
+          soundBtn.className = "fa-solid fa-volume-xmark sound rpgui-cursor-point";
         } else {
           sound.play();
-          soundBtn.class = "fa-solid fa-volume-high sound rpgui-cursor-point";
+          soundBtn.className = "fa-solid fa-volume-high sound rpgui-cursor-point";
         }
       });
       var sound = new Howl({
         src: ["./backgroundMusic.mp3"],
         autoplay: true,
         loop: true,
-        volume: 0.1,
+        volume: 0.05,
       });
       sound.play();
     </script>
