@@ -5,49 +5,58 @@ import axios from "axios"
 
 export default function RunnerGame() {
     const [score, setScore] = useState(0)
-    const [gameLoop, setGameLoop] = useState(true)
+    const [gameLoop, setGameLoop] = useState("before")
     const navigate = useNavigate()
     const count = useRef(0)
 
     useEffect(() => {
 
 
-        const dino = document.getElementById("character");
-        const cactus = document.getElementById("block");
+        const character = document.getElementById("character");
+        const hazard = document.querySelector(".slime");
 
         function jump() {
-            if (dino.classList != "jump") {
-                dino.classList.add("jump");
+            if (character.classList != "jump") {
+                character.classList.add("jump");
 
                 setTimeout(function () {
-                    dino.classList.remove("jump");
-                }, 300);
+                    character.classList.remove("jump");
+                }, 500);
             }
         }
 
         let isAlive = setInterval(function () {
-            // get current dino Y position
-            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
-
-            // get current cactus X position
-            let cactusLeft = parseInt(
-                window.getComputedStyle(cactus).getPropertyValue("left")
+            // get current character Y position
+            let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+            let hazardLeft
+            if(hazard.id=="block"){
+            // get current hazard X position
+                hazardLeft = parseInt(
+                window.getComputedStyle(hazard).getPropertyValue("left")
             );
+            }
 
             // detect collision
-            if (cactusLeft < 40 && cactusLeft > 0 && dinoTop > 175) {
+            if (hazardLeft < 40 && hazardLeft > 0 && characterTop > 175) {
                 // collision
-                cactus.id = ""
+                hazard.id = ""
                 let finalScore = count.current
                 updateScore(finalScore)
             }
         }, 10);
 
+        const title = document.querySelector(".instructions")
         document.addEventListener("keydown", function (event) {
-            jump();
+            if (gameLoop=="before"){
+                title.id="startedTitle"
+                hazard.id="block"   
+                setGameLoop("started")
+            } else if(gameLoop=="started") {
+                jump();
+            }
         });
 
-    }, []);
+    }, [gameLoop]);
 
     var tID; //we will use this variable to clear the setInterval()
     function animateScript() {
@@ -79,7 +88,7 @@ export default function RunnerGame() {
             try {
                 const response = await fetch("http://localhost:5000/scores/", options);
                 const data = await response.json();
-                setGameLoop(false)
+                setGameLoop("ended")
                 return data;
             } catch (err) {
                 console.log(err);
@@ -94,7 +103,7 @@ export default function RunnerGame() {
             try {
                 const response = await fetch("http://localhost:5000/scores/", options);
                 const data = await response.json();
-                setGameLoop(false)
+                setGameLoop("ended")
                 return data;
             } catch (err) {
                 console.log(err);
@@ -108,28 +117,30 @@ export default function RunnerGame() {
         count.current = count.current + 1
     }
     useEffect(() => {
-        if (gameLoop == true) {
-            const countDown = setInterval(() => addScore(), 2000)
+        if (gameLoop == "started") {
+            const countDown = setInterval(() => addScore(), 1000)
             animateScript()
             return () => clearInterval(countDown)
-        } else {
-            // alert("Game over")
-            // navigate("/home", { replace: true });
+        } else if (gameLoop=="ended") {
+            alert("Game over")
+            navigate("/home", { replace: true });
         }
 
     }, [gameLoop])
 
     return (
+        <>
         <div className="gameBackground">
+            <h1 id="before" className="instructions">Press any button to start!</h1>
             <section className="gameCanvas">
                 <div id="game">
                     <div id="character"></div>
-                    <div id="block"></div>
+                    <div id="" className="slime"></div>
                 </div>
                 <h1 id="score">{score}</h1>
             </section>
         </div>
-
+        </>
 
     );
 }

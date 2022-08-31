@@ -4,13 +4,30 @@
     height: 100vh;
 }
 
+#before {
+    padding:0;
+    margin:0;
+    position:absolute;
+    color:white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+#startedTitle {
+    padding:0;
+    margin:0;
+    opacity: 0;
+}
+
 @keyframes slideleft {
     from {
         background-position: 0%;
     }
     
     to {
-        background-position: -90000%;
+        background-position: -90000000%;
     }
 }
 
@@ -19,7 +36,7 @@
         background-position: 0%;
     }
     to {
-        background-position: -90000%;
+        background-position: -90000000%;
     }
 }
 
@@ -28,8 +45,8 @@
     background-image: url('map.png');
     background-repeat: repeat-x;
     background-size: contain;
-    animation: slideleft 10s infinite linear;
-    -webkit-animation: slideleft 10s infinite linear;
+    animation: slideleft 5000s infinite linear;
+    -webkit-animation: slideleft 5000s infinite linear;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -103,8 +120,8 @@
 } */
 
 #character {
-    width: 100px;
-    height: 100px;
+    width: 2rem;
+    height: 4rem;
     background-image: url(playerRight.png);
     width: calc(192px/4);
     background-repeat: no-repeat;
@@ -129,28 +146,28 @@
 
 
 .jump {
-    animation: jump 0.3s linear;
+    animation: jump 0.5s linear;
 }
 
 @keyframes jump {
     0% {
-        top: 195px;
+        top: 17rem;
     }
 
     30% {
-        top: 155px;
+        top: 12rem;
     }
 
     50% {
-        top: 95px;
+        top: 7rem;
     }
 
     80% {
-        top: 155px;
+        top: 12rem;
     }
 
     100% {
-        top: 195px;
+        top: 17rem;
     }
 }
 /* 
@@ -164,25 +181,25 @@
 } */
 
 #block {
-    width: 40px;
-    height: 80px;
+    width: 2.5rem;
+    height: 2.5rem;
     position: relative;
-    top: 130px;
-    left: 1160px;
+    top: 15rem;
+    left: 700px;
 
-    background-image: url("rock.png");
-    background-size: 10px 10px;
+    background-image: url("slime.png");
+    background-size: 2.5rem 2.5rem;
     background-repeat: no-repeat;
 
-    animation: block 2s infinite linear;
+    animation: block 1s infinite linear;
 }
 
 @keyframes block {
     0% {
-        left: 722.5px;
+        left: 60rem;
     }
 
     100% {
-        left: -40px;
+        left: -1rem;
     }
 }
