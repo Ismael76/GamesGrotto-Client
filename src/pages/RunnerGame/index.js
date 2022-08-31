@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
-import kirby from "./kirby.png"
 import axios from "axios"
 
 export default function RunnerGame() {
@@ -35,7 +34,7 @@ export default function RunnerGame() {
             );
 
             // detect collision
-            if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
+            if (cactusLeft < 100 && cactusLeft > 0 && dinoTop >= 175) {
                 // collision
                 cactus.id = ""
                 let finalScore = count.current
@@ -95,13 +94,16 @@ export default function RunnerGame() {
     }, [])
 
     return (
-        <section className="gameCanvas">
+        <div className="gameBackground">
+            <section className="gameCanvas">
             <div id="game">
                 <div id="character"></div>
                     <div id="block"></div>
                 </div>
             <h1 id="score">{score}</h1>
-        </section>
+            </section>
+        </div>
+   
 
     );
 }
