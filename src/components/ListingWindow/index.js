@@ -137,9 +137,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
     <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
         <div className="rpgui-container framed-golden-2 shop-window2">
-          <a href="#" onClick={handleBack}>
-            <div className="rpgui-container position-absolute">Back</div>
-          </a>
+          <div onClick={handleBack} className="rpgui-container position-absolute cross">Back</div>
 
           <div className="d-flex flex-column pt-5">
             {/* <select
@@ -209,9 +207,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           )}
           {whichModal == "ListingModal" && (
             <>
-              <a href="#" onClick={closeModal}>
-                <div className="rpgui-container position-absolute">X</div>
-              </a>
+              <div onClick={closeModal} className="rpgui-container position-absolute cross">X</div>
               <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}

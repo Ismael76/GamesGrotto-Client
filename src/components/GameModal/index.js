@@ -54,9 +54,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">SHOP</h1>
               <p>Enter Shop To Sell, Trade &#38; Buy Games!</p>
@@ -75,9 +75,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">MINIGAME</h1>
               <p>
@@ -99,9 +99,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">ABOUT</h1>
               <p>Created By:</p>
@@ -148,9 +148,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4 score-modal">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">LEADERBOARDS</h1>
               <hr className="golden" />

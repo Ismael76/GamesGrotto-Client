@@ -15,7 +15,6 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
             <li key={number} className="page-item">
               <a
                 onClick={() => paginate(number)}
-                href="#"
                 className="page-link"
               >
                 {number}

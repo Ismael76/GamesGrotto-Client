@@ -158,18 +158,15 @@ export default function ForumWindow() {
       {!modalIsOpen && (
         <>
           <div className="rpgui-container framed-golden forum-search">
-            <a href="#" onClick={handleBack}>
-              <div className="rpgui-container flex-item">Back</div>
-            </a>
+              <div onClick={handleBack} className="rpgui-container flex-item cross">Back</div>
             <form onSubmit={handleSubmit} className="d-flex mt-4">
               <input
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                 }}
-                className="m-1"
+                className="my-1 mx-5"
                 placeholder="Search Title Here"
               ></input>
-              <button className="m-1">Submit</button>
             </form>
           </div>
 
@@ -181,7 +178,7 @@ export default function ForumWindow() {
           </div>
 
           <button
-            className="rpgui-container framed-golden post-create"
+            className="rpgui-container framed-golden post-create cross"
             onClick={openCreatePostModal}
           >
             Create Post

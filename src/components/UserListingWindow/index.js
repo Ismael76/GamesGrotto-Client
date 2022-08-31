@@ -51,9 +51,7 @@ export default function UserListingWindow({
   return (
     <section className="rpgui-content">
       <div className="rpgui-container framed-golden shop-window-info">
-        <a href="#" onClick={() => setShowUserListings(false)}>
-          <div className="rpgui-container flex-item">X</div>
-        </a>
+          <div onClick={() => setShowUserListings(false)} className="rpgui-container flex-item cross">X</div>
 
         <div className="d-flex flex-column text-center justify-content-center">
           <h1>

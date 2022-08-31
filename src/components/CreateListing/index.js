@@ -44,9 +44,7 @@ export default function CreateListing({
   return (
     <section className="rpgui-content framed-golden sell-window">
       <div className="rpgui-container framed d-flex flex-column text-center">
-        <a href="#" onClick={closeModal}>
-          <div className="rpgui-container position-absolute">X</div>
-        </a>
+        <div onClick={closeModal} className="rpgui-container position-absolute cross">X</div>
         <section className="d-flex flex-column text-center p-5">
           <h1>CREATE LISTING</h1>
           <p>Sell/Trade Your Old Games!</p>

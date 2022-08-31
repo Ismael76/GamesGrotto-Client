@@ -154,14 +154,14 @@ export default function Shop() {
           <section className="rpgui-content">
             <div className="rpgui-container framed-golden-2 shop-window">
               <div className="d-flex flex-row-reverse justify-content-between pb-2 pl-2">
-                <a href="#" className="">
+              <a>
                   <div
                     onClick={handleInfo}
-                    className="rpgui-icon exclamation flex-item"
+                    className="rpgui-icon exclamation flex-item cross"
                   ></div>
                 </a>
-                <a href="#" onClick={handleBack}>
-                  <div className="rpgui-container flex-item">Back</div>
+                <a onClick={handleBack}>
+                  <div className="rpgui-container flex-item cross">Back</div>
                 </a>
               </div>
               <div className="d-flex row justify-content-center pb-5 w-auto">
@@ -172,10 +172,10 @@ export default function Shop() {
                   <div className="product-content">
                     <h3 className="title mx-md-5 py-1">
                       <button
-                        className="rpgui-button d-block m-auto"
+                        className="rpgui-button d-block m-auto cross"
                         onClick={handleClick}
                       >
-                        <a href="#">BUY</a>
+                        BUY
                       </button>
                     </h3>
                   </div>
@@ -187,10 +187,10 @@ export default function Shop() {
                   <div className="product-content">
                     <h3 className="title mx-md-5 py-1">
                       <button
-                        className="rpgui-button d-block m-auto"
+                        className="rpgui-button d-block m-auto cross"
                         onClick={handleClick}
                       >
-                        <a href="#">TRADE</a>
+                        TRADE
                       </button>
                     </h3>
                   </div>
@@ -203,9 +203,9 @@ export default function Shop() {
                     <h3 className="title mx-md-5 py-1">
                       <button
                         onClick={openModal}
-                        className="rpgui-button d-block m-auto  "
+                        className="rpgui-button d-block m-auto cross"
                       >
-                        <a href="#">SELL</a>
+                        SELL
                       </button>
                     </h3>
                   </div>
@@ -220,9 +220,9 @@ export default function Shop() {
                         onClick={() => {
                           setShowUserListings(true);
                         }}
-                        className="rpgui-button d-block m-auto  "
+                        className="rpgui-button d-block m-auto cross"
                       >
-                        <a href="#">MY LISTINGS</a>
+                        MY LISTINGS
                       </button>
                     </h3>
                   </div>
@@ -244,9 +244,7 @@ export default function Shop() {
         {showInfo && (
           <section className="rpgui-content">
             <div className="rpgui-container framed-golden shop-window-info">
-              <a href="#" onClick={() => setShowInfo(false)}>
-                <div className="rpgui-container flex-item">X</div>
-              </a>
+                <div onClick={() => setShowInfo(false)} className="rpgui-container flex-item cross">X</div>
 
               <div className="d-flex flex-column text-center justify-content-center">
                 <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>
