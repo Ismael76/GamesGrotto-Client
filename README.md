@@ -58,3 +58,6 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 ### Challenges
 - Building a full-stack app using more programming languages than ever before
 - Building a reactjs python-flask web-app within a HTML canvas
+
+<br>
+</hr>
