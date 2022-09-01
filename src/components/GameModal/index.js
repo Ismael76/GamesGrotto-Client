@@ -22,6 +22,22 @@ const customStyles = {
   },
 };
 
+const customStyles2 = {
+  overlay: {
+    backgroundColor: "rgba(64, 223, 219,0)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    color: "black",
+    opacity: "1",
+  },
+};
+
 export default function GameModal({
   modalIsOpen,
   setIsOpen,
@@ -185,10 +201,10 @@ export default function GameModal({
           closeTimeoutMS={500}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          style={customStyles}
+          style={customStyles2}
           contentLabel="Authentication modal"
         >
-          <div className="rpgui-container framed-golden d-flex flex-column text-center p-4 score-modal">
+          <div className="rpgui-container framed-golden d-flex flex-column text-center p-4 score-modal overflow-auto">
             <div className="position-absolute cross" onClick={closeModal}>
               X
             </div>
