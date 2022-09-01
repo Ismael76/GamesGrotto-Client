@@ -59,12 +59,14 @@ export default function RunnerGame() {
 
     const title = document.querySelector(".instructions");
     document.addEventListener("keydown", function (event) {
-      if (gameLoop == "before") {
-        title.id = "startedTitle";
-        hazard.id = "block";
-        setGameLoop("started");
-      } else if (gameLoop == "started") {
-        jump();
+      if (event.key == " ") {
+        if (gameLoop == "before") {
+          title.id = "startedTitle";
+          hazard.id = "block";
+          setGameLoop("started");
+        } else if (gameLoop == "started") {
+          jump();
+        }
       }
     });
   }, [gameLoop]);
@@ -171,7 +173,7 @@ export default function RunnerGame() {
     >
       <div className="gameBackground">
         <h1 id="before" className="instructions">
-          Press Any Button To Start Game!
+          Press Spacebar To Start Game!
         </h1>
         <section className="gameCanvas">
           <div id="game">
