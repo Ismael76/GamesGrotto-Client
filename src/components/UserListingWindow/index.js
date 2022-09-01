@@ -32,11 +32,13 @@ export default function UserListingWindow({
     if (userListingData.length != 0) {
       return userListingData.map((val, key) => (
         <tr key={key} className="border-listings-table ">
-          <td className="p-3 special-border text-uppercase">{val.title}</td>
+          <td className="p-3 special-border text-uppercase table-highlight">
+            {val.title}
+          </td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
-          <td className="p-3 special-border">£{val.price}</td>
+          <td className="p-3 special-border table-highlight">£{val.price}</td>
           <td className="p-3 special-border">{val.location}</td>
 
           <button
@@ -48,12 +50,6 @@ export default function UserListingWindow({
         </tr>
       ));
     }
-    return (
-      <div>
-        <h1>You Currently Have No Listings To View!</h1>
-        <img src="https://www.nicepng.com/png/full/28-288275_cash-cash-pixel-art-png.png"></img>
-      </div>
-    );
   }
   return (
     <section className="rpgui-content">
@@ -88,6 +84,14 @@ export default function UserListingWindow({
             </tr>
             {renderUserListings()}
           </table>
+          {userListingData.length == 0 ? (
+            <div className="center-no-listing">
+              <h1>You Currently Have No Listings To View!</h1>
+              <img src="https://www.nicepng.com/png/full/28-288275_cash-cash-pixel-art-png.png"></img>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </section>
