@@ -60,13 +60,13 @@ export default function CommentModal({
           </p>
           <div className="d-flex justify-content-around">
             <button
-              className="rpgui-button"
+              className="rpgui-button thumb"
               onClick={() => updateLikes(item, "likes")}
             >
               {item.likes.length}👍
             </button>
             <button
-              className="rpgui-button"
+              className="rpgui-button thumb"
               onClick={() => updateLikes(item, "dislikes")}
             >
               {item.dislikes.length}👎

@@ -127,13 +127,13 @@ export default function ForumWindow() {
             </div>
             <div className="d-flex justify-content-around pt-2">
               <button
-                className="rpgui-button"
+                className="rpgui-button thumb"
                 onClick={() => updateLikes(item, "likes")}
               >
                 {item.likes.length}👍
               </button>
               <button
-                className="rpgui-button"
+                className="rpgui-button thumb"
                 onClick={() => updateLikes(item, "dislikes")}
               >
                 {item.dislikes.length}👎
