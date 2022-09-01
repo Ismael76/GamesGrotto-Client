@@ -6,14 +6,22 @@ export default function ListingModal({ listing, setWhichModal }) {
   }
 
   return (
-    <section>
+    <section className="d-flex flex-column overflow-auto align-items-center">
       <h1 className="pt-4 pb-2">LISTING</h1>
-      <div className="d-flex flex-column rpgui-container framed-grey overflow-auto">
-        <div className="d-flex flex-column align-items-center ">
-          <h2>Name: {listing.title}</h2>
-          <h2>Price: £{listing.price}</h2>
-          <h2>Description:</h2>
-          <p>{listing.description}</p>
+      <div className="d-flex flex-column rpgui-container framed-golden-2 overflow-auto mt-5 view-listing">
+        <div className="d-flex flex-column align-items-center">
+          <h2 className="text-uppercase">
+            NAME:{" "}
+            <span className="text-uppercase listing-text">{listing.title}</span>
+          </h2>
+          <h2 className=" text-uppercase">
+            PRICE:{" "}
+            <span className="text-uppercase listing-text">
+              £{listing.price}
+            </span>
+          </h2>
+          <h2 className="text-uppercase">DESCRIPTION:</h2>
+          <p className="listing-text">{listing.description}</p>
 
           {listing.image ? (
             <img
@@ -31,8 +39,8 @@ export default function ListingModal({ listing, setWhichModal }) {
         <div className="rpgui-container framed-golden-relative contact-seller-container mt-3 w-50 overflow-auto">
           <h1 className="mx-auto pt-4">SELLER</h1>
           <hr className="golden" />
-          <h2>Username: {listing.username}</h2>
-          <h2>Location: {listing.location}</h2>
+          <h2>USERNAME: {listing.username}</h2>
+          <h2>LOCATION: {listing.location}</h2>
 
           <button className="rpgui-button bg-dark" onClick={goToOther}>
             Contact

@@ -13,3 +13,12 @@
 .listing-modal {
   width: 50vw;
 }
+
+.listing-text {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.3rem !important;
+}
+.view-listing {
+  margin-top: 5rem !important;
+  width: 40vw;
+}
