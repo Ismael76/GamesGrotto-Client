@@ -75,7 +75,7 @@ export default function Shop() {
       setUserListingData(data);
     }
     fetchData();
-  }, []);
+  }, [showUserListings, showListing]);
 
   const deleteListing = async (e, id) => {
     e.preventDefault();
