@@ -91,11 +91,13 @@ export default function ListingWindow({ listingType, setShowListing }) {
       })
       .map((val, key) => (
         <tr key={key} className="border-listings-table shadow">
-          <td className="p-3 special-border text-uppercase">{val.title}</td>
+          <td className="p-3 special-border text-uppercase table-highlight">
+            {val.title}
+          </td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
-          <td className="p-3 special-border">£{val.price}</td>
+          <td className="p-3 special-border table-highlight">£{val.price}</td>
           <td className="p-3 special-border">{val.location}</td>
 
           <button
@@ -127,7 +129,9 @@ export default function ListingWindow({ listingType, setShowListing }) {
       })
       .map((val, key) => (
         <tr key={key} className="border-listings-table shadow">
-          <td className="p-5 special-border">{val.title}</td>
+          <td className="p-5 special-border font-weight-bold table-highlight">
+            {val.title}
+          </td>
           <td className="p-5 special-border table-description">
             {val.description}
           </td>
