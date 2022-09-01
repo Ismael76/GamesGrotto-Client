@@ -87,7 +87,7 @@ export default function CommentModal({
     try {
       const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
-      setCommentData((prev) => [...prev, postCommentData]);
+      //   setCommentData((prev) => [...prev, postCommentData]);
       setInputVal("");
       setRerenderComments(Math.random());
       return data;
