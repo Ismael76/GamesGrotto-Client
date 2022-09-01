@@ -76,8 +76,8 @@ export default function ListingWindow({ listingType, setShowListing }) {
     if (currentListingSale.length == 0) {
       return (
         <div className="no-listing">
-          <h2>No Sale Listings To View, Sorry :(</h2>
-          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+          {/* <h2>No Sale Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img> */}
         </div>
       );
     }
@@ -112,8 +112,8 @@ export default function ListingWindow({ listingType, setShowListing }) {
     if (currentListingTrade.length == 0) {
       return (
         <div className="no-listing d-flex flex-column">
-          <h2>No Trade Listings To View, Sorry :(</h2>
-          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+          {/* <h2>No Trade Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img> */}
         </div>
       );
     }
