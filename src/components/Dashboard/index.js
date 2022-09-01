@@ -664,8 +664,8 @@ const Dashboard = ({ draw, height, width }) => {
             }) &&
             overlappingArea > (player.width * player.height) / 2
           ) {
-            window.location.replace("https://www.getfutureproof.co.uk/");
-            window.cancelAnimationFrame(animationID);
+            setWhichModal("futureproof");
+            setIsOpen(true);
             break;
           }
         }

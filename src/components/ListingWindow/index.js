@@ -23,7 +23,6 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function ListingWindow({ listingType, setShowListing }) {
-  const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listing, setListing] = useState();
@@ -205,9 +204,33 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </div>
         </div>
       )}
+      {/* <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+        <div className="modal-content">
+        <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
+          {whichModal == "ContactModal" && (
+            <>
+              <a className="position-absolute" onClick={goToOther}>
+                Back
+              </a>
+              <ContactModal listing={listing} setWhichModal={setWhichModal} />
+            </>
+          )}
+          {whichModal == "ListingModal" && (
+            <>
+              <div
+                onClick={closeModal}
+                className="rpgui-container position-absolute cross"
+              >
+                X
+              </div>
+              <ListingModal listing={listing} setWhichModal={setWhichModal} />
+            </>
+          )}
+        </div>
+        </div>
+      </div> */}
       <Modal
         className="rpgui-content splash-modal-position"
-        ref={modal}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}

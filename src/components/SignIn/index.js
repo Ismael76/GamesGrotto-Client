@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { GameContext } from "../../ContextProvider";
 
 export default function SignIn({ setWhichModal }) {
   const [loading, setLoading] = useState(false);
@@ -8,6 +9,16 @@ export default function SignIn({ setWhichModal }) {
 
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+    leaveDungeon,
+    setleaveDungeon,
+  ] = useContext(GameContext);
 
   const navigate = useNavigate();
 
@@ -29,6 +40,13 @@ export default function SignIn({ setWhichModal }) {
       const { token } = await response.json();
       localStorage.setItem("token", token);
       localStorage.setItem("username", loginData.username);
+      setleaveDungeon(false);
+      setLeaveForum(false);
+      setLeaveShop(false);
+      setOffset({
+        x: -900,
+        y: -1250,
+      });
       navigate("/home", { replace: true });
     } catch (err) {
       console.log(err);

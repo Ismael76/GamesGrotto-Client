@@ -50,6 +50,10 @@ export default function GameModal({
     navigate("/", { replace: true });
   }
 
+  function takeMeToWebsite() {
+    window.location.replace("https://www.getfutureproof.co.uk/");
+  }
+
   function renderPopup() {
     if (whichModal === "shop") {
       return (
@@ -195,6 +199,39 @@ export default function GameModal({
                 <h1 className="text-center">No highscores yet</h1>
               )}
               {scoreData.length != 0 && renderScores()}
+            </div>
+          </div>
+        </Modal>
+      );
+    } else if (whichModal === "futureproof") {
+      return (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+            <div className="position-absolute cross" onClick={closeModal}>
+              X
+            </div>
+            <div className="mt-2">
+              <h1 className="game-modal-heading">
+                Teleport To Futureproof Website
+              </h1>
+              <p>
+                Do You Want To Teleport To Futureproof? Come Inside My Friend!
+              </p>
+              <button
+                className="rpgui-button"
+                onClick={() => {
+                  takeMeToWebsite();
+                }}
+              >
+                Teleport
+              </button>
             </div>
           </div>
         </Modal>
