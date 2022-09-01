@@ -290,6 +290,27 @@ inside your html file.
   background-position: center;
 }
 
+.rpgui-container.framed-relative {
+  position: relative;
+  /* border */
+  border-style: solid;
+  border-image-source: url("img/border-image.png");
+  border-image-repeat: repeat;
+  border-image-slice: 6 6 6 6;
+  border-image-width: 18px;
+  border-width: 15px;
+  padding: 12px;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* background */
+  background: url("img/background-image.png") repeat repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+}
+
 /* game div with golden background image*/
 .rpgui-container.framed-golden {
   /* border */
@@ -695,7 +716,7 @@ ul.rpgui-dropdown-imp {
 .rpgui-content textarea {
   line-height: 22px;
   padding-top: 7px;
-  height: 300px;
+  height: 200px;
   resize: none;
 }
 

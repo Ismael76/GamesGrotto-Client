@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { GameContext } from "../../ContextProvider";
 
 export default function SignIn({ setWhichModal }) {
   const [loading, setLoading] = useState(false);
@@ -8,6 +9,16 @@ export default function SignIn({ setWhichModal }) {
 
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [
+    leaveShop,
+    setLeaveShop,
+    leaveForum,
+    setLeaveForum,
+    offset,
+    setOffset,
+    leaveDungeon,
+    setleaveDungeon,
+  ] = useContext(GameContext);
 
   const navigate = useNavigate();
 
@@ -25,13 +36,17 @@ export default function SignIn({ setWhichModal }) {
       body: JSON.stringify(loginData),
     };
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/auth/login",
-        options
-      );
+      const response = await fetch("http://localhost:5000/auth/login", options);
       const { token } = await response.json();
       localStorage.setItem("token", token);
       localStorage.setItem("username", loginData.username);
+      setleaveDungeon(false);
+      setLeaveForum(false);
+      setLeaveShop(false);
+      setOffset({
+        x: -900,
+        y: -1250,
+      });
       navigate("/home", { replace: true });
     } catch (err) {
       console.log(err);
@@ -51,11 +66,11 @@ export default function SignIn({ setWhichModal }) {
     >
       <section className="d-flex flex-column text-center align-self-center">
         <h1>Welcome!</h1>
-        <p>Log in with your details.</p>
+        <p>Please Sign In With Your Details.</p>
         <br />
         <form onSubmit={handleSubmit}>
           <input
-            className="mb-1"
+            className="mb- bg-dark"
             type="text"
             label="Username"
             onChange={(e) => setUsername(e.target.value)}
@@ -63,7 +78,7 @@ export default function SignIn({ setWhichModal }) {
           ></input>
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Password"
             onChange={(e) => setPassword(e.target.value)}
@@ -77,9 +92,9 @@ export default function SignIn({ setWhichModal }) {
         </form>
 
         <p className="mt-1">
-          Don't have an account?{" "}
+          Don't Already Have An Account?{" "}
           <button className="bg-success" onClick={goToOther}>
-            Register
+            Sign Up
           </button>
         </p>
       </section>

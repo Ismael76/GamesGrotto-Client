@@ -2,25 +2,29 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 
-export default function CommentModal({ post, closeModal, rerenderComments, setRerenderComments }) {
+export default function CommentModal({
+  post,
+  closeModal,
+  rerenderComments,
+  setRerenderComments,
+}) {
   const [commentData, setCommentData] = useState([]);
   const [postCommentData, setPostCommentData] = useState({
     post_id: post.id,
     text: "",
     username: localStorage.getItem("username"),
-    likes:[],
-    dislikes:[]
+    likes: [],
+    dislikes: [],
   });
 
   const [inputVal, setInputVal] = useState("");
 
   const comments = async () => {
-    console.log(post)
+    console.log(post);
     try {
-      const url = `https://games-grotto.herokuapp.com/comments/${post.id}`;
+      const url = `http://localhost:5000/comments/${post.id}`;
       const data = await axios.get(url);
       setCommentData(data.data);
-
     } catch (error) {
       console.log(error);
     }
@@ -30,8 +34,8 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
   }, [rerenderComments]);
 
   const currentPost = () => (
-    <>
-      <div>
+    <section className="container pt-4">
+      <div className="rpgui-container framed-golden-relative shadow-sm">
         <h3 className="p-3">{post.title}</h3>
         <p className="p-3">{post.text}</p>
         <p className="p-3 text-center">
@@ -39,22 +43,31 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
         </p>
       </div>
       <hr className="golden" />
-    </>
+    </section>
   );
 
   const renderComments = () =>
     commentData.map((item) => (
       <>
-        <div key={item.id}>
+        <div
+          key={item.id}
+          className="rpgui-container framed-golden2-relative my-3 mx-3 shadow-sm"
+        >
           <p className="p-3">{item.text}</p>
           <p className="p-3 text-center">
             Commented by {item.username} {/*on {item.date} */}
           </p>
           <div className="d-flex justify-content-around">
-            <button className="rpgui-button" onClick={() => updateLikes(item, "likes")}>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "likes")}
+            >
               {item.likes.length}👍
             </button>
-            <button className="rpgui-button" onClick={() => updateLikes(item, "dislikes")}>
+            <button
+              className="rpgui-button"
+              onClick={() => updateLikes(item, "dislikes")}
+            >
               {item.dislikes.length}👎
             </button>
           </div>
@@ -72,10 +85,7 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
     };
 
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
       setCommentData((prev) => [...prev, postCommentData]);
       setInputVal("");
@@ -84,7 +94,6 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
     } catch (err) {
       console.log(err);
     }
-    
   };
 
   const updateLikes = async (item, option) => {
@@ -103,10 +112,7 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
       body: JSON.stringify(data),
     };
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
       setRerenderComments(Math.random());
       return data;
@@ -122,19 +128,22 @@ export default function CommentModal({ post, closeModal, rerenderComments, setRe
       </a>
       {currentPost()}
       <form onSubmit={(e) => submitComment(e)}>
-        <textarea
-          required
-          placeholder="Enter comment"
-          onChange={(e) => {
-            setPostCommentData((prev) => ({
-              ...prev,
-              text: e.target.value,
-            }));
-            setInputVal(e.target.value);
-          }}
-          value={inputVal}
-        ></textarea>
-        <button className="rpgui-button framed-golden">Submit Comment</button>
+        <div className="rpgui-container framed-relative w-75 mx-auto mb-4">
+          <textarea
+            className="bg-dark"
+            required
+            placeholder="Enter Comment..."
+            onChange={(e) => {
+              setPostCommentData((prev) => ({
+                ...prev,
+                text: e.target.value,
+              }));
+              setInputVal(e.target.value);
+            }}
+            value={inputVal}
+          ></textarea>
+        </div>
+        <button className="rpgui-button framed-golden mb-3"> Comment</button>
       </form>
       {commentData.length != 0 && renderComments()}
     </section>

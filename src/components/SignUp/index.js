@@ -48,29 +48,27 @@ export default function SignUp({ setWhichModal }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
     };
+    if (password == confirmPassword) {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/auth/register",
+          options
+        );
 
-    try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/auth/register",
-        options
-      );
+        const loginResponse = await fetch(
+          "http://localhost:5000/auth/login",
+          optionsTwo
+        );
 
-      const loginResponse = await fetch(
-        "https://games-grotto.herokuapp.com/auth/login",
-        optionsTwo
-      );
-
-      const { token } = await loginResponse.json();
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", loginData.username);
-      navigate("/home", { replace: true });
-    } catch (err) {
-      console.log(err);
-    }
-
-    if (password !== confirmPassword) {
-      setErrorMessage("Passwords must match.");
-      return;
+        const { token } = await loginResponse.json();
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", loginData.username);
+        navigate("/home", { replace: true });
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (password !== confirmPassword) {
+      setErrorMessage("Passwords Must Match.");
     }
 
     setLoading(true);
@@ -89,52 +87,58 @@ export default function SignUp({ setWhichModal }) {
     >
       <section className="d-flex flex-column text-center">
         <h1>Welcome!</h1>
-        <p>Create a new account.</p>
+        <p>Create A New Account.</p>
 
         <form onSubmit={handleSubmit}>
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="text"
+            minLength={3}
+            maxLength={12}
             label="Username"
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
           />
           <br />
           <input
-            className="mb-1"
-            type="text"
+            className="mb-1 bg-dark"
+            type="email"
             label="Email"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Password"
+            minLength={8}
+            maxLength={30}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
           <br />
           <input
-            className="mb-1"
+            className="mb-1 bg-dark"
             type="password"
             label="Confirm Password"
+            minLength={8}
+            maxLength={30}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
           />
           <br />
           <button type="submit" className="rpgui-button mb-1">
-            Submit
+            Register
           </button>
 
           <br />
         </form>
 
         <p className="mt-1">
-          Already registered?{" "}
+          Already Registered?{" "}
           <button className="bg-success" onClick={goToOther}>
-            Login
+            Sign In
           </button>
         </p>
       </section>

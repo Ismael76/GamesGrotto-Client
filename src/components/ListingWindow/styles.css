@@ -4,9 +4,9 @@
   left: calc(23vw + 2rem);
   top: 2vw;
   z-index: 1;
-  max-height: 90vh;
+  height: 90vh;
   overflow: auto;
-  width: 70vw;
+  max-width: 70vw;
 }
 
 .special-border {
@@ -34,4 +34,12 @@
 .show-modal {
   position: absolute;
   left: 50%;
+}
+
+.no-listing {
+  width: 100%;
+}
+
+.listing-table {
+  text-align: center;
 }

@@ -23,14 +23,3 @@
     top: 1vw;
     width:50%;
 }
-
-.post-create {
-    display:flex;
-    position: absolute;
-    justify-content: center;
-    left: calc(37.5vw);
-    bottom: 1vw;
-    width:30%;
-    color: white;
-}
-

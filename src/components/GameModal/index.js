@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./styles.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { logoutData } from "../Dashboard/navigateZones";
 
 //Modal
 const customStyles = {
@@ -27,9 +29,10 @@ export default function GameModal({
   setWhichModal,
 }) {
   const [scoreData, setScoreData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchScores = async () => {
-    const url = `https://games-grotto.herokuapp.com/scores/`;
+    const url = `http://localhost:5000/scores/`;
     const data = await axios.get(url);
     setScoreData(data.data);
   };
@@ -40,6 +43,15 @@ export default function GameModal({
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    navigate("/", { replace: true });
+  }
+
+  function takeMeToWebsite() {
+    window.location.replace("https://www.getfutureproof.co.uk/");
   }
 
   function renderPopup() {
@@ -54,9 +66,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">SHOP</h1>
               <p>Enter Shop To Sell, Trade &#38; Buy Games!</p>
@@ -75,15 +87,41 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">MINIGAME</h1>
-              <p>
-                Climb down the steps to play an exciting minigame! Score as high
-                as you can and make it to the top 10 of the leaderboards!
-              </p>
+              <p>Play Our Unique Minigame &#38; Climb The Leaderboards!</p>
+            </div>
+          </div>
+        </Modal>
+      );
+    } else if (whichModal === "logout") {
+      return (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+            <div className="position-absolute cross" onClick={closeModal}>
+              X
+            </div>
+            <div className="mt-2">
+              <h1 className="game-modal-heading">Return To Mainland</h1>
+              <p>Climb Aboard The Boat If You Wish To Leave Pyre Town.</p>
+              <button
+                className="rpgui-button"
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </Modal>
@@ -99,9 +137,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">ABOUT</h1>
               <p>Created By:</p>
@@ -127,7 +165,10 @@ export default function GameModal({
       const renderScores = () =>
         scoreData.map((item) => (
           <>
-            <div class="d-flex justify-content-around score-div" key={item.id}>
+            <div
+              className="d-flex justify-content-around score-div"
+              key={item.id}
+            >
               <p className="p-3 text-center">
                 {item.username}
                 {/*on {item.date} */}
@@ -148,9 +189,9 @@ export default function GameModal({
           contentLabel="Authentication modal"
         >
           <div className="rpgui-container framed-golden d-flex flex-column text-center p-4 score-modal">
-            <button className="position-absolute" onClick={closeModal}>
+            <div className="position-absolute cross" onClick={closeModal}>
               X
-            </button>
+            </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">LEADERBOARDS</h1>
               <hr className="golden" />
@@ -158,6 +199,39 @@ export default function GameModal({
                 <h1 className="text-center">No highscores yet</h1>
               )}
               {scoreData.length != 0 && renderScores()}
+            </div>
+          </div>
+        </Modal>
+      );
+    } else if (whichModal === "futureproof") {
+      return (
+        <Modal
+          className="rpgui-content splash-modal-position"
+          closeTimeoutMS={500}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Authentication modal"
+        >
+          <div className="rpgui-container framed-golden-2 d-flex flex-column text-center p-4">
+            <div className="position-absolute cross" onClick={closeModal}>
+              X
+            </div>
+            <div className="mt-2">
+              <h1 className="game-modal-heading">
+                Teleport To Futureproof Website
+              </h1>
+              <p>
+                Do You Want To Teleport To Futureproof? Come Inside My Friend!
+              </p>
+              <button
+                className="rpgui-button"
+                onClick={() => {
+                  takeMeToWebsite();
+                }}
+              >
+                Teleport
+              </button>
             </div>
           </div>
         </Modal>
