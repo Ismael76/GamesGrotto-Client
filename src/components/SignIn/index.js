@@ -52,6 +52,7 @@ export default function SignIn({ setWhichModal }) {
       });
       navigate("/home", { replace: true });
     } catch (err) {
+      alert("Username Or Password Is Incorrect");
       console.log(err);
     }
   };

@@ -58,6 +58,7 @@ export default function RunnerGame() {
     }, 10);
 
     const title = document.querySelector(".instructions");
+
     document.addEventListener("keydown", function (event) {
       if (event.key == " ") {
         if (gameLoop == "before") {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,7 +6,7 @@ import "./styles.css";
 
 Modal.setAppElement("#root");
 
-export default function SignUp({ setWhichModal }) {
+export default function SignUp({ allUsers, setWhichModal }) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [registered, setRegistered] = useState(false);
@@ -47,6 +47,16 @@ export default function SignUp({ setWhichModal }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginData),
     };
+
+    for (let i = 0; i < allUsers.length; i++) {
+      if (username == allUsers[i].username) {
+        alert("Username Already Exists, Please Use A Different Username");
+        return;
+      } else if (email == allUsers[i].email) {
+        alert("Email Already Exists, Please Use A Different Email");
+      }
+    }
+
     if (password == confirmPassword) {
       try {
         const response = await fetch(
@@ -67,9 +77,8 @@ export default function SignUp({ setWhichModal }) {
         console.log(err);
       }
     } else if (password !== confirmPassword) {
-      setErrorMessage("Passwords Must Match.");
+      alert("Passwords Must Match.");
     }
-
   };
 
   return (
