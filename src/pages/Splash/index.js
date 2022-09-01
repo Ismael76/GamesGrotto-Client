@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SignIn, SignUp } from "../../components";
 import backgroundgif from "./world-splash-animation.mp4";
 import { useNavigate } from "react-router-dom";
@@ -28,8 +28,19 @@ Modal.setAppElement("#root");
 export default function Splash() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [whichModal, setWhichModal] = React.useState("register");
+  const [allUsers, setAllUsers] = useState([]);
 
   const navigate = useNavigate();
+
+  const getAllUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/users");
+      const data = await response.json();
+      setAllUsers(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   function openModal() {
     if (localStorage.getItem("token")) {
@@ -41,6 +52,10 @@ export default function Splash() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <motion.div
@@ -78,10 +93,10 @@ export default function Splash() {
                 X
               </button>
               {whichModal === "register" && (
-                <SignUp setWhichModal={setWhichModal} />
+                <SignUp allUsers={allUsers} setWhichModal={setWhichModal} />
               )}
               {whichModal === "login" && (
-                <SignIn setWhichModal={setWhichModal} />
+                <SignIn allUsers={allUsers} setWhichModal={setWhichModal} />
               )}
             </div>
           </Modal>
