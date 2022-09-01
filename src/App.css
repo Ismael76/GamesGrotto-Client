@@ -47,3 +47,7 @@ textarea {
 ::placeholder {
   color: goldenrod;
 }
+
+td {
+  word-break: break-word !important;
+}
