@@ -212,7 +212,7 @@ export default function GameModal({
               <h1 className="game-modal-heading">LEADERBOARDS</h1>
               <hr className="golden" />
               {scoreData.length == 0 && (
-                <h1 className="text-center">No highscores yet</h1>
+                <h1 className="text-center">No Highscores Yet</h1>
               )}
               {scoreData.length != 0 && renderScores()}
             </div>
@@ -235,10 +235,10 @@ export default function GameModal({
             </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">
-                Teleport To Futureproof Website
+                Teleport To futureproof Website
               </h1>
               <p>
-                Do You Want To Teleport To Futureproof? Come Inside My Friend!
+                Do You Want To Teleport To futureproof? Come Inside My Friend!
               </p>
               <button
                 className="rpgui-button"
