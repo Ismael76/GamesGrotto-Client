@@ -60,12 +60,12 @@ export default function SignUp({ allUsers, setWhichModal }) {
     if (password == confirmPassword) {
       try {
         const response = await fetch(
-          "https://games-grotto.herokuapp.com/auth/register",
+          "http://localhost:5000/auth/register",
           options
         );
 
         const loginResponse = await fetch(
-          "https://games-grotto.herokuapp.com/auth/login",
+          "http://localhost:5000/auth/login",
           optionsTwo
         );
 

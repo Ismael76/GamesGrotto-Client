@@ -7,10 +7,11 @@ export default function CommentModal({
   closeModal,
   rerenderComments,
   setRerenderComments,
+  setRerender,
 }) {
   const [commentData, setCommentData] = useState([]);
   const [postCommentData, setPostCommentData] = useState({
-    post_id: post.id,
+    post_id: "",
     text: "",
     username: localStorage.getItem("username"),
     likes: [],
@@ -20,8 +21,9 @@ export default function CommentModal({
   const [inputVal, setInputVal] = useState("");
 
   const comments = async () => {
+    setPostCommentData((prev) => ({ ...prev, post_id: post.id }));
     try {
-      const url = `https://games-grotto.herokuapp.com/comments/${post.id}`;
+      const url = `http://localhost:5000/comments/${post.id}`;
       const data = await axios.get(url);
       setCommentData(data.data);
     } catch (error) {
@@ -84,13 +86,10 @@ export default function CommentModal({
     };
 
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
-      setInputVal("");
       setRerenderComments(Math.random());
+      setInputVal("");
       return data;
     } catch (err) {
       console.log(err);
@@ -113,10 +112,7 @@ export default function CommentModal({
       body: JSON.stringify(data),
     };
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/comments/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/comments/", options);
       const data = await response.json();
       setRerenderComments(Math.random());
       return data;
@@ -125,9 +121,15 @@ export default function CommentModal({
     }
   };
 
+  function rerender_and_close() {
+    setRerenderComments(Math.random());
+    setRerender(Math.random());
+    closeModal();
+  }
+
   return (
     <section className="rpgui-container framed d-flex flex-column text-center comments-modal">
-      <a onClick={closeModal}>
+      <a onClick={rerender_and_close}>
         <div className="position-absolute cross">X</div>
       </a>
       {currentPost()}
