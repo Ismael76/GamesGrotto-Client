@@ -21,6 +21,7 @@ export default function UserListingWindow({
     };
     const response = await fetch(
       `https://games-grotto.herokuapp.com/listings/${id}`,
+
       options
     );
     const data = await response.json();

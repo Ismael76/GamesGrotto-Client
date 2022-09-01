@@ -23,14 +23,10 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function ListingWindow({ listingType, setShowListing }) {
-  const [gameType, setGameType] = useState("Video Game");
-  const [section, modal] = useContext(GameContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [whichModal, setWhichModal] = React.useState("ListingModal");
   const [listing, setListing] = useState();
-
   const [searchTerm, setSearchTerm] = useState("");
-
   //Pagination States
   const [listingData, setListingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,14 +47,12 @@ export default function ListingWindow({ listingType, setShowListing }) {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/listings"
-      );
+      const response = await fetch("http://localhost:5000/listings/");
       const data = await response.json();
       setListingData(data);
     }
     fetchData();
-  }, []);
+  }, [searchTerm]);
 
   const indexOfLastListing = currentPage * postsPerPage;
   const indexOfFirstListing = indexOfLastListing - postsPerPage;
@@ -76,8 +70,16 @@ export default function ListingWindow({ listingType, setShowListing }) {
     indexOfLastListing
   );
 
-  const renderListingSale = () =>
-    currentListingSale
+  const renderListingSale = () => {
+    if (currentListingSale.length == 0) {
+      return (
+        <div className="no-listing">
+          <h2>No Sale Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+        </div>
+      );
+    }
+    return currentListingSale
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
         else if (
@@ -86,8 +88,8 @@ export default function ListingWindow({ listingType, setShowListing }) {
           return searchItem;
       })
       .map((val, key) => (
-        <tr key={key} className="border-listings-table">
-          <td className="p-3 special-border">{val.title}</td>
+        <tr key={key} className="border-listings-table shadow">
+          <td className="p-3 special-border text-uppercase">{val.title}</td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
@@ -102,9 +104,18 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </button>
         </tr>
       ));
+  };
 
-  const renderListingTrade = () =>
-    currentListingTrade
+  const renderListingTrade = () => {
+    if (currentListingTrade.length == 0) {
+      return (
+        <div className="no-listing d-flex flex-column">
+          <h2>No Trade Listings To View, Sorry :(</h2>
+          <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/b813007a1618720.png"></img>
+        </div>
+      );
+    }
+    return currentListingTrade
       .filter((searchItem) => {
         if (searchTerm == "") return searchItem;
         else if (
@@ -113,12 +124,11 @@ export default function ListingWindow({ listingType, setShowListing }) {
           return searchItem;
       })
       .map((val, key) => (
-        <tr key={key} className="border-listings-table">
+        <tr key={key} className="border-listings-table shadow">
           <td className="p-5 special-border">{val.title}</td>
           <td className="p-5 special-border table-description">
             {val.description}
           </td>
-          <td className="p-5 special-border">£{val.price}</td>
           <td className="p-5 special-border">{val.location}</td>
 
           <button
@@ -129,6 +139,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </button>
         </tr>
       ));
+  };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -140,21 +151,16 @@ export default function ListingWindow({ listingType, setShowListing }) {
     <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
         <div className="rpgui-container framed-golden-2 shop-window2">
-          <a href="#" onClick={handleBack}>
-            <div className="rpgui-container position-absolute">Back</div>
-          </a>
+          <div
+            onClick={handleBack}
+            className="rpgui-container position-absolute cross"
+          >
+            Back
+          </div>
 
           <div className="d-flex flex-column pt-5">
-            {/* <select
-              className="rpgui-dropdown"
-              onChange={(e) => {
-                setGameType(e.target.value);
-              }}
-            >
-              <option className="rpgui-dropdown-imp">Video Games</option>
-              <option className="rpgui-dropdown-imp">Board Games</option>
-            </select> */}
             <input
+              className="rounded shadow-sm"
               type="text"
               placeholder="Search Item..."
               onChange={(e) => {
@@ -164,19 +170,24 @@ export default function ListingWindow({ listingType, setShowListing }) {
             <table className="listing-table">
               <tr>
                 <th className="p-4">
-                  <h2>Name</h2>
+                  <h2>TITLE</h2>
                 </th>
                 <th className="p-4">
-                  <h2>Description</h2>
+                  <h2>DESCRIPTION</h2>
+                </th>
+                {listingType == "Sell" ? (
+                  <th className="p-4">
+                    <h2>PRICE</h2>
+                  </th>
+                ) : (
+                  <></>
+                )}
+
+                <th className="p-4">
+                  <h2>LOCATION</h2>
                 </th>
                 <th className="p-4">
-                  <h2>Price</h2>
-                </th>
-                <th className="p-4">
-                  <h2>Location</h2>
-                </th>
-                <th className="p-4">
-                  <h2>See more</h2>
+                  <h2>SEE MORE</h2>
                 </th>
               </tr>
               {listingType == "Sell"
@@ -193,9 +204,33 @@ export default function ListingWindow({ listingType, setShowListing }) {
           </div>
         </div>
       )}
+      {/* <div className={modalIsOpen ? "show-modal" : "hide-modal"}>
+        <div className="modal-content">
+        <div className="rpgui-container framed d-flex flex-column text-center listing-modal">
+          {whichModal == "ContactModal" && (
+            <>
+              <a className="position-absolute" onClick={goToOther}>
+                Back
+              </a>
+              <ContactModal listing={listing} setWhichModal={setWhichModal} />
+            </>
+          )}
+          {whichModal == "ListingModal" && (
+            <>
+              <div
+                onClick={closeModal}
+                className="rpgui-container position-absolute cross"
+              >
+                X
+              </div>
+              <ListingModal listing={listing} setWhichModal={setWhichModal} />
+            </>
+          )}
+        </div>
+        </div>
+      </div> */}
       <Modal
         className="rpgui-content splash-modal-position"
-        ref={modal}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
@@ -212,9 +247,12 @@ export default function ListingWindow({ listingType, setShowListing }) {
           )}
           {whichModal == "ListingModal" && (
             <>
-              <a href="#" onClick={closeModal}>
-                <div className="rpgui-container position-absolute">X</div>
-              </a>
+              <div
+                onClick={closeModal}
+                className="rpgui-container position-absolute cross"
+              >
+                X
+              </div>
               <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}

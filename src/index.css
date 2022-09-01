@@ -24,4 +24,9 @@ code {
 /* default gui link */
 .cross:hover {
   text-decoration: underline;
+  cursor: url("../public/dist/img/cursor/point.png") 10 0, auto !important;
+}
+
+button:hover {
+  cursor: url("../public/dist/img/cursor/point.png") 10 0, auto !important;
 }

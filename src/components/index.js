@@ -8,3 +8,4 @@ export { default as ListingModal } from "./ListingModal";
 export { default as ContactModal } from "./ContactModal";
 export { default as GameModal } from "./GameModal";
 export { default as Pagination } from "./Pagination";
+export { default as UserListingWindow } from "./UserListingWindow";

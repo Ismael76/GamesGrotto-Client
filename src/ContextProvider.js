@@ -5,7 +5,8 @@ export const GameContext = createContext();
 export default function GameProvider(props) {
   const [leaveShop, setLeaveShop] = useState(false);
   const [leaveForum, setLeaveForum] = useState(false);
-  const [offset, setOffset] = useState({ x: -280, y: -1250 });
+  const [offset, setOffset] = useState({ x: -900, y: -1250 });
+  const [leaveDungeon, setleaveDungeon] = useState(false);
 
   return (
     <GameContext.Provider
@@ -16,6 +17,8 @@ export default function GameProvider(props) {
         setLeaveForum,
         offset,
         setOffset,
+        leaveDungeon,
+        setleaveDungeon,
       ]}
     >
       {props.children}

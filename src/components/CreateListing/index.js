@@ -32,10 +32,7 @@ export default function CreateListing({
     };
 
     try {
-      const response = await fetch(
-        "https://games-grotto.herokuapp.com/listings/",
-        options
-      );
+      const response = await fetch("http://localhost:5000/listings/", options);
       const data = await response.json();
       setUserListingData((prev) => [...prev, listingData]);
       return data;
@@ -47,9 +44,7 @@ export default function CreateListing({
   return (
     <section className="rpgui-content framed-golden sell-window">
       <div className="rpgui-container framed d-flex flex-column text-center">
-        <a href="#" onClick={closeModal}>
-          <div className="rpgui-container position-absolute">X</div>
-        </a>
+        <div onClick={closeModal} className="rpgui-container position-absolute cross">X</div>
         <section className="d-flex flex-column text-center p-5">
           <h1>CREATE LISTING</h1>
           <p>Sell/Trade Your Old Games!</p>
@@ -57,7 +52,7 @@ export default function CreateListing({
           {/* <form onSubmit={handleSubmit}> */}
           <form onSubmit={(e) => submitListing(e)}>
             <input
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="text"
               label="Item Name"
               // onChange={(e) => setUsername(e.target.value)}
@@ -80,7 +75,7 @@ export default function CreateListing({
               }
               className="rpgui-dropdown listing-dropdown mt-1 mb-1"
             >
-              <option value="Sell" selected>
+              <option defaultValue="Sell">
                 Sell
               </option>
               <option value="Trade">Trade</option>
@@ -89,7 +84,7 @@ export default function CreateListing({
             <br />
             {listingData.type == "Sell" ? (
               <input
-                className="mb-1"
+                className="mb-1 bg-dark"
                 type="text"
                 label="Price"
                 // onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +98,7 @@ export default function CreateListing({
               />
             ) : (
               <input
-                className="mb-1"
+                className="mb-1 bg-dark"
                 type="text"
                 label="Price"
                 placeholder="Price"
@@ -113,7 +108,7 @@ export default function CreateListing({
 
             <br />
             <input
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="text"
               label="Location"
               // onChange={(e) => setEmail(e.target.value)}
@@ -126,7 +121,7 @@ export default function CreateListing({
               }
             />
             <input
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="text"
               label="Img URL"
               // onChange={(e) => setEmail(e.target.value)}
@@ -141,7 +136,7 @@ export default function CreateListing({
 
             <br />
             <textarea
-              className="mb-1"
+              className="mb-1 bg-dark"
               type="Description"
               label="Description"
               // onChange={(e) => setConfirmPassword(e.target.value)}
