@@ -39,7 +39,8 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 - Prototyping
 - Building
 - UI design
-- 
+- Stretch goals
+- Testing
 
 # Bugs
 - Known bug: when user exits game if they press up whilst the popup appears they automatically walk up on game exit
