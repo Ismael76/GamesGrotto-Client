@@ -27,7 +27,8 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 3. Start the client:
     ```npm start```
     
-        <br>
+   <br>
+        
 # Features
 - Profile System
 - Discussion Forum
