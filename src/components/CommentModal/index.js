@@ -89,7 +89,6 @@ export default function CommentModal({
         options
       );
       const data = await response.json();
-      setCommentData((prev) => [...prev, postCommentData]);
       setInputVal("");
       setRerenderComments(Math.random());
       return data;
