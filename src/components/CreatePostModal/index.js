@@ -13,6 +13,7 @@ export default function CreatePostModal({ setRerender, closeModal }) {
 
   const submitPost = async (e) => {
     e.preventDefault();
+    e.target.reset();
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
