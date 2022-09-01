@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import axios from "axios";
 import { GameContext } from "../../ContextProvider";
+import { motion } from "framer-motion";
 
 export default function RunnerGame() {
   const [
@@ -162,7 +163,12 @@ export default function RunnerGame() {
   }, [gameLoop]);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="gameBackground">
         <h1 id="before" className="instructions">
           Press Any Button To Start Game!
@@ -175,6 +181,6 @@ export default function RunnerGame() {
           <h1 id="score">{score}</h1>
         </section>
       </div>
-    </>
+    </motion.div>
   );
 }
