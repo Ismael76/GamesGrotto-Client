@@ -16,7 +16,7 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 - Elliot (github.com/eheath30)
 - Thilak (github.com/thilak9)
 
-
+    <br>
 ## Getting started
 1. Clone this repository:
     ```https://github.com/Ismael76/GamesGrotto-Client```
@@ -27,12 +27,14 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 3. Start the client:
     ```npm start```
     
+        <br>
 # Features
 - Profile System
 - Discussion Forum
 - Trading post
 - Game
-
+- 
+    <br>
 # Changelog
 - Excalidraw wireframe: ```https://excalidraw.com/#room=e18ef76c59df58aa3a40,lIkmgoSRt1vQ2E-ohjXvlA```
 - Trello
@@ -41,7 +43,8 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 - UI design
 - Stretch goals
 - Testing
-
+- 
+    <br>
 # Bugs
 - Known bug: when user exits game if they press up whilst the popup appears they automatically walk up on game exit
 - Select dropdown UI issues
