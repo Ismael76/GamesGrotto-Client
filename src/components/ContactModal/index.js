@@ -15,6 +15,7 @@ export default function ContactModal({ listing, setWhichModal }) {
       name: e.target[0].value,
       mobile_number: e.target[1].value,
       message: e.target[2].value,
+      sender_username: localStorage.getItem("username"),
     };
 
     const options = {
@@ -41,13 +42,34 @@ export default function ContactModal({ listing, setWhichModal }) {
       <p>Send A Message To The Seller</p>
       <form onSubmit={(e) => submitContact(e)}>
         <div className="p-3">
-          <input label="Name" placeholder="Name" maxLength={100} type="text" id="Input1" className="mb-1 bg-dark"/>
+          <input
+            label="Name"
+            placeholder="Name"
+            maxLength={100}
+            type="text"
+            id="Input1"
+            className="mb-1 bg-dark"
+          />
         </div>
         <div className="p-3">
-          <input label="Tel" placeholder="Tel" maxLength={100} type="text" id="Input2" className="mb-1 bg-dark"/>
+          <input
+            label="Tel"
+            placeholder="Tel"
+            maxLength={100}
+            type="text"
+            id="Input2"
+            className="mb-1 bg-dark"
+          />
         </div>
         <div className="p-3">
-          <textarea id="textarea1" rows="5" maxLength={500} label="Message" placeholder="Message" className="mb-1 bg-dark"></textarea>
+          <textarea
+            id="textarea1"
+            rows="5"
+            maxLength={500}
+            label="Message"
+            placeholder="Message"
+            className="mb-1 bg-dark"
+          ></textarea>
           <button type="submit" className="rpgui-button m-3">
             Send
           </button>
