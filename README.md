@@ -34,7 +34,13 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 - Discussion Forum
 - Trading post
 - Game
-- 
+- World
+- Info-Modals
+- Music
+- Logout
+- Email
+- Teleportation
+
     <br>
 # Changelog
 - Excalidraw wireframe: ```https://excalidraw.com/#room=e18ef76c59df58aa3a40,lIkmgoSRt1vQ2E-ohjXvlA```
@@ -44,7 +50,8 @@ Server: ```https://github.com/Ismael76/GamesGrotto-Server```
 - UI design
 - Stretch goals
 - Testing
-- 
+
+
     <br>
 # Bugs
 - Known bug: when user exits game if they press up whilst the popup appears they automatically walk up on game exit
