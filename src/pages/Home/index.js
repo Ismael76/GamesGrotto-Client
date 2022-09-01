@@ -14,13 +14,11 @@ export default function Home() {
       transition={{ duration: 1 }}
       exit={{ opacity: 0 }}
     >
-      <section className="home">
-        <Dashboard
-          draw={draw}
-          height={window.innerHeight}
-          width={window.innerWidth}
-        />
-      </section>
+      <Dashboard
+        draw={draw}
+        height={window.innerHeight}
+        width={window.innerWidth}
+      />
     </motion.div>
   );
 }

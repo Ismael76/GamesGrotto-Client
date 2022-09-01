@@ -89,9 +89,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
       })
       .map((val, key) => (
         <tr key={key} className="border-listings-table shadow">
-          <td className="p-3 special-border text-uppercase table-highlight">
-            {val.title}
-          </td>
+          <td className="p-3 special-border table-highlight">{val.title}</td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
