@@ -34,7 +34,9 @@ export default function Splash() {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/auth/users");
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/auth/users"
+      );
       const data = await response.json();
       setAllUsers(data);
     } catch (err) {
