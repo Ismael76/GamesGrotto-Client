@@ -76,7 +76,6 @@ export default function ForumWindow() {
 
   const updateLikes = async (item, option) => {
     const username = localStorage.getItem("username");
-    console.log(username);
     const data = {
       id: item.id,
       username: username,

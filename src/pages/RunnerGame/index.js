@@ -89,7 +89,6 @@ export default function RunnerGame() {
   }
 
   async function updateScore(finalScore) {
-    console.log(finalScore);
     const data = (await axios.get("https://games-grotto.herokuapp.com/scores/"))
       .data;
     const scoreNumber = data.length;
