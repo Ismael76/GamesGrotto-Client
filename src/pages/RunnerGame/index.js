@@ -154,8 +154,8 @@ export default function RunnerGame() {
       setLeaveShop(false);
       setleaveDungeon(true);
       setOffset({
-        x: -1400,
-        y: -1250,
+        x: -1200,
+        y: -850,
       });
 
       navigate("/home", { replace: true });
