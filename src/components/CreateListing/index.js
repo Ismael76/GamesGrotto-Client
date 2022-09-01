@@ -32,7 +32,10 @@ export default function CreateListing({
     };
 
     try {
-      const response = await fetch("http://localhost:5000/listings/", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/listings/",
+        options
+      );
       const data = await response.json();
       setUserListingData((prev) => [...prev, listingData]);
       return data;
@@ -44,7 +47,12 @@ export default function CreateListing({
   return (
     <section className="rpgui-content framed-golden sell-window">
       <div className="rpgui-container framed d-flex flex-column text-center">
-        <div onClick={closeModal} className="rpgui-container position-absolute cross">X</div>
+        <div
+          onClick={closeModal}
+          className="rpgui-container position-absolute cross"
+        >
+          X
+        </div>
         <section className="d-flex flex-column text-center p-5">
           <h1>CREATE LISTING</h1>
           <p>Sell/Trade Your Old Games!</p>
@@ -75,9 +83,7 @@ export default function CreateListing({
               }
               className="rpgui-dropdown listing-dropdown mt-1 mb-1"
             >
-              <option defaultValue="Sell">
-                Sell
-              </option>
+              <option defaultValue="Sell">Sell</option>
               <option value="Trade">Trade</option>
             </select>
 

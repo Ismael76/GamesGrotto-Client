@@ -20,7 +20,8 @@ export default function UserListingWindow({
       body: JSON.stringify(deleteData),
     };
     const response = await fetch(
-      `http://localhost:5000/listings/${id}`,
+      `https://games-grotto.herokuapp.com/listings/${id}`,
+
       options
     );
     const data = await response.json();

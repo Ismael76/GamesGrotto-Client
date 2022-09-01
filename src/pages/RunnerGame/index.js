@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import axios from "axios";
 import { GameContext } from "../../ContextProvider";
+import { motion } from "framer-motion";
 
 export default function RunnerGame() {
   const [
@@ -92,8 +93,8 @@ export default function RunnerGame() {
   }
 
   async function updateScore(finalScore) {
-    console.log(finalScore);
-    const data = (await axios.get("http://localhost:5000/scores/")).data;
+    const data = (await axios.get("https://games-grotto.herokuapp.com/scores/"))
+      .data;
     const scoreNumber = data.length;
     if (scoreNumber < 10) {
       const scoreData = {
@@ -106,7 +107,10 @@ export default function RunnerGame() {
         body: JSON.stringify(scoreData),
       };
       try {
-        const response = await fetch("http://localhost:5000/scores/", options);
+        const response = await fetch(
+          "https://games-grotto.herokuapp.com/scores/",
+          options
+        );
         const data = await response.json();
         setGameLoop("ended");
         return data;
@@ -124,7 +128,10 @@ export default function RunnerGame() {
         body: JSON.stringify(scoreData),
       };
       try {
-        const response = await fetch("http://localhost:5000/scores/", options);
+        const response = await fetch(
+          "https://games-grotto.herokuapp.com/scores/",
+          options
+        );
         const data = await response.json();
         setGameLoop("ended");
         return data;
@@ -159,7 +166,12 @@ export default function RunnerGame() {
   }, [gameLoop]);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="gameBackground">
         <h1 id="before" className="instructions">
           Press Spacebar To Start Game!
@@ -172,6 +184,6 @@ export default function RunnerGame() {
           <h1 id="score">{score}</h1>
         </section>
       </div>
-    </>
+    </motion.div>
   );
 }

@@ -504,7 +504,6 @@ const Dashboard = ({ draw, height, width }) => {
     // Game Scene Configuration
     const gameScene = new Image();
     gameScene.src = require("./map.png");
-    console.log(offset.y);
     const gameSceneLayer = new Sprite({
       position: {
         x: offset.x,

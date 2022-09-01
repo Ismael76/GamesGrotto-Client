@@ -20,7 +20,10 @@ export default function CreatePostModal({ setRerender, closeModal }) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/posts", options);
+      const response = await fetch(
+        "https://games-grotto.herokuapp.com/posts",
+        options
+      );
       const data = await response.json();
 
       setRerender(Math.random());
