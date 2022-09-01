@@ -77,9 +77,12 @@ export default function RunnerGame() {
     var position = 48; //start position for the image slicer
     const interval = 100; //100 ms of interval for the setInterval()
     tID = setInterval(() => {
-      document.getElementById(
+
+      let cc = document.getElementById(
         "character"
-      ).style.backgroundPosition = `-${position}px 0px`;
+      )
+      if (cc){cc.style.backgroundPosition = `-${position}px 0px`;}
+      
       //we use the ES6 template literal to insert the variable "position"
       if (position < 144) {
         position = position + 48;
