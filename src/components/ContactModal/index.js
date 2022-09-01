@@ -41,16 +41,13 @@ export default function ContactModal({ listing, setWhichModal }) {
       <p>Send A Message To The Seller</p>
       <form onSubmit={(e) => submitContact(e)}>
         <div className="p-3">
-          <label for="Input1">Name:</label>
-          <input maxLength={100} type="text" id="Input1" />
+          <input label="Name" placeholder="Name" maxLength={100} type="text" id="Input1" className="mb-1 bg-dark"/>
         </div>
         <div className="p-3">
-          <label for="Input2">Tel:</label>
-          <input maxLength={100} type="text" id="Input2" />
+          <input label="Tel" placeholder="Tel" maxLength={100} type="text" id="Input2" className="mb-1 bg-dark"/>
         </div>
         <div className="p-3">
-          <label for="textarea1">Message:</label>
-          <textarea id="textarea1" rows="5" maxLength={500}></textarea>
+          <textarea id="textarea1" rows="5" maxLength={500} label="Message" placeholder="Message" className="mb-1 bg-dark"></textarea>
           <button type="submit" className="rpgui-button m-3">
             Send
           </button>

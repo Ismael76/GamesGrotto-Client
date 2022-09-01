@@ -7,8 +7,8 @@ export default function ListingModal({ listing, setWhichModal }) {
 
   return (
     <section className="d-flex flex-column overflow-auto align-items-center">
-      <h1 className="pt-4 pb-2">LISTING</h1>
-      <div className="d-flex flex-column rpgui-container framed-golden-2 overflow-auto mt-5 view-listing">
+      <h1 className="pt-4">LISTING</h1>
+      <div className="d-flex flex-column rpgui-container framed-golden2-relative view-listing">
         <div className="d-flex flex-column align-items-center">
           <h2 className="text-uppercase">
             NAME:{" "}

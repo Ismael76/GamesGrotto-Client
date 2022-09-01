@@ -20,7 +20,6 @@ export default function CommentModal({
   const [inputVal, setInputVal] = useState("");
 
   const comments = async () => {
-    console.log(post);
     try {
       const url = `https://games-grotto.herokuapp.com/comments/${post.id}`;
       const data = await axios.get(url);
