@@ -60,7 +60,7 @@ export default function ForumWindow() {
 
   const openCommentModal = (post) => {
     setPost(post);
-    setRerenderComments(Math.random());
+    setRerenderComments(Math.random(0, 1000000000));
     setWhichModal("DisplayComments");
     setIsOpen(true);
   };
