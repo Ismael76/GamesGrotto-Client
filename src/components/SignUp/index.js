@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import * as api from "../../api";
+
 import "./styles.css";
 
 Modal.setAppElement("#root");
@@ -71,11 +71,11 @@ export default function SignUp({ setWhichModal }) {
       setErrorMessage("Passwords Must Match.");
     }
 
-    setLoading(true);
-    const res = await api.register({ username, email, password });
-    setRegistered(res.verified);
-    setErrorMessage(res.error || null);
-    setLoading(false);
+    // setLoading(true);
+    // const res = await api.register({ username, email, password });
+    // setRegistered(res.verified);
+    // setErrorMessage(res.error || null);
+    // setLoading(false);
   };
 
   return (
