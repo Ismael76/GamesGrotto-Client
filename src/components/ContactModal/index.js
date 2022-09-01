@@ -25,7 +25,7 @@ export default function ContactModal({ listing, setWhichModal }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/listings/contact",
+        "https://games-grotto.herokuapp.com/listings/contact",
         options
       );
       const data = await response.json();

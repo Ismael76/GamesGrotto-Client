@@ -66,7 +66,9 @@ export default function Shop() {
         headers: { "Content-Type": "application/json" },
       };
       const response = await fetch(
-        `http://localhost:5000/listings/${localStorage.getItem("username")}`,
+        `https://games-grotto.herokuapp.com/listings/${localStorage.getItem(
+          "username"
+        )}`,
         options
       );
       const data = await response.json();
@@ -88,7 +90,7 @@ export default function Shop() {
       body: JSON.stringify(deleteData),
     };
     const response = await fetch(
-      `http://localhost:5000/listings/${id}`,
+      `https://games-grotto.herokuapp.com/listings/${id}`,
       options
     );
     const data = await response.json();
