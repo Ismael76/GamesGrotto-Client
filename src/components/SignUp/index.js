@@ -49,26 +49,26 @@ export default function SignUp({ setWhichModal }) {
       body: JSON.stringify(loginData),
     };
     if (password == confirmPassword) {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/auth/register",
-        options
-      );
+      try {
+        const response = await fetch(
+          "http://localhost:5000/auth/register",
+          options
+        );
 
-      const loginResponse = await fetch(
-        "http://localhost:5000/auth/login",
-        optionsTwo
-      );
+        const loginResponse = await fetch(
+          "http://localhost:5000/auth/login",
+          optionsTwo
+        );
 
-      const { token } = await loginResponse.json();
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", loginData.username);
-      navigate("/home", { replace: true });
-    } catch (err) {
-      console.log(err);
-    }
+        const { token } = await loginResponse.json();
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", loginData.username);
+        navigate("/home", { replace: true });
+      } catch (err) {
+        console.log(err);
+      }
     } else if (password !== confirmPassword) {
-      setErrorMessage("Passwords must match.");
+      setErrorMessage("Passwords Must Match.");
     }
 
     setLoading(true);
@@ -87,7 +87,7 @@ export default function SignUp({ setWhichModal }) {
     >
       <section className="d-flex flex-column text-center">
         <h1>Welcome!</h1>
-        <p>Create a new account.</p>
+        <p>Create A New Account.</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -106,7 +106,6 @@ export default function SignUp({ setWhichModal }) {
             label="Email"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-
           />
           <br />
           <input
@@ -130,16 +129,16 @@ export default function SignUp({ setWhichModal }) {
           />
           <br />
           <button type="submit" className="rpgui-button mb-1">
-            Submit
+            Register
           </button>
 
           <br />
         </form>
 
         <p className="mt-1">
-          Already registered?{" "}
+          Already Registered?{" "}
           <button className="bg-success" onClick={goToOther}>
-            Login
+            Sign In
           </button>
         </p>
       </section>

@@ -125,7 +125,6 @@ export default function ListingWindow({ listingType, setShowListing }) {
           return searchItem;
       })
       .map((val, key) => (
-
         <tr key={key} className="border-listings-table shadow">
           <td className="p-5 special-border">{val.title}</td>
           <td className="p-5 special-border table-description">
@@ -153,7 +152,12 @@ export default function ListingWindow({ listingType, setShowListing }) {
     <section className="rpgui-content overflow-auto">
       {!modalIsOpen && (
         <div className="rpgui-container framed-golden-2 shop-window2">
-          <div onClick={handleBack} className="rpgui-container position-absolute cross">Back</div>
+          <div
+            onClick={handleBack}
+            className="rpgui-container position-absolute cross"
+          >
+            Back
+          </div>
 
           <div className="d-flex flex-column pt-5">
             <input
@@ -184,7 +188,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
                   <h2>Location</h2>
                 </th>
                 <th className="p-4">
-                  <h2>See more</h2>
+                  <h2>See More</h2>
                 </th>
               </tr>
               {listingType == "Sell"
@@ -220,7 +224,12 @@ export default function ListingWindow({ listingType, setShowListing }) {
           )}
           {whichModal == "ListingModal" && (
             <>
-              <div onClick={closeModal} className="rpgui-container position-absolute cross">X</div>
+              <div
+                onClick={closeModal}
+                className="rpgui-container position-absolute cross"
+              >
+                X
+              </div>
               <ListingModal listing={listing} setWhichModal={setWhichModal} />
             </>
           )}

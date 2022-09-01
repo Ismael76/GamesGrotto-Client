@@ -48,7 +48,7 @@ export default function SignIn({ setWhichModal }) {
     >
       <section className="d-flex flex-column text-center align-self-center">
         <h1>Welcome!</h1>
-        <p>Log in with your details.</p>
+        <p>Please Sign In With Your Details.</p>
         <br />
         <form onSubmit={handleSubmit}>
           <input
@@ -74,9 +74,9 @@ export default function SignIn({ setWhichModal }) {
         </form>
 
         <p className="mt-1">
-          Don't have an account?{" "}
+          Don't Already Have An Account?{" "}
           <button className="bg-success" onClick={goToOther}>
-            Register
+            Sign Up
           </button>
         </p>
       </section>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./styles.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { logoutData } from "../Dashboard/navigateZones";
 
 //Modal
 const customStyles = {
@@ -27,6 +29,7 @@ export default function GameModal({
   setWhichModal,
 }) {
   const [scoreData, setScoreData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchScores = async () => {
     const url = `http://localhost:5000/scores/`;
@@ -40,6 +43,11 @@ export default function GameModal({
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    navigate("/", { replace: true });
   }
 
   function renderPopup() {
@@ -80,10 +88,7 @@ export default function GameModal({
             </div>
             <div className="mt-2">
               <h1 className="game-modal-heading">MINIGAME</h1>
-              <p>
-                Climb down the steps to play an exciting minigame! Score as high
-                as you can and make it to the top 10 of the leaderboards!
-              </p>
+              <p>Play Our Unique Minigame &#38; Climb The Leaderboards!</p>
             </div>
           </div>
         </Modal>
@@ -103,11 +108,16 @@ export default function GameModal({
               X
             </div>
             <div className="mt-2">
-              <h1 className="game-modal-heading">Return to Mainland</h1>
-              <p>
-                Climb aboard the boat if you wish to leave Pyre Town.
-              </p>
-              <button className="rpgui-button" onClick={()=>{localStorage.removeItem("token");}}>Logout</button>
+              <h1 className="game-modal-heading">Return To Mainland</h1>
+              <p>Climb Aboard The Boat If You Wish To Leave Pyre Town.</p>
+              <button
+                className="rpgui-button"
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </Modal>
@@ -151,7 +161,10 @@ export default function GameModal({
       const renderScores = () =>
         scoreData.map((item) => (
           <>
-            <div className="d-flex justify-content-around score-div" key={item.id}>
+            <div
+              className="d-flex justify-content-around score-div"
+              key={item.id}
+            >
               <p className="p-3 text-center">
                 {item.username}
                 {/*on {item.date} */}

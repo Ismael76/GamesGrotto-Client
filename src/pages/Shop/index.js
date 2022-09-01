@@ -235,7 +235,9 @@ export default function Shop() {
               </div>
 
               <div className="d-flex flex-column text-center justify-content-center">
-                <h1 className="mx-auto pe-2 py-2">Welcome to Pyre shop</h1>
+                <h1 className="mx-auto pe-2 py-2 text-decoration-underline">
+                  Welcome To Pyre Shop
+                </h1>
                 <p>
                   In this shop you can find games of all types to buy or trade.
                 </p>
@@ -243,19 +245,23 @@ export default function Shop() {
                   Alternatively you can post games for sale or to trade on the
                   market place.
                 </p>
-                <h3>How to:</h3>
+                <h3>How To:</h3>
                 <p>
                   If a game interests you, simply message the seller your offer
                   along with your contact details and wait for a reply.
                 </p>
+                <p>
+                  Well good luck, hope you get what you are looking for. Enjoy
+                  gaming gamers!
+                </p>
                 <div className="rpgui-container framed-grey shadow-sm">
                   <h2>Rules:</h2>
                   <ul className="list-unstyled pe-4">
-                    <li>1. Be polite</li>
+                    <li>1. Be Polite</li>
                     <br />
-                    <li>2. Be civil</li>
+                    <li>2. Be Civil</li>
                     <br />
-                    <li>3. Have fun</li>
+                    <li>3. Have Fun</li>
                   </ul>
                 </div>
               </div>

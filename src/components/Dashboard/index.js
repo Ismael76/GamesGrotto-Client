@@ -10,6 +10,7 @@ import {
   minigameNavigateData,
   leaderboardPopupData,
   navigateWebsiteData,
+  logoutData,
 } from "./navigateZones";
 import { useNavigate } from "react-router-dom";
 import GameModal from "../GameModal";
@@ -64,6 +65,11 @@ for (let i = 0; i < minigamePopupData.length; i += 70) {
 const leaderboardPopup = [];
 for (let i = 0; i < leaderboardPopupData.length; i += 70) {
   leaderboardPopup.push(leaderboardPopupData.slice(i, 70 + i));
+}
+
+const logoutNavigate = [];
+for (let i = 0; i < logoutData.length; i += 70) {
+  logoutNavigate.push(logoutData.slice(i, 70 + i));
 }
 
 const keys = {
@@ -412,6 +418,23 @@ const Dashboard = ({ draw, height, width }) => {
       });
     });
 
+    const logoutNavigateTiles = [];
+
+    logoutNavigate.forEach((row, i) => {
+      row.forEach((symbol, j) => {
+        if (symbol === 4247) {
+          logoutNavigateTiles.push(
+            new Boundary({
+              position: {
+                x: j * Boundary.width + offset.x,
+                y: i * Boundary.height + offset.y,
+              },
+            })
+          );
+        }
+      });
+    });
+
     //Sprite Class Creating Sprites Such As Players, Map etc.
     class Sprite {
       constructor({ position, velocity, image, frames = { max: 1 }, sprites }) {
@@ -522,6 +545,7 @@ const Dashboard = ({ draw, height, width }) => {
       ...aboutPopupTiles,
       ...leaderboardPopupTiles,
       ...websiteNavigateTiles,
+      ...logoutNavigateTiles,
     ];
 
     function animate() {
@@ -566,6 +590,10 @@ const Dashboard = ({ draw, height, width }) => {
       });
 
       leaderboardPopupTiles.forEach((navigateZone) => {
+        navigateZone.draw();
+      });
+
+      logoutNavigateTiles.forEach((navigateZone) => {
         navigateZone.draw();
       });
 
@@ -802,6 +830,32 @@ const Dashboard = ({ draw, height, width }) => {
           ) {
             navigate("/forum", { replace: true });
             window.cancelAnimationFrame(animationID);
+            break;
+          }
+        }
+
+        for (let i = 0; i < logoutNavigateTiles.length; i++) {
+          const navigateZone = logoutNavigateTiles[i];
+          const overlappingArea =
+            (Math.min(
+              player.position.x + player.width,
+              navigateZone.position.x + navigateZone.width
+            ) -
+              Math.max(player.position.x, navigateZone.position.x)) *
+            (Math.min(
+              player.position.y + player.height,
+              navigateZone.position.y + navigateZone.height
+            ) -
+              Math.max(player.position.y, navigateZone.position.y));
+          if (
+            checkCollision({
+              player: player,
+              boundary: navigateZone,
+            }) &&
+            overlappingArea > (player.width * player.height) / 2
+          ) {
+            setWhichModal("logout");
+            setIsOpen(true);
             break;
           }
         }
