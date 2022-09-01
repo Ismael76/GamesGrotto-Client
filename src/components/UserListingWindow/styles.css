@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
+
+.listing-container {
+  overflow-y: auto !important;
+}
+
+table {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1rem;
+}
+
+.listing-table td {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}

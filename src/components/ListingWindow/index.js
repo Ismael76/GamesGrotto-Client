@@ -52,7 +52,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
       setListingData(data);
     }
     fetchData();
-  }, []);
+  }, [searchTerm]);
 
   const indexOfLastListing = currentPage * postsPerPage;
   const indexOfFirstListing = indexOfLastListing - postsPerPage;
@@ -89,7 +89,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
       })
       .map((val, key) => (
         <tr key={key} className="border-listings-table shadow">
-          <td className="p-3 special-border">{val.title}</td>
+          <td className="p-3 special-border text-uppercase">{val.title}</td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
@@ -170,24 +170,24 @@ export default function ListingWindow({ listingType, setShowListing }) {
             <table className="listing-table">
               <tr>
                 <th className="p-4">
-                  <h2>Name</h2>
+                  <h2>TITLE</h2>
                 </th>
                 <th className="p-4">
-                  <h2>Description</h2>
+                  <h2>DESCRIPTION</h2>
                 </th>
                 {listingType == "Sell" ? (
                   <th className="p-4">
-                    <h2>Price</h2>
+                    <h2>PRICE</h2>
                   </th>
                 ) : (
                   <></>
                 )}
 
                 <th className="p-4">
-                  <h2>Location</h2>
+                  <h2>LOCATION</h2>
                 </th>
                 <th className="p-4">
-                  <h2>See More</h2>
+                  <h2>SEE MORE</h2>
                 </th>
               </tr>
               {listingType == "Sell"

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "./styles.css";
 
 export default function UserListingWindow({
   userListingData,
@@ -29,8 +30,8 @@ export default function UserListingWindow({
   function renderUserListings() {
     if (userListingData.length != 0) {
       return userListingData.map((val, key) => (
-        <tr key={key} className="border-listings-table">
-          <td className="p-3 special-border">{val.title}</td>
+        <tr key={key} className="border-listings-table ">
+          <td className="p-3 special-border text-uppercase">{val.title}</td>
           <td className="p-3 special-border table-description">
             {val.description}
           </td>
@@ -55,16 +56,37 @@ export default function UserListingWindow({
   }
   return (
     <section className="rpgui-content">
-      <div className="rpgui-container framed-golden shop-window-info">
-          <div onClick={() => setShowUserListings(false)} className="rpgui-container flex-item cross">X</div>
+      <div className="rpgui-container framed-golden-2 shop-window-info listing-container">
+        <div
+          onClick={() => setShowUserListings(false)}
+          className="rpgui-container flex-item cross"
+        >
+          X
+        </div>
 
         <div className="d-flex flex-column text-center justify-content-center">
-          <h1>
+          <h1 className="mb-4">
             {localStorage.getItem("username").toUpperCase() +
               "'s" +
               " LISTINGS"}
           </h1>
-          <table>{renderUserListings()}</table>
+          <table className="listing-table">
+            <tr>
+              <th className="p-4">
+                <h2>TITLE</h2>
+              </th>
+              <th className="p-4">
+                <h2>DESCRIPTION</h2>
+              </th>
+              <th className="p-4">
+                <h2>PRICE</h2>
+              </th>
+              <th className="p-4">
+                <h2>LOCATION</h2>
+              </th>
+            </tr>
+            {renderUserListings()}
+          </table>
         </div>
       </div>
     </section>
