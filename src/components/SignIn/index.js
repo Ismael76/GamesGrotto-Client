@@ -74,6 +74,7 @@ export default function SignIn({ setWhichModal }) {
         <br />
         <form onSubmit={handleSubmit}>
           <input
+          required
             className="mb- bg-dark"
             type="text"
             label="Username"
@@ -82,6 +83,7 @@ export default function SignIn({ setWhichModal }) {
           ></input>
           <br />
           <input
+          required
             className="mb-1 bg-dark"
             type="password"
             label="Password"

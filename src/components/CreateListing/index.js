@@ -60,6 +60,7 @@ export default function CreateListing({
           {/* <form onSubmit={handleSubmit}> */}
           <form onSubmit={(e) => submitListing(e)}>
             <input
+            required
               className="mb-1 bg-dark"
               type="text"
               label="Item Name"
@@ -114,6 +115,7 @@ export default function CreateListing({
 
             <br />
             <input
+            required
               className="mb-1 bg-dark"
               type="text"
               label="Location"
@@ -142,6 +144,7 @@ export default function CreateListing({
 
             <br />
             <textarea
+            required
               className="mb-1 bg-dark"
               type="Description"
               label="Description"
