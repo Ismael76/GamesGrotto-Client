@@ -2,7 +2,7 @@
 
 .listing-container {
   overflow-y: auto !important;
-  width: 70vw;
+  width: 80vw;
 }
 
 table {
@@ -26,4 +26,5 @@ table {
 .table-highlight {
   font-weight: bold !important;
   font-size: 1.3rem;
+  word-break: break-word !important;
 }

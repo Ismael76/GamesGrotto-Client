@@ -62,23 +62,23 @@ export default function UserListingWindow({
         </div>
 
         <div className="d-flex flex-column text-center justify-content-center">
-          <h1 className="mb-4">
+          <h1 className="mb-3">
             {localStorage.getItem("username").toUpperCase() +
               "'s" +
               " LISTINGS"}
           </h1>
           <table className="listing-table">
             <tr>
-              <th className="p-4">
+              <th className="p-2">
                 <h2>TITLE</h2>
               </th>
-              <th className="p-4">
+              <th className="p-2">
                 <h2>DESCRIPTION</h2>
               </th>
-              <th className="p-4">
+              <th className="p-2">
                 <h2>PRICE</h2>
               </th>
-              <th className="p-4">
+              <th className="p-2">
                 <h2>LOCATION</h2>
               </th>
             </tr>
