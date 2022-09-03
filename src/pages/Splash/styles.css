@@ -7,8 +7,6 @@
   min-width: 100%;
   min-height: 100%;
   transform: translateX(calc((100% - 100vw) / 2));
-
-  /* background: url('https://cdnb.artstation.com/p/assets/images/images/037/263/051/original/karina-formanova-rainforest-animation.gif?1619929364'); */
 }
 
 .splash-modal-position {
@@ -50,7 +48,6 @@
   z-index: 1;
   transition: all 0.3s;
 
-  /* change enter btn animation here */
 }
 
 .ReactModal__Overlay {
