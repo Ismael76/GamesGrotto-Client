@@ -60,7 +60,7 @@ export default function CreateListing({
           {/* <form onSubmit={handleSubmit}> */}
           <form onSubmit={(e) => submitListing(e)}>
             <input
-            required
+              required
               className="mb-1 bg-dark"
               type="text"
               label="Item Name"
@@ -82,10 +82,10 @@ export default function CreateListing({
                   type: e.target.value,
                 }))
               }
-              className="rpgui-dropdown listing-dropdown mt-1 mb-1"
+              className="rpgui-dropdown listing-dropdown mt-1 mb-1 w-100"
             >
-              <option defaultValue="Sell">Sell</option>
-              <option value="Trade">Trade</option>
+              <option defaultValue="Sell">SELL</option>
+              <option value="Trade">TRADE</option>
             </select>
 
             <br />
@@ -115,7 +115,7 @@ export default function CreateListing({
 
             <br />
             <input
-            required
+              required
               className="mb-1 bg-dark"
               type="text"
               label="Location"
@@ -144,7 +144,7 @@ export default function CreateListing({
 
             <br />
             <textarea
-            required
+              required
               className="mb-1 bg-dark"
               type="Description"
               label="Description"
