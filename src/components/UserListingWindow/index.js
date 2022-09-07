@@ -32,7 +32,7 @@ export default function UserListingWindow({
     if (userListingData.length != 0) {
       return userListingData.map((val, key) => (
         <tr key={key} className="border-listings-table ">
-          <td className="p-3 special-border text-uppercase table-highlight">
+          <td className="p-3 special-border text-uppercase table-highlight ">
             {val.title}
           </td>
           <td className="p-3 special-border table-description">

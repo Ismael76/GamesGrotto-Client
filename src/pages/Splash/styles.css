@@ -79,3 +79,14 @@
   opacity: 0;
   transition: all 700ms;
 }
+
+.logo {
+  left: 0;
+  right: 0;
+  top: 100px;
+  margin: auto;
+  z-index: 0;
+  position: absolute;
+  width: 50rem;
+  height: 5rem;
+}

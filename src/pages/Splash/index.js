@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SignIn, SignUp } from "../../components";
 import backgroundgif from "./world-splash-animation.mp4";
+import logo from "./logo.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
@@ -70,6 +71,7 @@ export default function Splash() {
         <video preload="auto" autoPlay muted loop id="myVideo">
           <source src={backgroundgif} type="video/mp4" />
         </video>
+        <img src={logo} class="logo"></img>
         <div className="enter-btn-container">
           {!modalIsOpen && (
             <button
