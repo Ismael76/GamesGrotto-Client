@@ -60,12 +60,12 @@ export default function SignUp({ allUsers, setWhichModal }) {
     if (password == confirmPassword) {
       try {
         const response = await fetch(
-          "https://games-grotto.herokuapp.com/auth/register",
+          "https://games-grotto.onrender.com/auth/register",
           options
         );
 
         const loginResponse = await fetch(
-          "https://games-grotto.herokuapp.com/auth/login",
+          "https://games-grotto.onrender.com/auth/login",
           optionsTwo
         );
 
@@ -94,7 +94,7 @@ export default function SignUp({ allUsers, setWhichModal }) {
 
         <form onSubmit={handleSubmit}>
           <input
-          required
+            required
             className="mb-1 bg-dark"
             type="text"
             minLength={3}
@@ -105,7 +105,7 @@ export default function SignUp({ allUsers, setWhichModal }) {
           />
           <br />
           <input
-          required
+            required
             className="mb-1 bg-dark"
             type="email"
             label="Email"
@@ -114,7 +114,7 @@ export default function SignUp({ allUsers, setWhichModal }) {
           />
           <br />
           <input
-          required
+            required
             className="mb-1 bg-dark"
             type="password"
             label="Password"
@@ -125,7 +125,7 @@ export default function SignUp({ allUsers, setWhichModal }) {
           />
           <br />
           <input
-          required
+            required
             className="mb-1 bg-dark"
             type="password"
             label="Confirm Password"

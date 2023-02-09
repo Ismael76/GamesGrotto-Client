@@ -37,7 +37,7 @@ export default function SignIn({ setWhichModal }) {
     };
     try {
       const response = await fetch(
-        "https://games-grotto.herokuapp.com/auth/login",
+        "https://games-grotto.onrender.com/auth/login",
         options
       );
       const { token } = await response.json();
@@ -74,7 +74,7 @@ export default function SignIn({ setWhichModal }) {
         <br />
         <form onSubmit={handleSubmit}>
           <input
-          required
+            required
             className="mb- bg-dark"
             type="text"
             label="Username"
@@ -83,7 +83,7 @@ export default function SignIn({ setWhichModal }) {
           ></input>
           <br />
           <input
-          required
+            required
             className="mb-1 bg-dark"
             type="password"
             label="Password"

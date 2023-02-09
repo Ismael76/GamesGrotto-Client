@@ -48,7 +48,7 @@ export default function ListingWindow({ listingType, setShowListing }) {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        "https://games-grotto.herokuapp.com/listings/"
+        "https://games-grotto.onrender.com/listings/"
       );
       const data = await response.json();
       setListingData(data);

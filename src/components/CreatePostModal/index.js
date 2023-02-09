@@ -22,7 +22,7 @@ export default function CreatePostModal({ setRerender, closeModal }) {
 
     try {
       const response = await fetch(
-        "https://games-grotto.herokuapp.com/posts",
+        "https://games-grotto.onrender.com/posts",
         options
       );
       const data = await response.json();

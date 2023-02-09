@@ -77,12 +77,11 @@ export default function RunnerGame() {
     var position = 48; //start position for the image slicer
     const interval = 100; //100 ms of interval for the setInterval()
     tID = setInterval(() => {
+      let cc = document.getElementById("character");
+      if (cc) {
+        cc.style.backgroundPosition = `-${position}px 0px`;
+      }
 
-      let cc = document.getElementById(
-        "character"
-      )
-      if (cc){cc.style.backgroundPosition = `-${position}px 0px`;}
-      
       //we use the ES6 template literal to insert the variable "position"
       if (position < 144) {
         position = position + 48;
@@ -96,7 +95,7 @@ export default function RunnerGame() {
   }
 
   async function updateScore(finalScore) {
-    const data = (await axios.get("https://games-grotto.herokuapp.com/scores/"))
+    const data = (await axios.get("https://games-grotto.onrender.com/scores/"))
       .data;
     const scoreNumber = data.length;
     if (scoreNumber < 10) {
@@ -111,7 +110,7 @@ export default function RunnerGame() {
       };
       try {
         const response = await fetch(
-          "https://games-grotto.herokuapp.com/scores/",
+          "https://games-grotto.onrender.com/scores/",
           options
         );
         const data = await response.json();
@@ -132,7 +131,7 @@ export default function RunnerGame() {
       };
       try {
         const response = await fetch(
-          "https://games-grotto.herokuapp.com/scores/",
+          "https://games-grotto.onrender.com/scores/",
           options
         );
         const data = await response.json();

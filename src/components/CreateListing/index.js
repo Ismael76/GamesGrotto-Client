@@ -33,7 +33,7 @@ export default function CreateListing({
 
     try {
       const response = await fetch(
-        "https://games-grotto.herokuapp.com/listings/",
+        "https://games-grotto.onrender.com/listings/",
         options
       );
       const data = await response.json();

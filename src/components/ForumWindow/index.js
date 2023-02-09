@@ -46,7 +46,7 @@ export default function ForumWindow() {
 
   const getPosts = async () => {
     try {
-      const url = "https://games-grotto.herokuapp.com/posts";
+      const url = "https://games-grotto.onrender.com/posts";
       const data = await axios.get(url);
       setPostData(data.data);
     } catch (error) {
@@ -90,7 +90,7 @@ export default function ForumWindow() {
     };
     try {
       const response = await fetch(
-        "https://games-grotto.herokuapp.com/posts",
+        "https://games-grotto.onrender.com/posts",
         options
       );
       const data = await response.json();
